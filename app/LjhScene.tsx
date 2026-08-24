@@ -108,8 +108,8 @@ export default function LjhScene() {
     new FontLoader().load('/fonts/helvetiker_bold.typeface.json', font => {
       if (disposed) return;
       const chars = ['L', 'J', 'H'];
-      const words = ['Design', 'ljh', 'space'];
-      const wordSizes = [1.42, 2.05, 1.58];
+      const words = ['D E S I G N', 'L J H', 'S P A C E'];
+      const wordSizes = [1.08, 1.68, 1.18];
       const makeGeometry = (text: string, size: number, depth: number) => {
         const geometry = new TextGeometry(text, { font, size, depth, curveSegments: 9, bevelEnabled: true, bevelThickness: .12, bevelSize: .075, bevelOffset: 0, bevelSegments: 5 });
         geometry.computeBoundingBox();
