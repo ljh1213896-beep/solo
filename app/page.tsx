@@ -214,8 +214,6 @@ export default function Home() {
           <div className="gallery-head"><span>PROJECT ARCHIVE</span><span>DRAGGED BY SCROLL</span><span>(07)</span></div>
           <div className="card-space">
             {works.map((work, i) => <article className="project-card" key={work.no} ref={el => { cardRefs.current[i] = el; }}>
-              <img src={work.image} alt="" /><div className="card-shade" />
-              <div className="card-label"><span>{work.no} / {work.year}</span><h2>{work.title}</h2><p>{work.en}</p><small>{work.type}</small></div>
               <a className="project-card-link" href={`/projects/${work.slug}`} aria-label={`查看 ${work.title} 项目详情`} />
             </article>)}
           </div>
