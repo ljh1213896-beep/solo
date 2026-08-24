@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import Lenis from 'lenis';
 import LjhScene from './LjhScene';
 import { projects as works } from './projectData';
+import ProjectCarouselScene from './ProjectCarouselScene';
 
 const chapters = [
   { layout: 'statement', tag: '00 / INTRODUCTION', title: <><span className="manifesto-title">萬千無象</span><small>Plain paper thousand hoodles</small><i /><span className="manifesto-line">当<em>空白</em>开始汲取<strong>空间</strong></span><small>When the blank begins to absorb space</small></>, copy: '' },
@@ -80,14 +81,10 @@ export default function Home() {
       cardRefs.current.forEach((card, i) => {
         if (!card) return;
         const rel = i - gp * (works.length - 1);
-        const x = rel * Math.min(window.innerWidth * .43, 560);
-        const y = Math.abs(rel) * 38 + Math.sin(rel * 1.4) * 22;
-        const z = -Math.abs(rel) * 260;
-        const rotateY = -rel * 17;
-        const rotateZ = rel * 2.2;
-        const scale = Math.max(.56, 1 - Math.abs(rel) * .12);
-        card.style.transform = `translate3d(calc(-50% + ${x}px),calc(-50% + ${y}px),${z}px) rotateY(${rotateY}deg) rotateZ(${rotateZ}deg) scale(${scale})`;
-        card.style.opacity = String(clamp(1.25 - Math.abs(rel) * .36, 0, 1));
+        const active = clamp(1 - Math.abs(rel) * 4.5);
+        card.style.transform = 'translate3d(-50%,-50%,0)';
+        card.style.opacity = String(active);
+        card.style.pointerEvents = active > .55 ? 'auto' : 'none';
         card.style.zIndex = String(20 - Math.round(Math.abs(rel) * 2));
       });
 
@@ -212,7 +209,8 @@ export default function Home() {
 
       <section className="gallery-scroll" id="work" ref={galleryRef}>
         <div className="gallery-stage">
-          <div className="gallery-backdrop">SELECTED WORK<br />SELECTED WORK<br />SELECTED WORK</div>
+          <ProjectCarouselScene projects={works} />
+          <div className="gallery-backdrop">OUR WORK · OUR WORK · OUR WORK<br />OUR WORK · OUR WORK · OUR WORK<br />OUR WORK · OUR WORK · OUR WORK</div>
           <div className="gallery-head"><span>PROJECT ARCHIVE</span><span>DRAGGED BY SCROLL</span><span>(07)</span></div>
           <div className="card-space">
             {works.map((work, i) => <article className="project-card" key={work.no} ref={el => { cardRefs.current[i] = el; }}>
