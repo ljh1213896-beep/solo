@@ -58,55 +58,68 @@ export default function LjhScene() {
     rose.position.set(6, -1, 5);
     scene.add(rose);
 
+    type GridKind = 'floor' | 'ceiling' | 'left' | 'right' | 'back';
+    type WarpedGrid = {
+      kind: GridKind;
+      lines: THREE.LineSegments;
+      geometry: THREE.BufferGeometry;
+      material: THREE.LineBasicMaterial;
+      positions: Float32Array;
+      bases: Float32Array;
+      phase: number;
+      baseOpacity: number;
+    };
     const gridRoom = new THREE.Group();
-    const gridSurfaces: THREE.GridHelper[] = [];
-    const gridMaterials: THREE.LineBasicMaterial[] = [];
-    const makeGrid = (size: number, divisions: number, opacity: number) => {
-      const helper = new THREE.GridHelper(size, divisions, 0x344c66, 0x15202c);
-      const material = helper.material as THREE.LineBasicMaterial;
-      material.transparent = true;
-      material.opacity = opacity;
-      material.depthWrite = false;
-      material.blending = THREE.AdditiveBlending;
-      helper.renderOrder = -5;
-      helper.userData.baseOpacity = opacity;
-      gridSurfaces.push(helper);
-      gridMaterials.push(material);
-      gridRoom.add(helper);
-      return helper;
+    const warpedGrids: WarpedGrid[] = [];
+    const tunnelMinZ = -27;
+    const tunnelMaxZ = 15;
+    const tunnelLeft = -12.2;
+    const tunnelRight = 12.2;
+    const tunnelBottom = -5.35;
+    const tunnelTop = 6.55;
+
+    const makeWarpedGrid = (kind: GridKind, uCount: number, vCount: number, opacity: number, phase: number) => {
+      const points: number[] = [];
+      const pointAt = (u: number, v: number) => {
+        const un = u / uCount;
+        const vn = v / vCount;
+        if (kind === 'floor') return [THREE.MathUtils.lerp(tunnelLeft, tunnelRight, un), tunnelBottom, THREE.MathUtils.lerp(tunnelMaxZ, tunnelMinZ, vn)];
+        if (kind === 'ceiling') return [THREE.MathUtils.lerp(tunnelLeft, tunnelRight, un), tunnelTop, THREE.MathUtils.lerp(tunnelMaxZ, tunnelMinZ, vn)];
+        if (kind === 'left') return [tunnelLeft, THREE.MathUtils.lerp(tunnelBottom, tunnelTop, un), THREE.MathUtils.lerp(tunnelMaxZ, tunnelMinZ, vn)];
+        if (kind === 'right') return [tunnelRight, THREE.MathUtils.lerp(tunnelBottom, tunnelTop, un), THREE.MathUtils.lerp(tunnelMaxZ, tunnelMinZ, vn)];
+        return [THREE.MathUtils.lerp(tunnelLeft, tunnelRight, un), THREE.MathUtils.lerp(tunnelBottom, tunnelTop, vn), tunnelMinZ];
+      };
+      const addSegment = (a: number[], b: number[]) => points.push(...a, ...b);
+      for (let u = 0; u <= uCount; u++) {
+        for (let v = 0; v < vCount; v++) addSegment(pointAt(u, v), pointAt(u, v + 1));
+      }
+      for (let v = 0; v <= vCount; v++) {
+        for (let u = 0; u < uCount; u++) addSegment(pointAt(u, v), pointAt(u + 1, v));
+      }
+      const positions = new Float32Array(points);
+      const bases = new Float32Array(points);
+      const geometry = new THREE.BufferGeometry();
+      const attribute = new THREE.BufferAttribute(positions, 3);
+      attribute.setUsage(THREE.DynamicDrawUsage);
+      geometry.setAttribute('position', attribute);
+      const material = new THREE.LineBasicMaterial({
+        color: 0x354457,
+        transparent: true,
+        opacity,
+        depthWrite: false,
+        blending: THREE.AdditiveBlending,
+      });
+      const lines = new THREE.LineSegments(geometry, material);
+      lines.renderOrder = -5;
+      gridRoom.add(lines);
+      warpedGrids.push({ kind, lines, geometry, material, positions, bases, phase, baseOpacity: opacity });
     };
 
-    const floorGrid = makeGrid(72, 72, .22);
-    floorGrid.position.set(0, -4.8, -9);
-    const ceilingGrid = makeGrid(72, 72, .075);
-    ceilingGrid.position.set(0, 6.4, -9);
-    const leftGrid = makeGrid(72, 72, .13);
-    leftGrid.rotation.z = Math.PI / 2;
-    leftGrid.position.set(-10.8, .8, -9);
-    const rightGrid = makeGrid(72, 72, .13);
-    rightGrid.rotation.z = Math.PI / 2;
-    rightGrid.position.set(10.8, .8, -9);
-    const backGrid = makeGrid(32, 32, .16);
-    backGrid.rotation.x = Math.PI / 2;
-    backGrid.position.set(0, .8, -19.5);
-
-    const frameGeometry = new THREE.EdgesGeometry(new THREE.BoxGeometry(21.6, 11.2, .01));
-    const frameMaterial = new THREE.LineBasicMaterial({
-      color: 0x27384d,
-      transparent: true,
-      opacity: .1,
-      depthWrite: false,
-      blending: THREE.AdditiveBlending,
-    });
-    const tunnelFrames: THREE.LineSegments[] = [];
-    for (let i = 0; i < 7; i++) {
-      const frameLine = new THREE.LineSegments(frameGeometry, frameMaterial);
-      frameLine.position.set(0, .8, 8 - i * 4.6);
-      frameLine.renderOrder = -4;
-      gridRoom.add(frameLine);
-      tunnelFrames.push(frameLine);
-    }
-    gridRoom.rotation.x = -.012;
+    makeWarpedGrid('floor', 24, 42, .21, .2);
+    makeWarpedGrid('ceiling', 24, 42, .085, 1.4);
+    makeWarpedGrid('left', 13, 42, .145, 2.2);
+    makeWarpedGrid('right', 13, 42, .145, 3.1);
+    makeWarpedGrid('back', 24, 13, .115, 4.2);
     scene.add(gridRoom);
 
     type LetterGroup = {
@@ -209,26 +222,45 @@ export default function LjhScene() {
       const seconds = time * .001;
       const scatter = 1 - clamp((progress - .08) / .16);
       const gridMotion = reduce ? 0 : seconds;
-      const gridPhase = (gridMotion * .32) % 4.6;
-      const gridBreath = 1 + Math.sin(gridMotion * .22) * .007 + progress * .018;
+      const gridSpacing = (tunnelMaxZ - tunnelMinZ) / 42;
+      const gridPhase = (gridMotion * .34) % gridSpacing;
+      const gridBreath = 1 + Math.sin(gridMotion * .22) * .008 + progress * .018;
       gridRoom.position.set(
-        smoothX * -.55 - progress * .18,
-        smoothY * .34,
-        gridPhase - 2.3 - progress * 1.35,
+        smoothX * -.5 - progress * .18,
+        smoothY * .3,
+        gridPhase - gridSpacing - progress * 1.2,
       );
       gridRoom.rotation.x = -.012 - smoothY * .018;
       gridRoom.rotation.y = smoothX * .025 + Math.sin(gridMotion * .12) * .004;
       gridRoom.scale.setScalar(gridBreath);
-      gridSurfaces.forEach((surface, i) => {
-        const material = surface.material as THREE.LineBasicMaterial;
-        const baseOpacity = surface.userData.baseOpacity as number;
-        material.opacity = baseOpacity + Math.sin(gridMotion * .42 + i * .9) * .016 + (1 - scatter) * .025;
+      warpedGrids.forEach((surface, surfaceIndex) => {
+        const { positions, bases, kind, phase } = surface;
+        for (let i = 0; i < positions.length; i += 3) {
+          const bx = bases[i];
+          const by = bases[i + 1];
+          const bz = bases[i + 2];
+          const coarse = Math.sin(bz * .34 + bx * .17 + by * .23 + phase + gridMotion * .38) * .115;
+          const fine = Math.sin(bz * .91 - bx * .31 + by * .46 + phase * 1.7 - gridMotion * .21) * .045;
+          const drift = coarse + fine;
+          if (kind === 'floor' || kind === 'ceiling') {
+            const direction = kind === 'floor' ? 1 : -1;
+            positions[i] = bx + Math.sin(bz * .28 + phase + gridMotion * .16) * .045;
+            positions[i + 1] = by + drift * direction;
+            positions[i + 2] = bz;
+          } else if (kind === 'left' || kind === 'right') {
+            const direction = kind === 'left' ? 1 : -1;
+            positions[i] = bx + drift * direction;
+            positions[i + 1] = by + Math.sin(bz * .31 + by * .58 + phase - gridMotion * .17) * .05;
+            positions[i + 2] = bz;
+          } else {
+            positions[i] = bx + Math.sin(by * .55 + phase + gridMotion * .14) * .045;
+            positions[i + 1] = by + Math.sin(bx * .42 - phase - gridMotion * .12) * .045;
+            positions[i + 2] = bz + drift * .7;
+          }
+        }
+        (surface.geometry.getAttribute('position') as THREE.BufferAttribute).needsUpdate = true;
+        surface.material.opacity = surface.baseOpacity + Math.sin(gridMotion * .42 + surfaceIndex * .9) * .014 + (1 - scatter) * .022;
       });
-      tunnelFrames.forEach((frameLine, i) => {
-        frameLine.position.z = 8 - i * 4.6;
-        frameLine.scale.setScalar(1 + Math.sin(gridMotion * .18 + i * .55) * .006);
-      });
-      frameMaterial.opacity = .075 + Math.sin(gridMotion * .35) * .014 + progress * .025;
       const focusCenters = [1 / 3, 2 / 3, 1];
       const targetPositions = [
         new THREE.Vector3(3.15, .55, 3.15),
@@ -292,10 +324,10 @@ export default function LjhScene() {
       geometries.forEach(geometry => geometry.dispose());
       materials.forEach(material => material.dispose());
       scene.remove(gridRoom);
-      gridSurfaces.forEach(surface => surface.geometry.dispose());
-      gridMaterials.forEach(material => material.dispose());
-      frameGeometry.dispose();
-      frameMaterial.dispose();
+      warpedGrids.forEach(surface => {
+        surface.geometry.dispose();
+        surface.material.dispose();
+      });
       environment.dispose();
       room.dispose();
       pmrem.dispose();
