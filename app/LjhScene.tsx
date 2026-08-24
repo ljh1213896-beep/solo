@@ -161,7 +161,7 @@ export default function LjhScene() {
       const targetPositions = [
         new THREE.Vector3(3.15, .55, 3.15),
         new THREE.Vector3(-2.7, .3, 3.45),
-        new THREE.Vector3(2.65, .35, 3.3),
+        new THREE.Vector3(0, 2.05, 3.2),
       ];
       const targetRotations = [
         new THREE.Euler(-.12, -.62, -.08),
