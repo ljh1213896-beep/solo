@@ -64,22 +64,22 @@ export default function LjhScene() {
     grid.material.opacity = .24;
     scene.add(grid);
 
-    const groups: THREE.Group[] = [];
+    type LetterGroup = { root: THREE.Group; meshes: THREE.Mesh<TextGeometry, THREE.MeshPhysicalMaterial>[] };
+    const groups: LetterGroup[] = [];
     const geometries: TextGeometry[] = [];
     const materials: THREE.MeshPhysicalMaterial[] = [];
     const flightPath = new THREE.CatmullRomCurve3([
-      new THREE.Vector3(-10.5, 5.2, -10),
-      new THREE.Vector3(-6.8, 3.1, -4.5),
-      new THREE.Vector3(-3.4, 1.7, .4),
-      new THREE.Vector3(0, .55, 4.8),
-      new THREE.Vector3(3.9, -.25, 1.6),
-      new THREE.Vector3(7.2, -1.8, -4.2),
-      new THREE.Vector3(10.8, -4.2, -11),
+      new THREE.Vector3(-10.8, 5.3, -5.5),
+      new THREE.Vector3(-6.2, 3.2, -.8),
+      new THREE.Vector3(-1.5, 1.05, 3.8),
+      new THREE.Vector3(3.4, -1.15, 2.4),
+      new THREE.Vector3(7.2, -3.1, -1.6),
+      new THREE.Vector3(11.2, -5.2, -6.2),
     ], false, 'catmullrom', .42);
     let disposed = false;
 
     const makeMaterial = (index: number) => {
-      const cool = index % 3 !== 0;
+      const cool = index % 4 !== 0;
       const material = new THREE.MeshPhysicalMaterial({
         color: cool ? 0x202a36 : 0x2c2029,
         metalness: .96,
@@ -111,23 +111,25 @@ export default function LjhScene() {
         if (box) geometry.translate(-(box.max.x - box.min.x) / 2, -(box.max.y - box.min.y) / 2, -(box.max.z - box.min.z) / 2);
         geometries.push(geometry);
       });
-      const count = window.innerWidth < 720 ? 8 : 11;
+      const count = 3;
       for (let i = 0; i < count; i++) {
         const group = new THREE.Group();
-        const material = makeMaterial(i);
+        const meshes: THREE.Mesh<TextGeometry, THREE.MeshPhysicalMaterial>[] = [];
         geometries.forEach((geometry, letterIndex) => {
+          const material = makeMaterial(i * 3 + letterIndex);
           const mesh = new THREE.Mesh(geometry, material);
           mesh.position.x = (letterIndex - 1) * 2.72;
           mesh.castShadow = true;
           group.add(mesh);
+          meshes.push(mesh);
         });
-        const initialT = .08 + i / Math.max(1, count - 1) * .92;
+        const initialT = .08 + i / count;
         group.position.copy(flightPath.getPoint(initialT));
         group.rotation.set(-.45 + initialT * 2.4, (initialT - .5) * 2.8, (initialT - .5) * .72);
-        group.scale.setScalar(.65 + (i % 4) * .09);
+        group.scale.setScalar(.72);
         group.userData.index = i;
         scene.add(group);
-        groups.push(group);
+        groups.push({ root: group, meshes });
       }
     });
 
@@ -153,34 +155,56 @@ export default function LjhScene() {
       const progress = hero ? clamp(window.scrollY / Math.max(1, hero.offsetHeight - window.innerHeight)) : 0;
       smoothX += (mouseX - smoothX) * .045;
       smoothY += (mouseY - smoothY) * .045;
-      const tunnel = clamp((progress - .74) / .26);
-      groups.forEach((group, i) => {
-        const baseT = .07 + i / Math.max(1, groups.length - 1) * 1.08;
-        const rawT = baseT - progress * .78;
-        const pathT = clamp(rawT);
-        const point = flightPath.getPoint(pathT);
-        const centerLift = Math.sin(pathT * Math.PI);
-        group.position.x = point.x + smoothX * (1.05 + centerLift * .65);
-        group.position.y = point.y - smoothY * (1 + centerLift * .5);
-        group.position.z = point.z + tunnel * (i - 4) * 1.2;
-        group.rotation.x = -.48 + pathT * 2.55 + progress * 2.1 + i * .035 + smoothY * .3;
-        group.rotation.y = (pathT - .5) * 3.15 + progress * 1.7 + smoothX * .48;
-        group.rotation.z = (pathT - .5) * .82 - progress * .72 + i * .025;
-        const scale = .42 + centerLift * .92 + (i % 3) * .045 + tunnel * .16;
-        group.scale.setScalar(scale);
-        group.visible = rawT > -.06 && rawT < 1.06;
+      const seconds = time * .001;
+      const scatter = 1 - clamp((progress - .08) / .16);
+      const focusCenters = [1 / 3, 2 / 3, 1];
+      const targetPositions = [
+        new THREE.Vector3(3.15, .55, 3.15),
+        new THREE.Vector3(-2.7, .3, 3.45),
+        new THREE.Vector3(2.65, .35, 3.3),
+      ];
+      const targetRotations = [
+        new THREE.Euler(-.12, -.62, -.08),
+        new THREE.Euler(.12, .54, .1),
+        new THREE.Euler(-.08, -.42, .08),
+      ];
+      groups.forEach(({ root, meshes }, i) => {
+        const autoT = (seconds * (reduce ? 0 : .027) + i / groups.length + .04) % 1;
+        const point = flightPath.getPoint(autoT);
+        const focus = clamp(1 - Math.abs(progress - focusCenters[i]) / .205);
+        const easedFocus = focus * focus * (3 - 2 * focus);
+        const depthScale = .48 + Math.sin(autoT * Math.PI) * .82;
+        const driftX = Math.sin(seconds * .42 + i * 1.8) * .16;
+        const driftY = Math.cos(seconds * .36 + i * 2.1) * .14;
+
+        root.position.copy(point).lerp(targetPositions[i], easedFocus);
+        root.position.x += driftX + smoothX * (1.1 - easedFocus * .45);
+        root.position.y += driftY - smoothY * (1.05 - easedFocus * .4);
+        root.rotation.x = THREE.MathUtils.lerp(-.52 + autoT * 2.5 + seconds * .1, targetRotations[i].x + Math.sin(seconds * .34 + i) * .08, easedFocus);
+        root.rotation.y = THREE.MathUtils.lerp((autoT - .5) * 3.4 + seconds * .16, targetRotations[i].y + Math.cos(seconds * .28 + i) * .12, easedFocus);
+        root.rotation.z = THREE.MathUtils.lerp((autoT - .5) * .9 + seconds * .055, targetRotations[i].z + Math.sin(seconds * .25 + i) * .045, easedFocus);
+        root.scale.setScalar(THREE.MathUtils.lerp(depthScale, 1.52, easedFocus));
+
+        meshes.forEach((mesh, letterIndex) => {
+          const isFocusedLetter = letterIndex === i;
+          const opacity = Math.max(scatter * .97, isFocusedLetter ? easedFocus : 0);
+          mesh.material.opacity = opacity;
+          mesh.visible = opacity > .015;
+          mesh.position.x = THREE.MathUtils.lerp((letterIndex - 1) * 2.72, isFocusedLetter ? 0 : (letterIndex - 1) * 4.2, easedFocus);
+        });
+        root.visible = scatter > .015 || focus > .015;
       });
       camera.position.x = smoothX * 1.2;
       camera.position.y = .35 - smoothY * .8;
-      camera.position.z = 18 - progress * 1.35;
-      camera.rotation.z = Math.sin(progress * Math.PI * 2) * .018;
-      camera.lookAt(-progress * 1.15, -.1 + progress * .22, 0);
+      camera.position.z = 18 - progress * .75;
+      camera.rotation.z = Math.sin(progress * Math.PI * 3) * .014;
+      camera.lookAt(0, -.05, 0);
       blue.position.x = -5.8 + smoothX * 4;
       blue.position.y = 1.2 - smoothY * 3;
       rose.position.x = 5.6 + smoothX * 4;
       rose.position.y = -1 + smoothY * 3;
-      bloom.strength = .5 + Math.sin(time * .0007) * .06 + tunnel * .12;
-      rgb.uniforms.amount.value = .0009 + Math.abs(smoothX) * .004 + tunnel * .0012;
+      bloom.strength = .48 + Math.sin(time * .0007) * .055 + (1 - scatter) * .06;
+      rgb.uniforms.amount.value = .0009 + Math.abs(smoothX) * .004 + (1 - scatter) * .0007;
       composer.render();
       frame = requestAnimationFrame(animate);
     };
@@ -194,7 +218,7 @@ export default function LjhScene() {
       cancelAnimationFrame(frame);
       window.removeEventListener('resize', resize);
       window.removeEventListener('pointermove', onPointer);
-      groups.forEach(group => scene.remove(group));
+      groups.forEach(({ root }) => scene.remove(root));
       geometries.forEach(geometry => geometry.dispose());
       materials.forEach(material => material.dispose());
       grid.geometry.dispose();
