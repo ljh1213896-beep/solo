@@ -67,6 +67,15 @@ export default function LjhScene() {
     const groups: THREE.Group[] = [];
     const geometries: TextGeometry[] = [];
     const materials: THREE.MeshPhysicalMaterial[] = [];
+    const flightPath = new THREE.CatmullRomCurve3([
+      new THREE.Vector3(-10.5, 5.2, -10),
+      new THREE.Vector3(-6.8, 3.1, -4.5),
+      new THREE.Vector3(-3.4, 1.7, .4),
+      new THREE.Vector3(0, .55, 4.8),
+      new THREE.Vector3(3.9, -.25, 1.6),
+      new THREE.Vector3(7.2, -1.8, -4.2),
+      new THREE.Vector3(10.8, -4.2, -11),
+    ], false, 'catmullrom', .42);
     let disposed = false;
 
     const makeMaterial = (index: number) => {
@@ -112,9 +121,9 @@ export default function LjhScene() {
           mesh.castShadow = true;
           group.add(mesh);
         });
-        const ring = i * .67;
-        group.position.set(Math.cos(ring) * 5, Math.sin(ring * 1.2) * 2.7, Math.sin(ring) * 2);
-        group.rotation.set(i * .17, i * .31, i * .09);
+        const initialT = .08 + i / Math.max(1, count - 1) * .92;
+        group.position.copy(flightPath.getPoint(initialT));
+        group.rotation.set(-.45 + initialT * 2.4, (initialT - .5) * 2.8, (initialT - .5) * .72);
         group.scale.setScalar(.65 + (i % 4) * .09);
         group.userData.index = i;
         scene.add(group);
@@ -144,25 +153,28 @@ export default function LjhScene() {
       const progress = hero ? clamp(window.scrollY / Math.max(1, hero.offsetHeight - window.innerHeight)) : 0;
       smoothX += (mouseX - smoothX) * .045;
       smoothY += (mouseY - smoothY) * .045;
-      const tunnel = clamp((progress - .7) / .3);
+      const tunnel = clamp((progress - .74) / .26);
       groups.forEach((group, i) => {
-        const angle = i * .67 + progress * 5.25;
-        let radius = progress < .28 ? 7.4 - progress * 15.5 : progress < .68 ? 3.1 + (progress - .28) * 18 : 10.3 - (progress - .68) * 21.5;
-        if (reduce) radius = 5;
-        group.position.x = Math.cos(angle) * radius + (i - (groups.length - 1) / 2) * 1.05 * tunnel + smoothX * (1.1 + i * .04);
-        group.position.y = Math.sin(angle * 1.17) * radius * .46 + (i % 2 ? -.8 : .8) * tunnel - smoothY * (1 + i * .035);
-        group.position.z = Math.sin(angle + progress * 2) * 4.8 + tunnel * (i - 5) * 1.55;
-        group.rotation.x = progress * 6.8 + i * .34 + smoothY * .35;
-        group.rotation.y = progress * 10.4 + i * .47 + smoothX * .55;
-        group.rotation.z = angle * .28;
-        const scale = .62 + (i % 4) * .09 + Math.sin(progress * Math.PI + i) * .08 + tunnel * .18;
+        const baseT = .07 + i / Math.max(1, groups.length - 1) * 1.08;
+        const rawT = baseT - progress * .78;
+        const pathT = clamp(rawT);
+        const point = flightPath.getPoint(pathT);
+        const centerLift = Math.sin(pathT * Math.PI);
+        group.position.x = point.x + smoothX * (1.05 + centerLift * .65);
+        group.position.y = point.y - smoothY * (1 + centerLift * .5);
+        group.position.z = point.z + tunnel * (i - 4) * 1.2;
+        group.rotation.x = -.48 + pathT * 2.55 + progress * 2.1 + i * .035 + smoothY * .3;
+        group.rotation.y = (pathT - .5) * 3.15 + progress * 1.7 + smoothX * .48;
+        group.rotation.z = (pathT - .5) * .82 - progress * .72 + i * .025;
+        const scale = .42 + centerLift * .92 + (i % 3) * .045 + tunnel * .16;
         group.scale.setScalar(scale);
-        group.visible = Math.abs(group.position.z) < 28;
+        group.visible = rawT > -.06 && rawT < 1.06;
       });
       camera.position.x = smoothX * 1.2;
       camera.position.y = .35 - smoothY * .8;
-      camera.position.z = 18 - progress * 1.8;
-      camera.lookAt(0, -.1, 0);
+      camera.position.z = 18 - progress * 1.35;
+      camera.rotation.z = Math.sin(progress * Math.PI * 2) * .018;
+      camera.lookAt(-progress * 1.15, -.1 + progress * .22, 0);
       blue.position.x = -5.8 + smoothX * 4;
       blue.position.y = 1.2 - smoothY * 3;
       rose.position.x = 5.6 + smoothX * 4;
