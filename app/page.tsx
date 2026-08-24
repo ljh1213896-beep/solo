@@ -26,6 +26,7 @@ function clamp(value: number, min = 0, max = 1) { return Math.min(max, Math.max(
 export default function Home() {
   const heroRef = useRef<HTMLElement>(null);
   const galleryRef = useRef<HTMLElement>(null);
+  const profileRef = useRef<HTMLElement>(null);
   const chapterRefs = useRef<(HTMLDivElement | null)[]>([]);
   const cardRefs = useRef<(HTMLElement | null)[]>([]);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -69,7 +70,16 @@ export default function Home() {
 
       frame = requestAnimationFrame(render);
     };
-    const onPointer = (event: PointerEvent) => { document.documentElement.style.setProperty('--mx', `${event.clientX}px`); document.documentElement.style.setProperty('--my', `${event.clientY}px`); };
+    const onPointer = (event: PointerEvent) => {
+      document.documentElement.style.setProperty('--mx', `${event.clientX}px`);
+      document.documentElement.style.setProperty('--my', `${event.clientY}px`);
+      const profile = profileRef.current;
+      if (profile) {
+        const rect = profile.getBoundingClientRect();
+        profile.style.setProperty('--profile-x', `${event.clientX - rect.left}px`);
+        profile.style.setProperty('--profile-y', `${event.clientY - rect.top}px`);
+      }
+    };
     const onWheel = (event: WheelEvent) => {
       const hero = heroRef.current;
       if (!hero || Math.abs(event.deltaY) < 4) return;
@@ -137,7 +147,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="profile-section" id="profile">
+      <section className="profile-section" id="profile" ref={profileRef}>
         <div className="profile-grid" aria-hidden="true" />
         <div className="profile-head"><span>ABOUT / 个人介绍</span><span>PROFILE 01</span><span>CHENGDU · CHINA</span></div>
         <div className="profile-hero">
