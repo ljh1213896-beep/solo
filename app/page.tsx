@@ -15,10 +15,10 @@ const works = [
 ];
 
 const chapters = [
-  { tag: '00 / INTRODUCTION', title: <>ENGINEERED<br />SPATIAL<br />NARRATIVES.</>, copy: '以空间为媒介，在场地、行为与感知之间建立可被体验的叙事。' },
-  { tag: '01 / POSITION', title: <>SPACE IS<br />A MEDIUM<br />OF RELATIONS.</>, copy: 'Spatial systems shaped through analysis, atmosphere, and human experience.' },
-  { tag: '02 / METHOD', title: <>FROM<br />LANDSCAPE<br />TO DETAIL.</>, copy: '从宏观环境到室内尺度，让每一个层级共同构成完整的场所体验。' },
-  { tag: '03 / WORK', title: <>SEVEN WORKS.<br />ONE EVOLVING<br />PRACTICE.</>, copy: 'Landscape · Interior · Spatial · Visual' },
+  { layout: 'statement', tag: '00 / INTRODUCTION', title: <>ENGINEERED<br />SPATIAL<br />NARRATIVES.</>, copy: '以空间为媒介，在场地、行为与感知之间建立可被体验的叙事。' },
+  { layout: 'glyph', tag: '[ L / LIGHT ]', title: <>L — Light <span>(光)</span></>, copy: '不仅是照明，更是空间的灵魂笔触' },
+  { layout: 'statement', tag: '02 / METHOD', title: <>FROM<br />LANDSCAPE<br />TO DETAIL.</>, copy: '从宏观环境到室内尺度，让每一个层级共同构成完整的场所体验。' },
+  { layout: 'statement', tag: '03 / WORK', title: <>SEVEN WORKS.<br />ONE EVOLVING<br />PRACTICE.</>, copy: 'Landscape · Interior · Spatial · Visual' },
 ];
 
 function clamp(value: number, min = 0, max = 1) { return Math.min(max, Math.max(min, value)); }
@@ -95,7 +95,7 @@ export default function Home() {
           <div className="scanlines" />
           <div className="target target-a">[</div><div className="target target-b">]</div>
           <div className="hero-chapters">
-            {chapters.map((chapter, i) => <div className="hero-chapter" key={chapter.tag} ref={el => { chapterRefs.current[i] = el; }}>
+            {chapters.map((chapter, i) => <div className={`hero-chapter ${chapter.layout === 'glyph' ? 'glyph-copy-chapter' : ''}`} key={chapter.tag} ref={el => { chapterRefs.current[i] = el; }}>
               <p className="chapter-tag">{chapter.tag}</p><h1>{chapter.title}</h1><p className="chapter-copy">{chapter.copy}</p>
             </div>)}
           </div>
