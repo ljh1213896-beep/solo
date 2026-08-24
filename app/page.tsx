@@ -3,16 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import Lenis from 'lenis';
 import LjhScene from './LjhScene';
-
-const works = [
-  { no: '01', year: '2025', title: '循“析”而栖', en: 'Dwelling Through Analysis', type: 'LANDSCAPE / ECOLOGY', image: '/projects/salt-lake.jpg' },
-  { no: '02', year: '2024', title: 'Medieval Pirate', en: 'A Medieval Narrative Store', type: 'INTERIOR / RETAIL', image: '/projects/medieval-pirate.jpg' },
-  { no: '03', year: '2024', title: '从“游走”到“扎根”', en: 'From Roaming to Rooting', type: 'WORKPLACE / COMMUNITY', image: '/projects/digital-nomad.jpg' },
-  { no: '04', year: '2024', title: '秋风市集', en: 'Autumn Breeze Market', type: 'URBAN RENEWAL / MARKET', image: '/projects/autumn-market.jpg' },
-  { no: '05', year: '2023', title: '汐月书庭', en: 'Tidal Moon Reading Court', type: 'INTERIOR / RENOVATION', image: '/projects/library.jpg' },
-  { no: '06', year: '2023', title: '万千无象', en: 'Myriad Formless', type: 'VISUAL IDENTITY / SYSTEM', image: '/projects/identity.jpg' },
-  { no: '07', year: '2022—25', title: '其他作品', en: 'Experiments & Studies', type: 'RENDER / PHOTO / STUDY', image: '/projects/other-works.jpg' },
-];
+import { projects as works } from './projectData';
 
 const chapters = [
   { layout: 'statement', tag: '00 / INTRODUCTION', title: <><span className="manifesto-title">萬千無象</span><small>Plain paper thousand hoodles</small><i /><span className="manifesto-line">当<em>空白</em>开始汲取<strong>空间</strong></span><small>When the blank begins to absorb space</small></>, copy: '' },
@@ -227,6 +218,7 @@ export default function Home() {
             {works.map((work, i) => <article className="project-card" key={work.no} ref={el => { cardRefs.current[i] = el; }}>
               <img src={work.image} alt="" /><div className="card-shade" />
               <div className="card-label"><span>{work.no} / {work.year}</span><h2>{work.title}</h2><p>{work.en}</p><small>{work.type}</small></div>
+              <a className="project-card-link" href={`/projects/${work.slug}`} aria-label={`查看 ${work.title} 项目详情`} />
             </article>)}
           </div>
           <div className="gallery-progress"><i /><span>SCROLL THROUGH PROJECTS</span></div>
@@ -244,7 +236,7 @@ export default function Home() {
 
       <section className="work-index">
         <div className="index-head"><span>ALL PROJECTS</span><span>项目索引 / 2022—2025</span><span>(07)</span></div>
-        {works.map(work => <a className="index-row" href="#contact" key={work.no}>
+        {works.map(work => <a className="index-row" href={`/projects/${work.slug}`} key={work.no}>
           <span>{work.no}</span><div><h3>{work.title}</h3><p>{work.en}</p></div><small>{work.type}</small><time>{work.year}</time><b>↗</b><img src={work.image} alt="" />
         </a>)}
       </section>
