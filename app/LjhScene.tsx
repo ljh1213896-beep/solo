@@ -64,7 +64,11 @@ export default function LjhScene() {
     grid.material.opacity = .24;
     scene.add(grid);
 
-    type LetterGroup = { root: THREE.Group; meshes: THREE.Mesh<TextGeometry, THREE.MeshPhysicalMaterial>[] };
+    type LetterGroup = {
+      root: THREE.Group;
+      wordMesh: THREE.Mesh<TextGeometry, THREE.MeshPhysicalMaterial>;
+      focusMesh: THREE.Mesh<TextGeometry, THREE.MeshPhysicalMaterial>;
+    };
     const groups: LetterGroup[] = [];
     const geometries: TextGeometry[] = [];
     const materials: THREE.MeshPhysicalMaterial[] = [];
@@ -104,32 +108,34 @@ export default function LjhScene() {
     new FontLoader().load('/fonts/helvetiker_bold.typeface.json', font => {
       if (disposed) return;
       const chars = ['L', 'J', 'H'];
-      chars.forEach(char => {
-        const geometry = new TextGeometry(char, { font, size: 2.45, depth: .72, curveSegments: 9, bevelEnabled: true, bevelThickness: .12, bevelSize: .075, bevelOffset: 0, bevelSegments: 5 });
+      const words = ['Design', 'ljh', 'space'];
+      const wordSizes = [1.42, 2.05, 1.58];
+      const makeGeometry = (text: string, size: number, depth: number) => {
+        const geometry = new TextGeometry(text, { font, size, depth, curveSegments: 9, bevelEnabled: true, bevelThickness: .12, bevelSize: .075, bevelOffset: 0, bevelSegments: 5 });
         geometry.computeBoundingBox();
         const box = geometry.boundingBox;
         if (box) geometry.translate(-(box.max.x - box.min.x) / 2, -(box.max.y - box.min.y) / 2, -(box.max.z - box.min.z) / 2);
         geometries.push(geometry);
-      });
+        return geometry;
+      };
+      const focusGeometries = chars.map(char => makeGeometry(char, 2.45, .72));
+      const wordGeometries = words.map((word, i) => makeGeometry(word, wordSizes[i], .58));
       const count = 3;
       for (let i = 0; i < count; i++) {
         const group = new THREE.Group();
-        const meshes: THREE.Mesh<TextGeometry, THREE.MeshPhysicalMaterial>[] = [];
-        geometries.forEach((geometry, letterIndex) => {
-          const material = makeMaterial(i * 3 + letterIndex);
-          const mesh = new THREE.Mesh(geometry, material);
-          mesh.position.x = (letterIndex - 1) * 2.72;
-          mesh.castShadow = true;
-          group.add(mesh);
-          meshes.push(mesh);
-        });
+        const wordMesh = new THREE.Mesh(wordGeometries[i], makeMaterial(i * 2));
+        const focusMesh = new THREE.Mesh(focusGeometries[i], makeMaterial(i * 2 + 1));
+        wordMesh.castShadow = true;
+        focusMesh.castShadow = true;
+        focusMesh.visible = false;
+        group.add(wordMesh, focusMesh);
         const initialT = .08 + i / count;
         group.position.copy(flightPath.getPoint(initialT));
         group.rotation.set(-.45 + initialT * 2.4, (initialT - .5) * 2.8, (initialT - .5) * .72);
         group.scale.setScalar(.72);
         group.userData.index = i;
         scene.add(group);
-        groups.push({ root: group, meshes });
+        groups.push({ root: group, wordMesh, focusMesh });
       }
     });
 
@@ -168,7 +174,7 @@ export default function LjhScene() {
         new THREE.Euler(.12, .54, .1),
         new THREE.Euler(-.08, -.42, .08),
       ];
-      groups.forEach(({ root, meshes }, i) => {
+      groups.forEach(({ root, wordMesh, focusMesh }, i) => {
         const autoT = (seconds * (reduce ? 0 : .027) + i / groups.length + .04) % 1;
         const point = flightPath.getPoint(autoT);
         const focus = clamp(1 - Math.abs(progress - focusCenters[i]) / .205);
@@ -185,13 +191,11 @@ export default function LjhScene() {
         root.rotation.z = THREE.MathUtils.lerp((autoT - .5) * .9 + seconds * .055, targetRotations[i].z + Math.sin(seconds * .25 + i) * .045, easedFocus);
         root.scale.setScalar(THREE.MathUtils.lerp(depthScale, 1.52, easedFocus));
 
-        meshes.forEach((mesh, letterIndex) => {
-          const isFocusedLetter = letterIndex === i;
-          const opacity = Math.max(scatter * .97, isFocusedLetter ? easedFocus : 0);
-          mesh.material.opacity = opacity;
-          mesh.visible = opacity > .015;
-          mesh.position.x = THREE.MathUtils.lerp((letterIndex - 1) * 2.72, isFocusedLetter ? 0 : (letterIndex - 1) * 4.2, easedFocus);
-        });
+        const wordOpacity = scatter * .97;
+        wordMesh.material.opacity = wordOpacity;
+        wordMesh.visible = wordOpacity > .015;
+        focusMesh.material.opacity = easedFocus;
+        focusMesh.visible = easedFocus > .015;
         root.visible = scatter > .015 || focus > .015;
       });
       camera.position.x = smoothX * 1.2;
