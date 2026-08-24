@@ -137,6 +137,25 @@ export default function Home() {
         </div>
       </section>
 
+      <section className="profile-section" id="profile">
+        <div className="profile-grid" aria-hidden="true" />
+        <div className="profile-head"><span>ABOUT / 个人介绍</span><span>PROFILE 01</span><span>CHENGDU · CHINA</span></div>
+        <div className="profile-hero">
+          <div className="profile-name"><p>李建华</p><h2>LI<br />JIANHUA</h2><small>ENVIRONMENTAL · INTERIOR<br />SPATIAL · LANDSCAPE DESIGN</small></div>
+          <figure className="profile-portrait"><img src="/profile/li-jianhua.png" alt="李建华个人肖像" /><figcaption>PORTRAIT / 2025</figcaption></figure>
+          <div className="profile-intro">
+            <p className="profile-role">环境设计师 / 空间实践者</p>
+            <p>以环境、室内、空间与景观为实践边界，关注场地语境、人的行为以及自然关系。擅长从调研、概念构建到视觉表达与落地协同，在设计实践与科研探索之间建立持续连接。</p>
+            <p className="profile-intro-en">An environmental design practitioner working across interior, spatial and landscape design, translating research, context and human experience into tangible places.</p>
+          </div>
+        </div>
+        <div className="profile-details">
+          <article><span>01 / EDUCATION</span><h3>西南民族大学<br /><i>环境设计</i></h3><p>2022.09 — 至今</p><dl><div><dt>GPA</dt><dd>3.77 / 4</dd></div><div><dt>专业课排名</dt><dd>1 / 97</dd></div><div><dt>综合测评</dt><dd>1 / 97</dd></div></dl></article>
+          <article><span>02 / SELECTED PRACTICE</span><ul className="profile-timeline"><li><time>2025.04—NOW</time><div><b>FOCUS DESIGN 设计平台</b><small>炁象设计访谈 · 执行策划</small></div></li><li><time>2024.09—NOW</time><div><b>西南民族大学校图书馆 2—4 楼改造</b><small>设计总负责 · 约 5350㎡</small></div></li><li><time>2024.07—2025.06</time><div><b>成都红牌里两新艺术中心</b><small>设计主创 · 文化空间改造</small></div></li><li><time>2024.03—2024.07</time><div><b>江西义源村旅游规划</b><small>设计主创 · 约 650 亩</small></div></li></ul></article>
+          <article><span>03 / RESEARCH & HONORS</span><h3>乡村文化场景营造<br /><i>公共艺术与聚落研究</i></h3><p>围绕乡村聚落、农业景观与地域文化转译展开实践；参与校园文创研究论文与水下仿生蛇推进机器人实用新型专利。</p><div className="profile-awards"><b>国家奖学金</b><b>四川省综合素质 A 级证书</b><b>多项设计竞赛一等奖</b></div></article>
+        </div>
+      </section>
+
       <section className="gallery-scroll" id="work" ref={galleryRef}>
         <div className="gallery-stage">
           <div className="gallery-backdrop">SELECTED WORK<br />SELECTED WORK<br />SELECTED WORK</div>
@@ -151,7 +170,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="paper-section" id="profile">
+      <section className="paper-section" id="position">
         <div className="paper-kicker"><span>DESIGN POSITION / 设计立场</span><span>APPROACH 01—04</span></div>
         <h2 className="paper-title">NOT OBJECTS<br />IN SPACE.<br /><em>RELATIONS</em><br />MADE VISIBLE.</h2>
         <p className="paper-copy">不止于塑造空间中的物体，<br />更在于让不可见的关系被感知。</p>
