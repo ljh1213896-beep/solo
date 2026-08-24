@@ -103,7 +103,7 @@ export default function LjhScene() {
       attribute.setUsage(THREE.DynamicDrawUsage);
       geometry.setAttribute('position', attribute);
       const material = new THREE.LineBasicMaterial({
-        color: 0x354457,
+        color: 0x55677c,
         transparent: true,
         opacity,
         depthWrite: false,
@@ -115,11 +115,11 @@ export default function LjhScene() {
       warpedGrids.push({ kind, lines, geometry, material, positions, bases, phase, baseOpacity: opacity });
     };
 
-    makeWarpedGrid('floor', 24, 42, .21, .2);
-    makeWarpedGrid('ceiling', 24, 42, .085, 1.4);
-    makeWarpedGrid('left', 13, 42, .145, 2.2);
-    makeWarpedGrid('right', 13, 42, .145, 3.1);
-    makeWarpedGrid('back', 24, 13, .115, 4.2);
+    makeWarpedGrid('floor', 24, 42, .27, .2);
+    makeWarpedGrid('ceiling', 24, 42, .14, 1.4);
+    makeWarpedGrid('left', 13, 42, .205, 2.2);
+    makeWarpedGrid('right', 13, 42, .205, 3.1);
+    makeWarpedGrid('back', 24, 13, .17, 4.2);
     scene.add(gridRoom);
 
     type LetterGroup = {
