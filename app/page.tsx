@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import Lenis from 'lenis';
 import LjhScene from './LjhScene';
+import ProfileRoom from './ProfileRoom';
 
 const works = [
   { no: '01', year: '2025', title: '循“析”而栖', en: 'Dwelling Through Analysis', type: 'LANDSCAPE / ECOLOGY', image: '/projects/salt-lake.jpg' },
@@ -148,21 +149,23 @@ export default function Home() {
       </section>
 
       <section className="profile-section" id="profile" ref={profileRef}>
-        <div className="profile-grid" aria-hidden="true" />
+        <ProfileRoom />
         <div className="profile-head"><span>ABOUT / 个人介绍</span><span>PROFILE 01</span><span>CHENGDU · CHINA</span></div>
-        <div className="profile-perspective">
-          <div className="profile-box-lines" aria-hidden="true"><i className="edge lt" /><i className="edge lc" /><i className="edge rt" /><i className="edge lb" /><i className="edge bc" /><i className="edge rb" /><i className="edge lv" /><i className="edge rv" /></div>
-          <aside className="profile-plane profile-plane-left">
-            <div className="profile-name"><p>李建华</p><h2>LI<br />JIANHUA</h2><small>ENVIRONMENTAL · INTERIOR<br />SPATIAL · LANDSCAPE DESIGN</small></div>
-            <div className="profile-side-education"><span>01 / EDUCATION</span><h3>西南民族大学 · 环境设计</h3><p>2022.09 — 至今</p><div className="profile-admission"><small>RECOMMENDED ADMISSION</small><b>保研至西南交通大学</b></div><dl><div><dt>GPA</dt><dd>3.77 / 4</dd></div><div><dt>专业课排名</dt><dd>1 / 97</dd></div><div><dt>综合测评</dt><dd>1 / 97</dd></div></dl></div>
+        <div className="profile-room-content">
+          <aside className="profile-wall profile-wall-left">
+            <div className="profile-side-education"><span>01 / EDUCATION</span><h3>西南民族大学<br />环境设计</h3><p>2022.09 — 至今</p><div className="profile-admission"><small>RECOMMENDED ADMISSION</small><b>保研至西南交通大学</b></div><dl><div><dt>GPA</dt><dd>3.77 / 4</dd></div><div><dt>专业课排名</dt><dd>1 / 97</dd></div><div><dt>综合测评</dt><dd>1 / 97</dd></div></dl></div>
+            <div className="profile-side-block profile-honors"><span>02 / HONORS</span><h3>荣誉与身份</h3><ul><li>国家奖学金</li><li>四川省大学生综合素质 A 级证书</li><li>中国建筑学会室内设计分会会员</li><li>多项全国及省级设计竞赛一等奖</li></ul></div>
           </aside>
-          <div className="profile-plane profile-plane-center">
-            <figure className="profile-portrait"><img src="/profile/li-jianhua.png" alt="李建华个人肖像" /><figcaption>PORTRAIT / 2025</figcaption></figure>
-            <div className="profile-intro"><p className="profile-role">环境设计师 / 空间实践者</p><p>以环境、室内、空间与景观为实践边界，关注场地语境、人的行为以及自然关系。擅长从调研、概念构建到视觉表达与落地协同，在设计实践与科研探索之间建立持续连接。</p><p className="profile-intro-en">An environmental design practitioner working across interior, spatial and landscape design, translating research, context and human experience into tangible places.</p></div>
+          <div className="profile-wall profile-wall-back">
+            <div className="profile-back-title" aria-hidden="true">萬<br />千<br />無<br />象</div>
+            <div className="profile-back-card">
+              <figure className="profile-portrait"><img src="/profile/li-jianhua.png" alt="李建华个人肖像" /><figcaption>PORTRAIT / 2025</figcaption></figure>
+              <div className="profile-intro"><div className="profile-name"><p>李建华</p><h2>LI JIANHUA</h2></div><p className="profile-role">环境设计师 / 空间实践者</p><p>以环境、室内、空间与景观为实践边界，关注场地语境、人的行为以及自然关系。从调研、概念构建到视觉表达与落地协同，在设计实践与科研探索之间建立持续连接。</p><p className="profile-intro-en">An environmental design practitioner translating research, context and human experience into tangible places.</p></div>
+            </div>
           </div>
-          <aside className="profile-plane profile-plane-right">
-            <div className="profile-side-block"><span>02 / SELECTED PRACTICE</span><ul className="profile-timeline"><li><time>2025.04—NOW</time><div><b>FOCUS DESIGN</b><small>炁象设计访谈 · 执行策划</small></div></li><li><time>2024.09—NOW</time><div><b>校图书馆 2—4 楼改造</b><small>设计总负责 · 约 5350㎡</small></div></li><li><time>2024.07—2025.06</time><div><b>红牌里两新艺术中心</b><small>设计主创 · 文化空间改造</small></div></li><li><time>2024.03—2024.07</time><div><b>江西义源村旅游规划</b><small>设计主创 · 约 650 亩</small></div></li></ul></div>
-            <div className="profile-side-block profile-research"><span>03 / RESEARCH & HONORS</span><h3>乡村文化场景营造<br />公共艺术与聚落研究</h3><p>围绕乡村聚落、农业景观与地域文化转译展开实践。</p><div className="profile-awards"><b>国家奖学金</b><b>四川省综合素质 A 级证书</b></div></div>
+          <aside className="profile-wall profile-wall-right">
+            <div className="profile-side-block"><span>03 / SELECTED PRACTICE</span><ul className="profile-timeline"><li><time>2025.04—NOW</time><div><b>FOCUS DESIGN</b><small>炁象设计访谈 · 执行策划</small></div></li><li><time>2024.09—NOW</time><div><b>校图书馆 2—4 楼改造</b><small>设计总负责 · 约 5350㎡</small></div></li><li><time>2024.07—2025.06</time><div><b>红牌里两新艺术中心</b><small>设计主创 · 文化空间改造</small></div></li><li><time>2024.03—2024.07</time><div><b>江西义源村旅游规划</b><small>设计主创 · 约 650 亩</small></div></li></ul></div>
+            <div className="profile-side-block profile-research"><span>04 / RESEARCH</span><h3>乡村文化场景营造<br />公共艺术与聚落研究</h3><p>围绕乡村聚落、农业景观与地域文化转译展开实践，持续连接科研方法与设计落地。</p></div>
           </aside>
         </div>
       </section>
