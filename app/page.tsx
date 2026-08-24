@@ -204,7 +204,6 @@ export default function Home() {
             </div>
           </aside>
           <div className="profile-wall profile-wall-back">
-            <div className="profile-back-title" aria-hidden="true">萬<br />千<br />無<br />象</div>
             <div className="profile-back-card">
               <figure className="profile-portrait"><img src="/profile/li-jianhua.png" alt="李建华个人肖像" /><figcaption>PORTRAIT / 2025</figcaption></figure>
               <div className="profile-intro"><div className="profile-name"><p>李建华</p><h2>LI JIANHUA</h2></div><p className="profile-role">环境设计师 / 空间实践者</p><p>以环境、室内、空间与景观为实践边界，关注场地语境、人的行为以及自然关系。从调研、概念构建到视觉表达与落地协同，在设计实践与科研探索之间建立持续连接。</p><p className="profile-intro-en">An environmental design practitioner translating research, context and human experience into tangible places.</p></div>
