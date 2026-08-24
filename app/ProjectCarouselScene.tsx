@@ -27,6 +27,8 @@ export default function ProjectCarouselScene({ projects }:{ projects:Project[] }
     const coverGeometry=new THREE.PlaneGeometry(5.92,2.1,70,28);
     const cards:{root:THREE.Group;base:THREE.Mesh<THREE.PlaneGeometry,THREE.ShaderMaterial>;cover:THREE.Mesh<THREE.PlaneGeometry,THREE.ShaderMaterial>}[]=[];
     const textures:THREE.Texture[]=[];
+    const videoTextures:THREE.VideoTexture[]=[];
+    const videos:HTMLVideoElement[]=[];
     const loader=new THREE.TextureLoader();
     let disposed=false;
 
@@ -54,12 +56,18 @@ export default function ProjectCarouselScene({ projects }:{ projects:Project[] }
       const root=new THREE.Group();
       root.userData.index=index;
       stage.add(root);
-      const baseUniforms={uTime:{value:0},uBend:{value:.42},uOpacity:{value:1}};
+      const baseUniforms={
+        uTime:{value:0},uBend:{value:.42},uOpacity:{value:1},
+        uVideo:{value:new THREE.Texture()},uVideoAspect:{value:16/9},uHasVideo:{value:0},
+      };
       const baseMaterial=new THREE.ShaderMaterial({
         uniforms:baseUniforms,transparent:true,side:THREE.DoubleSide,
         vertexShader:vertex('3.275','2.025'),
         fragmentShader:`
           uniform float uOpacity;
+          uniform sampler2D uVideo;
+          uniform float uVideoAspect;
+          uniform float uHasVideo;
           varying vec2 vUv;
           varying float vDome;
           void main(){
@@ -68,6 +76,15 @@ export default function ProjectCarouselScene({ projects }:{ projects:Project[] }
             vec3 warm=vec3(.055,.025,.044);
             vec3 color=mix(cool,warm,vUv.x*.32)+vDome*.018;
             color+=vec3(.055,.09,.13)*(1.0-edge)*.32;
+            if(uHasVideo>.5){
+              vec2 uv=vUv;
+              float planeAspect=1.617;
+              if(uVideoAspect>planeAspect){float s=planeAspect/uVideoAspect;uv.x=(uv.x-.5)*s+.5;}
+              else{float s=uVideoAspect/planeAspect;uv.y=(uv.y-.5)*s+.5;}
+              vec3 movingImage=texture2D(uVideo,uv).rgb;
+              movingImage*=.86+vDome*.1;
+              color=mix(movingImage,color,.08);
+            }
             gl_FragColor=vec4(color,uOpacity);
           }
         `,
@@ -75,6 +92,28 @@ export default function ProjectCarouselScene({ projects }:{ projects:Project[] }
       const base=new THREE.Mesh(baseGeometry,baseMaterial);
       base.renderOrder=index*2;
       root.add(base);
+
+      if(project.video){
+        const video=document.createElement('video');
+        video.src=project.video;
+        video.muted=true;
+        video.loop=true;
+        video.autoplay=true;
+        video.playsInline=true;
+        video.preload='auto';
+        const videoTexture=new THREE.VideoTexture(video);
+        videoTexture.colorSpace=THREE.SRGBColorSpace;
+        videoTexture.minFilter=THREE.LinearFilter;
+        videoTexture.magFilter=THREE.LinearFilter;
+        baseUniforms.uVideo.value=videoTexture;
+        baseUniforms.uHasVideo.value=1;
+        video.addEventListener('loadedmetadata',()=>{
+          baseUniforms.uVideoAspect.value=video.videoWidth/Math.max(1,video.videoHeight);
+        });
+        video.play().catch(()=>undefined);
+        videos.push(video);
+        videoTextures.push(videoTexture);
+      }
 
       const coverUniforms={uTexture:{value:new THREE.Texture()},uTime:{value:0},uBend:{value:.34},uImageAspect:{value:2.82},uOpacity:{value:1}};
       const coverMaterial=new THREE.ShaderMaterial({
@@ -163,6 +202,8 @@ export default function ProjectCarouselScene({ projects }:{ projects:Project[] }
       removeEventListener('resize',resize);
       removeEventListener('pointermove',pointer);
       textures.forEach(texture=>texture.dispose());
+      videoTextures.forEach(texture=>texture.dispose());
+      videos.forEach(video=>{video.pause();video.removeAttribute('src');video.load();});
       cards.forEach(({base,cover})=>{base.material.dispose();cover.material.dispose();});
       baseGeometry.dispose();coverGeometry.dispose();renderer.dispose();renderer.domElement.remove();
     };
