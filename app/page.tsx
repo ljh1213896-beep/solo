@@ -33,6 +33,8 @@ export default function Home() {
   useEffect(() => {
     const lenis = new Lenis({ lerp: .075, smoothWheel: true, wheelMultiplier: .9, touchMultiplier: 1.1 });
     let frame = 0;
+    let heroSnapping = false;
+    let heroSnapTimer = 0;
     const render = (time: number) => {
       lenis.raf(time);
       const hero = heroRef.current;
@@ -68,9 +70,41 @@ export default function Home() {
       frame = requestAnimationFrame(render);
     };
     const onPointer = (event: PointerEvent) => { document.documentElement.style.setProperty('--mx', `${event.clientX}px`); document.documentElement.style.setProperty('--my', `${event.clientY}px`); };
+    const onWheel = (event: WheelEvent) => {
+      const hero = heroRef.current;
+      if (!hero || Math.abs(event.deltaY) < 4) return;
+      const start = hero.offsetTop;
+      const travel = Math.max(1, hero.offsetHeight - window.innerHeight);
+      const currentY = window.scrollY;
+      if (currentY < start - 2 || currentY > start + travel + 2) return;
+
+      const currentStep = Math.round(clamp((currentY - start) / travel) * (chapters.length - 1));
+      const direction = event.deltaY > 0 ? 1 : -1;
+      const nextStep = currentStep + direction;
+      if (nextStep < 0 || nextStep >= chapters.length) return;
+
+      event.preventDefault();
+      if (heroSnapping) return;
+      heroSnapping = true;
+      const targetY = start + travel * (nextStep / (chapters.length - 1));
+      lenis.scrollTo(targetY, {
+        duration: 1.05,
+        easing: value => 1 - Math.pow(1 - value, 4),
+        force: true,
+      });
+      window.clearTimeout(heroSnapTimer);
+      heroSnapTimer = window.setTimeout(() => { heroSnapping = false; }, 920);
+    };
     window.addEventListener('pointermove', onPointer, { passive: true });
+    window.addEventListener('wheel', onWheel, { passive: false, capture: true });
     frame = requestAnimationFrame(render);
-    return () => { cancelAnimationFrame(frame); lenis.destroy(); window.removeEventListener('pointermove', onPointer); };
+    return () => {
+      cancelAnimationFrame(frame);
+      window.clearTimeout(heroSnapTimer);
+      lenis.destroy();
+      window.removeEventListener('pointermove', onPointer);
+      window.removeEventListener('wheel', onWheel, { capture: true });
+    };
   }, []);
 
   return (
