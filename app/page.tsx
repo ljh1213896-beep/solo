@@ -153,10 +153,12 @@ export default function Home() {
         <div className="profile-head"><span>ABOUT / 个人介绍</span><span>PROFILE 01</span><span>CHENGDU · CHINA</span></div>
         <div className="profile-room-content">
           <aside className="profile-wall profile-wall-left">
+            <div className="profile-wall-inner">
             <div className="room-info-section"><span>■ 教育背景&nbsp; Education</span><div className="room-education"><b>西南民族大学</b><b>环境设计</b><small>2022.09 至今</small><p>学业情况：90.41 / 100&nbsp;&nbsp;3.74 / 4</p><p>专业课排名：2 / 98</p></div></div>
             <div className="room-info-section"><span>■ 荣誉奖项&nbsp; Honors</span><ul className="room-simple-list"><li><time>2024</time><b>国家奖学金</b></li><li><time>2025</time><b>四川省大学生综合素质 A 级证书</b></li><li><time>2024</time><b>西南民族大学本科生一等奖学金</b></li><li><time>2024</time><b>西南民族大学校级三好学生</b></li><li><time>2023</time><b>西南民族大学本科生二等奖学金</b></li></ul></div>
             <div className="room-info-section"><span>■ 软件技能&nbsp; Skills</span><div className="room-skills"><b>Photoshop</b><b>Sketch Up</b><b>Illustrator</b><b>Cinema 4D</b><b>Auto CAD</b><b>Midjourney</b><b>D5 Render</b><b>Blender</b><b>Stable Diffusion</b></div></div>
             <div className="room-info-section"><span>■ 校园经历&nbsp; Campus Experiences</span><ul className="room-simple-list"><li><time>2025</time><b>FOCUS DESIGN 设计平台签约设计师</b></li><li><time>2024</time><b>环境设计与陈设艺术研究所 第四工作室负责人</b></li><li><time>2023</time><b>中国建筑学会室内设计分会会员</b></li><li><time>2023</time><b>建筑学院环境设计系实践工作组组长</b></li><li><time>2022</time><b>党委宣传部民小薇工作室摄影记者</b></li></ul></div>
+            </div>
           </aside>
           <div className="profile-wall profile-wall-back">
             <div className="profile-back-title" aria-hidden="true">萬<br />千<br />無<br />象</div>
@@ -166,8 +168,10 @@ export default function Home() {
             </div>
           </div>
           <aside className="profile-wall profile-wall-right">
+            <div className="profile-wall-inner">
             <div className="room-info-section"><span>■ 学术经历&nbsp; Academic Experience</span><ul className="room-award-list"><li><b>2025 米兰设计周中国高校设计学科师生优秀作品展四川赛区</b><em>二等奖</em></li><li><b>2024 第十届“中装杯”全国大学生环境设计大赛</b><em>二等奖</em></li><li><b>2024 四川省大学生环境设计大赛</b><em>一等奖</em></li><li><b>2024 两岸新锐设计竞赛·华灿奖</b><em>三等奖</em></li><li><b>2024 东方设计奖全国高校创新设计大赛</b><em>一等奖</em></li><li><b>2024 四川省大学生农业创意设计大赛</b><em>一等奖</em></li><li><b>2024 十七届全国三维数字化创新设计大赛</b><em>一等奖</em></li><li><b>2024 首届中西部乡村振兴环境设计大赛</b><em>一等奖</em></li><li><b>2023 第12届未来设计师高校数字艺术设计大赛</b><em>一等奖</em></li><li><b>2023 四川省国际大学生创新大赛</b><em>银奖</em></li><li><b>2023 四川省道中华杯原创手绘比赛</b><em>一等奖</em></li><li><b>2023 成都市优秀原创方案设计室内装饰类</b><em>优秀奖</em></li></ul></div>
             <div className="room-info-section room-practice"><span>■ 科研与实践经历&nbsp; Research & Practice</span><ul><li><b>青触 Design — 基于新媒体平台的创意传媒品牌</b><em>负责人</em><p>负责项目研究主干梳理及主要设计工作。</p></li><li><b>油脉巡行者 — 新一代仿生蛇形石油管道巡检机器人</b><em>主要负责人</em><p>负责产品研发、项目视觉设计与策划统筹。</p></li><li><b>江西省赣州市赣县区义源村旅游规划项目</b><em>主要负责人</em><p>约 650 亩，方案已中标并进入落地阶段。</p></li><li><b>四川省成都市红牌里两新艺术中心设计</b><em>设计主创</em><p>约 3000㎡文化空间改造，项目已落地。</p></li><li><b>西南民族大学校图书馆一至四楼改造项目</b><em>主要负责人</em><p>负责调研、方案、采购需求与落地协同。</p></li></ul></div>
+            </div>
           </aside>
         </div>
       </section>
