@@ -216,7 +216,10 @@ export default function LjhScene() {
     };
     const animate = (time: number) => {
       const hero = document.getElementById('top');
-      const progress = hero ? clamp(window.scrollY / Math.max(1, hero.offsetHeight - window.innerHeight)) : 0;
+      const heroTravel = hero ? Math.max(1, hero.offsetHeight - window.innerHeight) : 1;
+      const progress = hero ? clamp((window.scrollY - hero.offsetTop) / heroTravel) : 0;
+      const profileProgress = hero ? clamp((window.scrollY - (hero.offsetTop + heroTravel)) / Math.max(1, window.innerHeight)) : 0;
+      const profileRelease = profileProgress * profileProgress * (3 - 2 * profileProgress);
       smoothX += (mouseX - smoothX) * .045;
       smoothY += (mouseY - smoothY) * .045;
       const seconds = time * .001;
@@ -292,8 +295,15 @@ export default function LjhScene() {
         const wordOpacity = scatter * .97;
         wordMesh.material.opacity = wordOpacity;
         wordMesh.visible = wordOpacity > .015;
-        focusMesh.material.opacity = easedFocus;
-        focusMesh.visible = easedFocus > .015;
+        const release = i === 2 ? profileRelease : 0;
+        focusMesh.material.opacity = easedFocus * (1 - release);
+        focusMesh.visible = easedFocus * (1 - release) > .015;
+        if (i === 2 && release > 0) {
+          root.rotation.y += release * 1.4;
+          root.rotation.z -= release * .48;
+          root.position.z += release * 3.2;
+          root.scale.multiplyScalar(1 + release * .2);
+        }
         root.visible = scatter > .015 || focus > .015;
       });
       camera.position.x = smoothX * 1.2;

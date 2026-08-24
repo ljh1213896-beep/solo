@@ -3,7 +3,6 @@
 import { useEffect, useRef, useState } from 'react';
 import Lenis from 'lenis';
 import LjhScene from './LjhScene';
-import ProfileRoom from './ProfileRoom';
 
 const works = [
   { no: '01', year: '2025', title: '循“析”而栖', en: 'Dwelling Through Analysis', type: 'LANDSCAPE / ECOLOGY', image: '/projects/salt-lake.jpg' },
@@ -47,16 +46,41 @@ export default function Home() {
       const hp = clamp(window.scrollY / heroTravel);
       const profileProgress = clamp((window.scrollY - (hero.offsetTop + heroTravel)) / Math.max(1, window.innerHeight));
       const profileEase = profileProgress * profileProgress * (3 - 2 * profileProgress);
+      const backEase = clamp(profileProgress / .58); const backFlight = backEase * backEase * (3 - 2 * backEase);
+      const leftEase = clamp((profileProgress - .08) / .78); const leftFlight = leftEase * leftEase * (3 - 2 * leftEase);
+      const rightEase = clamp((profileProgress - .18) / .82); const rightFlight = rightEase * rightEase * (3 - 2 * rightEase);
       profile.style.setProperty('--profile-enter', String(profileEase));
       profile.style.setProperty('--profile-enter-shift', `${(1 - profileEase) * 82}px`);
       profile.style.setProperty('--profile-enter-scale', String(.9 + profileEase * .1));
+      profile.style.setProperty('--profile-section-lift', `${(1 - profileProgress) * -100}vh`);
+      profile.style.setProperty('--profile-back-flight', String(backFlight));
+      profile.style.setProperty('--profile-left-flight', String(leftFlight));
+      profile.style.setProperty('--profile-right-flight', String(rightFlight));
+      profile.style.setProperty('--profile-back-x', `${(1 - backFlight) * 2}vw`);
+      profile.style.setProperty('--profile-back-y', `${(1 - backFlight) * -9}vh`);
+      profile.style.setProperty('--profile-back-z', `${(1 - backFlight) * 560}px`);
+      profile.style.setProperty('--profile-back-turn', `${(1 - backFlight) * 132}deg`);
+      profile.style.setProperty('--profile-back-roll', `${(1 - backFlight) * -48}deg`);
+      profile.style.setProperty('--profile-back-scale', String(.08 + backFlight * .92));
+      profile.style.setProperty('--profile-left-x', `${(1 - leftFlight) * 41}vw`);
+      profile.style.setProperty('--profile-left-y', `${(1 - leftFlight) * 11}vh`);
+      profile.style.setProperty('--profile-left-z', `${(1 - leftFlight) * 520}px`);
+      profile.style.setProperty('--profile-left-turn', `${38 + (1 - leftFlight) * 128}deg`);
+      profile.style.setProperty('--profile-left-roll', `${(1 - leftFlight) * -74}deg`);
+      profile.style.setProperty('--profile-left-scale', String(.06 + leftFlight * .94));
+      profile.style.setProperty('--profile-right-x', `${(1 - rightFlight) * -41}vw`);
+      profile.style.setProperty('--profile-right-y', `${(1 - rightFlight) * 11}vh`);
+      profile.style.setProperty('--profile-right-z', `${(1 - rightFlight) * 520}px`);
+      profile.style.setProperty('--profile-right-turn', `${-38 - (1 - rightFlight) * 128}deg`);
+      profile.style.setProperty('--profile-right-roll', `${(1 - rightFlight) * 74}deg`);
+      profile.style.setProperty('--profile-right-scale', String(.06 + rightFlight * .94));
       const galleryTop = gallery.offsetTop;
       const gp = clamp((window.scrollY - galleryTop) / Math.max(1, gallery.offsetHeight - window.innerHeight));
       chapterRefs.current.forEach((chapter, i) => {
         if (!chapter) return;
         const center = i / (chapters.length - 1);
         const distance = Math.abs(hp - center);
-        const opacity = clamp(1 - distance * 7.2);
+        const opacity = clamp(1 - distance * 7.2) * (i === chapters.length - 1 ? 1 - profileEase : 1);
         chapter.style.opacity = String(opacity);
         chapter.style.transform = `translateY(${(hp - center) * -90}px)`;
         chapter.style.pointerEvents = opacity > .5 ? 'auto' : 'none';
@@ -154,10 +178,10 @@ export default function Home() {
         <p>ENVIRONMENTAL · INTERIOR · SPATIAL · LANDSCAPE DESIGN</p>
       </aside>
 
+      <div className="intro-sequence">
+      <div className="intro-continuous-scene"><LjhScene /><div className="scanlines" /></div>
       <section className="hero-scroll" id="top" ref={heroRef}>
         <div className="hero-stage">
-          <LjhScene />
-          <div className="scanlines" />
           <div className="target target-a">[</div><div className="target target-b">]</div>
           <div className="hero-chapters">
             {chapters.map((chapter, i) => <div className={`hero-chapter ${i === 0 ? 'intro-manifesto' : ''} ${chapter.layout !== 'statement' ? `glyph-copy-chapter ${chapter.layout}-chapter` : ''}`} key={chapter.tag} ref={el => { chapterRefs.current[i] = el; }}>
@@ -169,7 +193,6 @@ export default function Home() {
       </section>
 
       <section className="profile-section" id="profile" ref={profileRef}>
-        <ProfileRoom />
         <div className="profile-head"><span>ABOUT / 个人介绍</span><span>PROFILE 01</span><span>CHENGDU · CHINA</span></div>
         <div className="profile-room-content">
           <aside className="profile-wall profile-wall-left">
@@ -195,6 +218,7 @@ export default function Home() {
           </aside>
         </div>
       </section>
+      </div>
 
       <section className="gallery-scroll" id="work" ref={galleryRef}>
         <div className="gallery-stage">
