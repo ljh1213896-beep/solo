@@ -58,11 +58,56 @@ export default function LjhScene() {
     rose.position.set(6, -1, 5);
     scene.add(rose);
 
-    const grid = new THREE.GridHelper(80, 80, 0x31557d, 0x192638);
-    grid.position.y = -3.4;
-    grid.material.transparent = true;
-    grid.material.opacity = .24;
-    scene.add(grid);
+    const gridRoom = new THREE.Group();
+    const gridSurfaces: THREE.GridHelper[] = [];
+    const gridMaterials: THREE.LineBasicMaterial[] = [];
+    const makeGrid = (size: number, divisions: number, opacity: number) => {
+      const helper = new THREE.GridHelper(size, divisions, 0x344c66, 0x15202c);
+      const material = helper.material as THREE.LineBasicMaterial;
+      material.transparent = true;
+      material.opacity = opacity;
+      material.depthWrite = false;
+      material.blending = THREE.AdditiveBlending;
+      helper.renderOrder = -5;
+      helper.userData.baseOpacity = opacity;
+      gridSurfaces.push(helper);
+      gridMaterials.push(material);
+      gridRoom.add(helper);
+      return helper;
+    };
+
+    const floorGrid = makeGrid(72, 72, .22);
+    floorGrid.position.set(0, -4.8, -9);
+    const ceilingGrid = makeGrid(72, 72, .075);
+    ceilingGrid.position.set(0, 6.4, -9);
+    const leftGrid = makeGrid(72, 72, .13);
+    leftGrid.rotation.z = Math.PI / 2;
+    leftGrid.position.set(-10.8, .8, -9);
+    const rightGrid = makeGrid(72, 72, .13);
+    rightGrid.rotation.z = Math.PI / 2;
+    rightGrid.position.set(10.8, .8, -9);
+    const backGrid = makeGrid(32, 32, .16);
+    backGrid.rotation.x = Math.PI / 2;
+    backGrid.position.set(0, .8, -19.5);
+
+    const frameGeometry = new THREE.EdgesGeometry(new THREE.BoxGeometry(21.6, 11.2, .01));
+    const frameMaterial = new THREE.LineBasicMaterial({
+      color: 0x27384d,
+      transparent: true,
+      opacity: .1,
+      depthWrite: false,
+      blending: THREE.AdditiveBlending,
+    });
+    const tunnelFrames: THREE.LineSegments[] = [];
+    for (let i = 0; i < 7; i++) {
+      const frameLine = new THREE.LineSegments(frameGeometry, frameMaterial);
+      frameLine.position.set(0, .8, 8 - i * 4.6);
+      frameLine.renderOrder = -4;
+      gridRoom.add(frameLine);
+      tunnelFrames.push(frameLine);
+    }
+    gridRoom.rotation.x = -.012;
+    scene.add(gridRoom);
 
     type LetterGroup = {
       root: THREE.Group;
@@ -163,6 +208,27 @@ export default function LjhScene() {
       smoothY += (mouseY - smoothY) * .045;
       const seconds = time * .001;
       const scatter = 1 - clamp((progress - .08) / .16);
+      const gridMotion = reduce ? 0 : seconds;
+      const gridPhase = (gridMotion * .32) % 4.6;
+      const gridBreath = 1 + Math.sin(gridMotion * .22) * .007 + progress * .018;
+      gridRoom.position.set(
+        smoothX * -.55 - progress * .18,
+        smoothY * .34,
+        gridPhase - 2.3 - progress * 1.35,
+      );
+      gridRoom.rotation.x = -.012 - smoothY * .018;
+      gridRoom.rotation.y = smoothX * .025 + Math.sin(gridMotion * .12) * .004;
+      gridRoom.scale.setScalar(gridBreath);
+      gridSurfaces.forEach((surface, i) => {
+        const material = surface.material as THREE.LineBasicMaterial;
+        const baseOpacity = surface.userData.baseOpacity as number;
+        material.opacity = baseOpacity + Math.sin(gridMotion * .42 + i * .9) * .016 + (1 - scatter) * .025;
+      });
+      tunnelFrames.forEach((frameLine, i) => {
+        frameLine.position.z = 8 - i * 4.6;
+        frameLine.scale.setScalar(1 + Math.sin(gridMotion * .18 + i * .55) * .006);
+      });
+      frameMaterial.opacity = .075 + Math.sin(gridMotion * .35) * .014 + progress * .025;
       const focusCenters = [1 / 3, 2 / 3, 1];
       const targetPositions = [
         new THREE.Vector3(3.15, .55, 3.15),
@@ -225,8 +291,11 @@ export default function LjhScene() {
       groups.forEach(({ root }) => scene.remove(root));
       geometries.forEach(geometry => geometry.dispose());
       materials.forEach(material => material.dispose());
-      grid.geometry.dispose();
-      grid.material.dispose();
+      scene.remove(gridRoom);
+      gridSurfaces.forEach(surface => surface.geometry.dispose());
+      gridMaterials.forEach(material => material.dispose());
+      frameGeometry.dispose();
+      frameMaterial.dispose();
       environment.dispose();
       room.dispose();
       pmrem.dispose();
