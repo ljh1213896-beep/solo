@@ -150,7 +150,7 @@ export default function Home() {
           </div>
         </div>
         <div className="profile-details">
-          <article><span>01 / EDUCATION</span><h3>西南民族大学<br /><i>环境设计</i></h3><p>2022.09 — 至今</p><dl><div><dt>GPA</dt><dd>3.77 / 4</dd></div><div><dt>专业课排名</dt><dd>1 / 97</dd></div><div><dt>综合测评</dt><dd>1 / 97</dd></div></dl></article>
+          <article><span>01 / EDUCATION</span><h3>西南民族大学<br /><i>环境设计</i></h3><p>2022.09 — 至今</p><div className="profile-admission"><small>RECOMMENDED ADMISSION</small><b>保研至西南交通大学</b></div><dl><div><dt>GPA</dt><dd>3.77 / 4</dd></div><div><dt>专业课排名</dt><dd>1 / 97</dd></div><div><dt>综合测评</dt><dd>1 / 97</dd></div></dl></article>
           <article><span>02 / SELECTED PRACTICE</span><ul className="profile-timeline"><li><time>2025.04—NOW</time><div><b>FOCUS DESIGN 设计平台</b><small>炁象设计访谈 · 执行策划</small></div></li><li><time>2024.09—NOW</time><div><b>西南民族大学校图书馆 2—4 楼改造</b><small>设计总负责 · 约 5350㎡</small></div></li><li><time>2024.07—2025.06</time><div><b>成都红牌里两新艺术中心</b><small>设计主创 · 文化空间改造</small></div></li><li><time>2024.03—2024.07</time><div><b>江西义源村旅游规划</b><small>设计主创 · 约 650 亩</small></div></li></ul></article>
           <article><span>03 / RESEARCH & HONORS</span><h3>乡村文化场景营造<br /><i>公共艺术与聚落研究</i></h3><p>围绕乡村聚落、农业景观与地域文化转译展开实践；参与校园文创研究论文与水下仿生蛇推进机器人实用新型专利。</p><div className="profile-awards"><b>国家奖学金</b><b>四川省综合素质 A 级证书</b><b>多项设计竞赛一等奖</b></div></article>
         </div>
