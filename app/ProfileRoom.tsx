@@ -2,6 +2,12 @@
 
 import { useEffect, useRef } from 'react';
 import * as THREE from 'three';
+import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
+import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
+import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass.js';
+import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass.js';
+import { OutputPass } from 'three/examples/jsm/postprocessing/OutputPass.js';
+import { RGBShiftShader } from 'three/examples/jsm/shaders/RGBShiftShader.js';
 
 type Surface = 'floor' | 'ceiling' | 'left' | 'right' | 'back';
 
@@ -20,11 +26,21 @@ export default function ProfileRoom() {
     renderer.setClearColor(0x040506, 1);
     host.appendChild(renderer.domElement);
 
+    const composer = new EffectComposer(renderer);
+    composer.addPass(new RenderPass(scene, camera));
+    const bloom = new UnrealBloomPass(new THREE.Vector2(1, 1), .28, .4, .18);
+    composer.addPass(bloom);
+    const rgb = new ShaderPass(RGBShiftShader);
+    rgb.uniforms.amount.value = .00065;
+    composer.addPass(rgb);
+    composer.addPass(new OutputPass());
+
     const movingRoom = new THREE.Group();
     const staticRoom = new THREE.Group();
     scene.add(movingRoom, staticRoom);
     const geometries: THREE.BufferGeometry[] = [];
     const materials: THREE.LineBasicMaterial[] = [];
+    const surfaces: { surface: Surface; geometry: THREE.BufferGeometry; positions: Float32Array; bases: Float32Array; phase: number }[] = [];
     const left = -11.8;
     const right = 11.8;
     const bottom = -6.5;
@@ -47,14 +63,19 @@ export default function ProfileRoom() {
       const add = (a: number[], b: number[]) => points.push(...a, ...b);
       for (let u = 0; u <= uSteps; u++) for (let v = 0; v < vSteps; v++) add(at(u, v), at(u, v + 1));
       for (let v = 0; v <= vSteps; v++) for (let u = 0; u < uSteps; u++) add(at(u, v), at(u + 1, v));
+      const positions = new Float32Array(points);
+      const bases = new Float32Array(points);
       const geometry = new THREE.BufferGeometry();
-      geometry.setAttribute('position', new THREE.Float32BufferAttribute(points, 3));
-      const material = new THREE.LineBasicMaterial({ color: 0x66798c, transparent: true, opacity, depthWrite: false, blending: THREE.AdditiveBlending });
+      const attribute = new THREE.BufferAttribute(positions, 3);
+      attribute.setUsage(THREE.DynamicDrawUsage);
+      geometry.setAttribute('position', attribute);
+      const material = new THREE.LineBasicMaterial({ color: 0x596e83, transparent: true, opacity, depthWrite: false, blending: THREE.AdditiveBlending });
       const lines = new THREE.LineSegments(geometry, material);
       lines.renderOrder = -2;
       (surface === 'back' ? staticRoom : movingRoom).add(lines);
       geometries.push(geometry);
       materials.push(material);
+      surfaces.push({ surface, geometry, positions, bases, phase: surfaces.length * 1.17 });
     };
 
     makeSurface('floor', 24, depthSteps, .34);
@@ -77,6 +98,7 @@ export default function ProfileRoom() {
       const width = host.clientWidth;
       const height = host.clientHeight;
       renderer.setSize(width, height, false);
+      composer.setSize(width, height);
       camera.aspect = width / Math.max(1, height);
       camera.updateProjectionMatrix();
     };
@@ -86,6 +108,25 @@ export default function ProfileRoom() {
       smoothY += (mouseY - smoothY) * .035;
       const spacing = (near - far) / depthSteps;
       movingRoom.position.z = reduce ? 0 : -((seconds * .62) % spacing);
+      surfaces.forEach(({ surface, geometry, positions, bases, phase }) => {
+        for (let i = 0; i < positions.length; i += 3) {
+          const bx = bases[i];
+          const by = bases[i + 1];
+          const bz = bases[i + 2];
+          const coarse = Math.sin(bz * .37 + bx * .14 + by * .21 + phase + seconds * .32) * .072;
+          const fine = Math.sin(bz * .82 - bx * .27 + by * .42 + phase * 1.6 - seconds * .19) * .026;
+          const warp = reduce ? 0 : coarse + fine;
+          positions[i] = bx;
+          positions[i + 1] = by;
+          positions[i + 2] = bz;
+          if (surface === 'floor') positions[i + 1] += warp;
+          if (surface === 'ceiling') positions[i + 1] -= warp;
+          if (surface === 'left') positions[i] += warp;
+          if (surface === 'right') positions[i] -= warp;
+          if (surface === 'back') positions[i + 2] += warp * .7;
+        }
+        (geometry.getAttribute('position') as THREE.BufferAttribute).needsUpdate = true;
+      });
       movingRoom.rotation.y = smoothX * .012;
       movingRoom.rotation.x = smoothY * .009;
       staticRoom.rotation.y = movingRoom.rotation.y;
@@ -94,7 +135,9 @@ export default function ProfileRoom() {
       camera.position.y = -smoothY * .55;
       camera.lookAt(0, 0, -8);
       materials.forEach((material, i) => { material.opacity += (([.34,.27,.31,.31,.24][i] + Math.sin(seconds * .45 + i) * .018) - material.opacity) * .04; });
-      renderer.render(scene, camera);
+      bloom.strength = .25 + Math.sin(seconds * .55) * .035;
+      rgb.uniforms.amount.value = .00055 + Math.abs(smoothX) * .0025;
+      composer.render();
       frame = requestAnimationFrame(animate);
     };
     resize();
@@ -108,6 +151,7 @@ export default function ProfileRoom() {
       host.removeEventListener('pointermove', onPointer);
       geometries.forEach(geometry => geometry.dispose());
       materials.forEach(material => material.dispose());
+      composer.dispose();
       renderer.dispose();
       renderer.domElement.remove();
     };

@@ -41,8 +41,15 @@ export default function Home() {
       lenis.raf(time);
       const hero = heroRef.current;
       const gallery = galleryRef.current;
-      if (!hero || !gallery) return;
-      const hp = clamp(window.scrollY / Math.max(1, hero.offsetHeight - window.innerHeight));
+      const profile = profileRef.current;
+      if (!hero || !gallery || !profile) return;
+      const heroTravel = Math.max(1, hero.offsetHeight - window.innerHeight);
+      const hp = clamp(window.scrollY / heroTravel);
+      const profileProgress = clamp((window.scrollY - (hero.offsetTop + heroTravel)) / Math.max(1, window.innerHeight));
+      const profileEase = profileProgress * profileProgress * (3 - 2 * profileProgress);
+      profile.style.setProperty('--profile-enter', String(profileEase));
+      profile.style.setProperty('--profile-enter-shift', `${(1 - profileEase) * 82}px`);
+      profile.style.setProperty('--profile-enter-scale', String(.9 + profileEase * .1));
       const galleryTop = gallery.offsetTop;
       const gp = clamp((window.scrollY - galleryTop) / Math.max(1, gallery.offsetHeight - window.innerHeight));
       chapterRefs.current.forEach((chapter, i) => {
@@ -92,6 +99,19 @@ export default function Home() {
       const currentStep = Math.round(clamp((currentY - start) / travel) * (chapters.length - 1));
       const direction = event.deltaY > 0 ? 1 : -1;
       const nextStep = currentStep + direction;
+      if (nextStep >= chapters.length && direction > 0 && profileRef.current) {
+        event.preventDefault();
+        if (heroSnapping) return;
+        heroSnapping = true;
+        lenis.scrollTo(profileRef.current.offsetTop, {
+          duration: 1.35,
+          easing: value => 1 - Math.pow(1 - value, 4),
+          force: true,
+        });
+        window.clearTimeout(heroSnapTimer);
+        heroSnapTimer = window.setTimeout(() => { heroSnapping = false; }, 1240);
+        return;
+      }
       if (nextStep < 0 || nextStep >= chapters.length) return;
 
       event.preventDefault();
