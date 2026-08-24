@@ -65,13 +65,13 @@ export default function Home() {
       profile.style.setProperty('--profile-left-x', `${(1 - leftFlight) * 41}vw`);
       profile.style.setProperty('--profile-left-y', `${(1 - leftFlight) * 11}vh`);
       profile.style.setProperty('--profile-left-z', `${(1 - leftFlight) * 520}px`);
-      profile.style.setProperty('--profile-left-turn', `${38 + (1 - leftFlight) * 128}deg`);
+      profile.style.setProperty('--profile-left-turn', `${24 + (1 - leftFlight) * 128}deg`);
       profile.style.setProperty('--profile-left-roll', `${(1 - leftFlight) * -74}deg`);
       profile.style.setProperty('--profile-left-scale', String(.06 + leftFlight * .94));
       profile.style.setProperty('--profile-right-x', `${(1 - rightFlight) * -41}vw`);
       profile.style.setProperty('--profile-right-y', `${(1 - rightFlight) * 11}vh`);
       profile.style.setProperty('--profile-right-z', `${(1 - rightFlight) * 520}px`);
-      profile.style.setProperty('--profile-right-turn', `${-38 - (1 - rightFlight) * 128}deg`);
+      profile.style.setProperty('--profile-right-turn', `${-24 - (1 - rightFlight) * 128}deg`);
       profile.style.setProperty('--profile-right-roll', `${(1 - rightFlight) * 74}deg`);
       profile.style.setProperty('--profile-right-scale', String(.06 + rightFlight * .94));
       const galleryTop = gallery.offsetTop;
@@ -199,7 +199,7 @@ export default function Home() {
             <div className="profile-wall-inner">
             <div className="room-info-section"><span>■ 教育背景&nbsp; Education</span><div className="room-education"><b>西南民族大学</b><b>环境设计</b><small>2022.09 至今</small><p>学业情况：90.41 / 100&nbsp;&nbsp;3.74 / 4</p><p>专业课排名：2 / 98</p></div></div>
             <div className="room-info-section"><span>■ 荣誉奖项&nbsp; Honors</span><ul className="room-simple-list"><li><time>2024</time><b>国家奖学金</b></li><li><time>2025</time><b>四川省大学生综合素质 A 级证书</b></li><li><time>2024</time><b>西南民族大学本科生一等奖学金</b></li><li><time>2024</time><b>西南民族大学校级三好学生</b></li><li><time>2023</time><b>西南民族大学本科生二等奖学金</b></li></ul></div>
-            <div className="room-info-section"><span>■ 软件技能&nbsp; Skills</span><div className="room-skills"><b>Photoshop</b><b>Sketch Up</b><b>Illustrator</b><b>Cinema 4D</b><b>Auto CAD</b><b>Midjourney</b><b>D5 Render</b><b>Blender</b><b>Stable Diffusion</b></div></div>
+            <div className="room-info-section"><span>■ 软件技能&nbsp; Skills</span><div className="room-skills"><b>Photoshop</b><b>Sketch Up</b><b>Illustrator</b><b>Cinema 4D</b><b>Auto CAD</b><b>Midjourney</b><b>D5 Render</b><b>Blender</b><b>Stable Diffusion</b><b>ChatGPT</b><b>Codex</b></div></div>
             <div className="room-info-section"><span>■ 校园经历&nbsp; Campus Experiences</span><ul className="room-simple-list"><li><time>2025</time><b>FOCUS DESIGN 设计平台签约设计师</b></li><li><time>2024</time><b>环境设计与陈设艺术研究所 第四工作室负责人</b></li><li><time>2023</time><b>中国建筑学会室内设计分会会员</b></li><li><time>2023</time><b>建筑学院环境设计系实践工作组组长</b></li><li><time>2022</time><b>党委宣传部民小薇工作室摄影记者</b></li></ul></div>
             </div>
           </aside>
