@@ -31,6 +31,14 @@ button { color:inherit; font:inherit; }
 .hero-chapters { position:absolute; inset:0; z-index:5; pointer-events:none; }.hero-chapter { position:absolute; inset:0; padding:130px 3vw 42px; display:flex; flex-direction:column; justify-content:flex-end; will-change:opacity,transform; }
 .chapter-tag { position:absolute; top:120px; left:3vw; margin:0; font:9px monospace; letter-spacing:.12em; color:var(--rose); }
 .hero-chapter h1 { margin:0; width:min(720px,72vw); font-size:clamp(61px,8.5vw,134px); line-height:.78; letter-spacing:-.075em; font-weight:500; }
+.intro-manifesto { padding-bottom:7.5vh; }
+.intro-manifesto h1 { display:flex; flex-direction:column; width:min(590px,46vw); font-size:inherit; line-height:1; letter-spacing:0; }
+.intro-manifesto .manifesto-title { font-size:clamp(48px,4.15vw,78px); line-height:.92; letter-spacing:-.075em; font-weight:500; }
+.intro-manifesto small { margin-top:5px; font-size:clamp(13px,1.14vw,21px); line-height:1; letter-spacing:-.035em; font-weight:500; }
+.intro-manifesto i { width:100%; height:1px; margin:13px 0 9px; background:rgba(242,240,238,.72); }
+.intro-manifesto .manifesto-line { white-space:nowrap; font-size:clamp(31px,2.75vw,53px); line-height:1; letter-spacing:-.07em; font-weight:400; }
+.intro-manifesto em,.intro-manifesto strong { color:#d94f9c; font:inherit; font-style:normal; }
+.intro-manifesto strong { color:#e33b67; }
 .chapter-copy { position:absolute; left:57vw; bottom:13vh; width:min(350px,35vw); font-size:14px; line-height:1.45; color:#bbb7ba; }
 .glyph-copy-chapter { justify-content:center; }
 .glyph-copy-chapter .chapter-tag { position:relative; top:auto; left:auto; margin:0 0 24px; color:#85818a; font-size:10px; }
@@ -62,6 +70,7 @@ footer { height:100vh; min-height:650px; padding:30px 3vw; display:flex; flex-di
 @media (max-width:760px) {
   .cursor { display:none; }.site-header { height:70px; padding:0 17px; grid-template-columns:1fr auto; }.site-header p { display:none; }.menu-button { width:38px; height:38px; }
   .hero-scroll { height:360vh; }.hero-chapter { padding:100px 18px 125px; }.hero-chapter h1 { width:91vw; font-size:15.5vw; line-height:.81; }.chapter-tag { top:94px; left:18px; }.chapter-copy { left:18px; bottom:58px; width:82vw; font-size:10px; line-height:1.4; }.stage-foot { left:18px; right:18px; bottom:14px; }.stage-foot span:nth-child(2){display:none}.glyph span { font-size:26vw; }
+  .intro-manifesto { padding:0 18px 78px; }.intro-manifesto h1 { width:min(94vw,560px); }.intro-manifesto .manifesto-title { font-size:13vw; }.intro-manifesto small { font-size:3.5vw; }.intro-manifesto .manifesto-line { font-size:7vw; }.intro-manifesto i { margin:10px 0 8px; }
   .glyph-copy-chapter,.glyph-left-chapter,.glyph-right-chapter,.glyph-bottom-chapter { justify-content:flex-end; align-items:flex-start; padding:0 18px 92px; text-align:left; }.glyph-copy-chapter .chapter-tag { margin-bottom:13px; font-size:8px; }.glyph-copy-chapter h1 { width:82vw; font-size:25px; line-height:1.05; }.glyph-copy-chapter .chapter-copy { width:82vw; margin-top:10px; font-size:12px; line-height:1.5; }
   .gallery-scroll { height:520vh; }.gallery-head { top:90px; left:18px; right:18px; }.gallery-head span:nth-child(2){display:none}.project-card { width:88vw; aspect-ratio:1.25; }.project-card img { object-fit:cover; }.card-shade { background:linear-gradient(0deg,rgba(0,0,0,.85),transparent 70%); }.card-label { padding:20px; }.card-label h2 { font-size:8vw; }
   .paper-section { min-height:100vh; padding:70px 18px; }.paper-title { margin-top:20vh; font-size:18vw; line-height:.78; }.paper-copy { left:18px; right:auto; bottom:8vh; }.ticker div { animation-duration:14s; }

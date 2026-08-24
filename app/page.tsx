@@ -15,7 +15,7 @@ const works = [
 ];
 
 const chapters = [
-  { layout: 'statement', tag: '00 / INTRODUCTION', title: <>ENGINEERED<br />SPATIAL<br />NARRATIVES.</>, copy: '以空间为媒介，在场地、行为与感知之间建立可被体验的叙事。' },
+  { layout: 'statement', tag: '00 / INTRODUCTION', title: <><span className="manifesto-title">萬千無象</span><small>Plain paper thousand hoodles</small><i /><span className="manifesto-line">当<em>空白</em>开始汲取<strong>空间</strong></span><small>When the blank begins to absorb space</small></>, copy: '' },
   { layout: 'glyph-left', tag: '[ L / LATITUDE ]', title: <>L — Latitude</>, copy: '设计的格局与思考的广度' },
   { layout: 'glyph-right', tag: '[ J / JUNCTION ]', title: <>J — Junction</>, copy: '空间的交汇、人与人 / 人与自然的互动' },
   { layout: 'glyph-bottom', tag: '[ H / HARMONY ]', title: <>H — Harmony</>, copy: '设计的终极目标——人与天地的共融' },
@@ -95,8 +95,8 @@ export default function Home() {
           <div className="scanlines" />
           <div className="target target-a">[</div><div className="target target-b">]</div>
           <div className="hero-chapters">
-            {chapters.map((chapter, i) => <div className={`hero-chapter ${chapter.layout !== 'statement' ? `glyph-copy-chapter ${chapter.layout}-chapter` : ''}`} key={chapter.tag} ref={el => { chapterRefs.current[i] = el; }}>
-              <p className="chapter-tag">{chapter.tag}</p><h1>{chapter.title}</h1><p className="chapter-copy">{chapter.copy}</p>
+            {chapters.map((chapter, i) => <div className={`hero-chapter ${i === 0 ? 'intro-manifesto' : ''} ${chapter.layout !== 'statement' ? `glyph-copy-chapter ${chapter.layout}-chapter` : ''}`} key={chapter.tag} ref={el => { chapterRefs.current[i] = el; }}>
+              <p className="chapter-tag">{chapter.tag}</p><h1>{chapter.title}</h1>{chapter.copy && <p className="chapter-copy">{chapter.copy}</p>}
             </div>)}
           </div>
           <div className="stage-foot"><span>SCROLL / SCRUB</span><span>35.027° N · 111.006° E</span><span>PORTFOLIO INDEX 00—07</span></div>
