@@ -174,10 +174,16 @@ export default function ProjectCarouselScene({ projects }:{ projects:Project[] }
         const rel=index-smoothProgress;
         const abs=Math.abs(rel);
         const side=Math.sign(rel);
-        root.position.set(rel*5.25,Math.sin(rel*.72)*.12-abs*.07,-abs*2.05-Math.min(abs,1)*.18);
-        root.rotation.set(smoothY*(abs<.6?-.045:-.015),-rel*.42+smoothX*(abs<.6?.075:.02),side*Math.min(abs,1)*.025);
-        root.scale.setScalar(Math.max(.48,1-abs*.115));
-        root.visible=abs<2.25;
+        const angle=rel*.67;
+        const radius=7.15;
+        root.position.set(
+          Math.sin(angle)*radius,
+          Math.sin(angle*2)*.16-Math.min(abs*abs,4)*.055,
+          (Math.cos(angle)-1)*radius*.9-abs*.08,
+        );
+        root.rotation.set(smoothY*(abs<.6?-.045:-.015),-angle*.78+smoothX*(abs<.6?.075:.02),side*Math.min(abs,1)*.032);
+        root.scale.setScalar(Math.max(.5,1-abs*.105));
+        root.visible=abs<2.75;
         const opacity=clamp(1-(abs-1.2)*.85,.12,1);
         base.material.uniforms.uTime.value=time*.001+index;
         cover.material.uniforms.uTime.value=time*.001+index;
@@ -186,6 +192,8 @@ export default function ProjectCarouselScene({ projects }:{ projects:Project[] }
         base.material.uniforms.uOpacity.value=opacity;
         cover.material.uniforms.uOpacity.value=opacity;
       });
+      stage.rotation.x=-.035-smoothY*.025;
+      stage.rotation.z=smoothX*.012;
       camera.position.x=smoothX*.18;
       camera.position.y=-smoothY*.12;
       camera.lookAt(0,0,0);

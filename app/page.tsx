@@ -5,6 +5,7 @@ import Lenis from 'lenis';
 import LjhScene from './LjhScene';
 import { projects as works } from './projectData';
 import ProjectCarouselScene from './ProjectCarouselScene';
+import EntryPrelude from './EntryPrelude';
 
 const chapters = [
   { layout: 'statement', tag: '00 / INTRODUCTION', title: <><span className="manifesto-title">萬千無象</span><small>Plain paper thousand hoodles</small><i /><span className="manifesto-line">当<em>空白</em>开始汲取<strong>空间</strong></span><small>When the blank begins to absorb space</small></>, copy: '' },
@@ -26,8 +27,20 @@ export default function Home() {
   useEffect(() => {
     const lenis = new Lenis({ lerp: .075, smoothWheel: true, wheelMultiplier: .9, touchMultiplier: 1.1 });
     let frame = 0;
-    let heroSnapping = false;
-    let heroSnapTimer = 0;
+    let scrollSnapping = false;
+    let snapTimer = 0;
+    let settleTimer = 0;
+    const snapTo = (target: number, duration = 1.05) => {
+      if (scrollSnapping) return;
+      scrollSnapping = true;
+      lenis.scrollTo(target, {
+        duration,
+        easing: value => 1 - Math.pow(1 - value, 4),
+        force: true,
+      });
+      window.clearTimeout(snapTimer);
+      snapTimer = window.setTimeout(() => { scrollSnapping = false; }, duration * 1000 + 140);
+    };
     const render = (time: number) => {
       lenis.raf(time);
       const hero = heroRef.current;
@@ -68,6 +81,7 @@ export default function Home() {
       profile.style.setProperty('--profile-right-scale', String(.06 + rightFlight * .94));
       const galleryTop = gallery.offsetTop;
       const gp = clamp((window.scrollY - galleryTop) / Math.max(1, gallery.offsetHeight - window.innerHeight));
+      gallery.style.setProperty('--gallery-progress', String(gp));
       chapterRefs.current.forEach((chapter, i) => {
         if (!chapter) return;
         const center = i / (chapters.length - 1);
@@ -102,56 +116,96 @@ export default function Home() {
     };
     const onWheel = (event: WheelEvent) => {
       const hero = heroRef.current;
-      if (!hero || Math.abs(event.deltaY) < 4) return;
+      const profile = profileRef.current;
+      const gallery = galleryRef.current;
+      if (!hero || !profile || !gallery || window.innerWidth <= 1000 || Math.abs(event.deltaY) < 4) return;
       const start = hero.offsetTop;
       const travel = Math.max(1, hero.offsetHeight - window.innerHeight);
       const currentY = window.scrollY;
-      if (currentY < start - 2 || currentY > start + travel + 2) return;
-
-      const currentStep = Math.round(clamp((currentY - start) / travel) * (chapters.length - 1));
       const direction = event.deltaY > 0 ? 1 : -1;
-      const nextStep = currentStep + direction;
-      if (nextStep >= chapters.length && direction > 0 && profileRef.current) {
+      if (scrollSnapping) {
         event.preventDefault();
-        if (heroSnapping) return;
-        heroSnapping = true;
-        lenis.scrollTo(profileRef.current.offsetTop, {
-          duration: 1.35,
-          easing: value => 1 - Math.pow(1 - value, 4),
-          force: true,
-        });
-        window.clearTimeout(heroSnapTimer);
-        heroSnapTimer = window.setTimeout(() => { heroSnapping = false; }, 1240);
         return;
       }
-      if (nextStep < 0 || nextStep >= chapters.length) return;
 
-      event.preventDefault();
-      if (heroSnapping) return;
-      heroSnapping = true;
-      const targetY = start + travel * (nextStep / (chapters.length - 1));
-      lenis.scrollTo(targetY, {
-        duration: 1.05,
-        easing: value => 1 - Math.pow(1 - value, 4),
-        force: true,
-      });
-      window.clearTimeout(heroSnapTimer);
-      heroSnapTimer = window.setTimeout(() => { heroSnapping = false; }, 920);
+      if (currentY >= start - 2 && currentY <= start + travel + 2) {
+        const currentStep = Math.round(clamp((currentY - start) / travel) * (chapters.length - 1));
+        const nextStep = currentStep + direction;
+        event.preventDefault();
+        if (scrollSnapping) return;
+        if (nextStep >= chapters.length) snapTo(profile.offsetTop, 1.2);
+        else if (nextStep >= 0) snapTo(start + travel * (nextStep / (chapters.length - 1)));
+        return;
+      }
+
+      const profileStart = profile.offsetTop;
+      const profileEnd = profileStart + profile.offsetHeight;
+      if (currentY > start + travel && currentY < profileStart - 2) {
+        event.preventDefault();
+        snapTo(direction > 0 ? profileStart : start + travel, .8);
+        return;
+      }
+      if (currentY > start + travel && currentY >= profileStart - 3 && currentY < profileEnd - 3) {
+        event.preventDefault();
+        if (scrollSnapping) return;
+        snapTo(direction > 0 ? gallery.offsetTop : start + travel, 1.15);
+        return;
+      }
+
+      const galleryStart = gallery.offsetTop;
+      const galleryTravel = Math.max(1, gallery.offsetHeight - window.innerHeight);
+      if (currentY >= galleryStart - 3 && currentY <= galleryStart + galleryTravel + 3) {
+        const currentProject = Math.round(clamp((currentY - galleryStart) / galleryTravel) * (works.length - 1));
+        const nextProject = currentProject + direction;
+        event.preventDefault();
+        if (scrollSnapping) return;
+        if (nextProject < 0) snapTo(profileStart, 1.15);
+        else if (nextProject >= works.length) snapTo(galleryStart + gallery.offsetHeight, 1.2);
+        else snapTo(galleryStart + galleryTravel * (nextProject / (works.length - 1)), .95);
+      }
+    };
+    const onScrollSettled = () => {
+      window.clearTimeout(settleTimer);
+      if (window.innerWidth <= 1000 || scrollSnapping) return;
+      settleTimer = window.setTimeout(() => {
+        if (scrollSnapping) return;
+        const hero = heroRef.current;
+        const gallery = galleryRef.current;
+        if (!hero || !gallery) return;
+        const currentY = window.scrollY;
+        const heroTravel = Math.max(1, hero.offsetHeight - window.innerHeight);
+        if (currentY >= hero.offsetTop && currentY <= hero.offsetTop + heroTravel) {
+          const step = Math.round(clamp((currentY - hero.offsetTop) / heroTravel) * (chapters.length - 1));
+          const target = hero.offsetTop + heroTravel * step / (chapters.length - 1);
+          if (Math.abs(target - currentY) > 3) snapTo(target, .72);
+          return;
+        }
+        const galleryTravel = Math.max(1, gallery.offsetHeight - window.innerHeight);
+        if (currentY >= gallery.offsetTop && currentY <= gallery.offsetTop + galleryTravel) {
+          const step = Math.round(clamp((currentY - gallery.offsetTop) / galleryTravel) * (works.length - 1));
+          const target = gallery.offsetTop + galleryTravel * step / (works.length - 1);
+          if (Math.abs(target - currentY) > 3) snapTo(target, .72);
+        }
+      }, 150);
     };
     window.addEventListener('pointermove', onPointer, { passive: true });
     window.addEventListener('wheel', onWheel, { passive: false, capture: true });
+    window.addEventListener('scroll', onScrollSettled, { passive: true });
     frame = requestAnimationFrame(render);
     return () => {
       cancelAnimationFrame(frame);
-      window.clearTimeout(heroSnapTimer);
+      window.clearTimeout(snapTimer);
+      window.clearTimeout(settleTimer);
       lenis.destroy();
       window.removeEventListener('pointermove', onPointer);
       window.removeEventListener('wheel', onWheel, { capture: true });
+      window.removeEventListener('scroll', onScrollSettled);
     };
   }, []);
 
   return (
     <main>
+      <EntryPrelude />
       <div className="cursor" aria-hidden="true"><span /></div>
       <header className="site-header">
         <a className="brand" href="#top">LJH<span>®</span></a>
@@ -210,11 +264,12 @@ export default function Home() {
       <section className="gallery-scroll" id="work" ref={galleryRef}>
         <div className="gallery-stage">
           <ProjectCarouselScene projects={works} />
-          <div className="gallery-backdrop">OUR WORK · OUR WORK · OUR WORK<br />OUR WORK · OUR WORK · OUR WORK<br />OUR WORK · OUR WORK · OUR WORK</div>
+          <div className="gallery-backdrop" aria-hidden="true"><div className="gallery-backdrop-track">{Array.from({ length: 12 }, (_, i) => <span key={i}>OUR WORK · SELECTED PROJECTS · ARCHIVE</span>)}</div></div>
           <div className="gallery-head"><span>PROJECT ARCHIVE</span><span>DRAGGED BY SCROLL</span><span>(07)</span></div>
           <div className="card-space">
             {works.map((work, i) => <article className="project-card" key={work.no} ref={el => { cardRefs.current[i] = el; }}>
               <a className="project-card-link" href={`/projects/${work.slug}`} aria-label={`查看 ${work.title} 项目详情`} />
+              <div className="card-label"><span>{work.no}</span><div><h2>{work.title}</h2><p>{work.en}</p></div><small>{work.type}</small></div>
             </article>)}
           </div>
           <div className="gallery-progress"><i /><span>SCROLL THROUGH PROJECTS</span></div>
