@@ -8,7 +8,7 @@ import ProjectCarouselScene from './ProjectCarouselScene';
 import EntryPrelude from './EntryPrelude';
 
 const chapters = [
-  { layout: 'statement', tag: '00 / INTRODUCTION', title: <><span className="manifesto-title">萬千無象</span><small>Plain paper thousand hoodles</small><i /><span className="manifesto-line">当<em>空白</em>开始汲取<strong>空间</strong></span><small>When the blank begins to absorb space</small></>, copy: '' },
+  { layout: 'statement', tag: '00 / INTRODUCTION', title: <><span className="manifesto-title">萬千炁象</span><small>Plain paper thousand hoodles</small><i /><span className="manifesto-line">当<em>空白</em>开始汲取<strong>空间</strong></span><small>When the blank begins to absorb space</small></>, copy: '' },
   { layout: 'glyph-left', tag: '[ L / LATITUDE ]', title: <>L — Latitude</>, copy: '设计的格局与思考的广度' },
   { layout: 'glyph-right', tag: '[ J / JUNCTION ]', title: <>J — Junction</>, copy: '空间的交汇、人与人 / 人与自然的互动' },
   { layout: 'glyph-bottom', tag: '[ H / HARMONY ]', title: <>H — Harmony</>, copy: '设计的终极目标——人与天地的共融' },
@@ -35,11 +35,16 @@ export default function Home() {
       scrollSnapping = true;
       lenis.scrollTo(target, {
         duration,
+        lock: true,
         easing: value => 1 - Math.pow(1 - value, 4),
         force: true,
+        onComplete: () => {
+          window.clearTimeout(snapTimer);
+          scrollSnapping = false;
+        },
       });
       window.clearTimeout(snapTimer);
-      snapTimer = window.setTimeout(() => { scrollSnapping = false; }, duration * 1000 + 140);
+      snapTimer = window.setTimeout(() => { scrollSnapping = false; }, duration * 1000 + 480);
     };
     const render = (time: number) => {
       lenis.raf(time);
@@ -118,7 +123,7 @@ export default function Home() {
       const hero = heroRef.current;
       const profile = profileRef.current;
       const gallery = galleryRef.current;
-      if (!hero || !profile || !gallery || window.innerWidth <= 1000 || Math.abs(event.deltaY) < 4) return;
+      if (!hero || !profile || !gallery || window.innerWidth <= 1000 || Math.abs(event.deltaY) < 2) return;
       const start = hero.offsetTop;
       const travel = Math.max(1, hero.offsetHeight - window.innerHeight);
       const currentY = window.scrollY;
@@ -134,7 +139,7 @@ export default function Home() {
         event.preventDefault();
         if (scrollSnapping) return;
         if (nextStep >= chapters.length) snapTo(profile.offsetTop, 1.2);
-        else if (nextStep >= 0) snapTo(start + travel * (nextStep / (chapters.length - 1)));
+        else if (nextStep >= 0) snapTo(start + travel * (nextStep / (chapters.length - 1)), 1.12);
         return;
       }
 
@@ -191,11 +196,13 @@ export default function Home() {
     window.addEventListener('pointermove', onPointer, { passive: true });
     window.addEventListener('wheel', onWheel, { passive: false, capture: true });
     window.addEventListener('scroll', onScrollSettled, { passive: true });
+    lenis.on('scroll', onScrollSettled);
     frame = requestAnimationFrame(render);
     return () => {
       cancelAnimationFrame(frame);
       window.clearTimeout(snapTimer);
       window.clearTimeout(settleTimer);
+      lenis.off('scroll', onScrollSettled);
       lenis.destroy();
       window.removeEventListener('pointermove', onPointer);
       window.removeEventListener('wheel', onWheel, { capture: true });
