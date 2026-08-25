@@ -17,7 +17,7 @@ export default function ProjectCarouselScene({ projects }:{ projects:Project[] }
     const camera=new THREE.PerspectiveCamera(43,1,.1,80);
     camera.position.set(0,0,7.2);
     const renderer=new THREE.WebGLRenderer({antialias:true,alpha:true,powerPreference:'high-performance'});
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio,1.6));
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio,window.innerWidth<760?1.2:1.6));
     renderer.outputColorSpace=THREE.SRGBColorSpace;
     host.appendChild(renderer.domElement);
 
@@ -160,7 +160,7 @@ export default function ProjectCarouselScene({ projects }:{ projects:Project[] }
       const width=host.clientWidth,height=host.clientHeight;
       renderer.setSize(width,height,false);
       camera.aspect=width/Math.max(1,height);
-      camera.position.z=camera.aspect<.8?15.2:7.2;
+      camera.position.z=camera.aspect<.8?16.4:7.2;
       camera.updateProjectionMatrix();
     };
     const animate=(time:number)=>{

@@ -20,7 +20,8 @@ export default function EntryPrelude(){
     history.scrollRestoration='manual';
     window.scrollTo(0,0);
     document.documentElement.classList.add('is-entering');
-    let width=innerWidth,height=innerHeight,dpr=Math.min(devicePixelRatio,1.75),frame=0,start=performance.now();
+    const pixelRatio=()=>Math.min(devicePixelRatio,innerWidth<760?1.25:1.75);
+    let width=innerWidth,height=innerHeight,dpr=pixelRatio(),frame=0,start=performance.now();
     let particles:Particle[]=[];
 
     const buildParticles=()=>{
@@ -43,7 +44,8 @@ export default function EntryPrelude(){
           if(pixels[(y*sample.width+x)*4+3]>100)points.push({x:x+width/2-sw/2,y:y+height/2-sh/2});
         }
       }
-      const stride=Math.max(1,Math.ceil(points.length/1350));
+      const particleLimit=width<760?760:1350;
+      const stride=Math.max(1,Math.ceil(points.length/particleLimit));
       particles=points.filter((_,index)=>index%stride===0).map((point,index)=>{
         const seed=(Math.sin(index*91.731)*43758.5453)%1;
         const edge=index%4;
@@ -55,7 +57,7 @@ export default function EntryPrelude(){
       });
     };
     const resize=()=>{
-      width=innerWidth;height=innerHeight;dpr=Math.min(devicePixelRatio,1.75);
+      width=innerWidth;height=innerHeight;dpr=pixelRatio();
       canvas.width=Math.floor(width*dpr);canvas.height=Math.floor(height*dpr);
       canvas.style.width=`${width}px`;canvas.style.height=`${height}px`;
       context.setTransform(dpr,0,0,dpr,0,0);

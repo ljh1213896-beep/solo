@@ -22,7 +22,7 @@ export default function ProfileRoom() {
     const camera = new THREE.PerspectiveCamera(52, 1, .1, 90);
     camera.position.set(0, 0, 12.5);
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false, powerPreference: 'high-performance' });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.6));
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, window.innerWidth < 760 ? 1.2 : 1.6));
     renderer.setClearColor(0x040506, 1);
     host.appendChild(renderer.domElement);
 

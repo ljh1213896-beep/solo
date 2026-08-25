@@ -25,7 +25,8 @@ export default function LjhScene() {
     const camera = new THREE.PerspectiveCamera(40, 1, .1, 120);
     camera.position.set(0, .4, 18);
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'high-performance' });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.75));
+    const isMobile = window.innerWidth < 760;
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, isMobile ? 1.25 : 1.75));
     renderer.setClearColor(0x020202, 0);
     renderer.outputColorSpace = THREE.SRGBColorSpace;
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
@@ -308,7 +309,7 @@ export default function LjhScene() {
       });
       camera.position.x = smoothX * 1.2;
       camera.position.y = .35 - smoothY * .8;
-      camera.position.z = 18 - progress * .75;
+      camera.position.z = (isMobile ? 21.4 : 18) - progress * .75;
       camera.rotation.z = Math.sin(progress * Math.PI * 3) * .014;
       camera.lookAt(0, -.05, 0);
       blue.position.x = -5.8 + smoothX * 4;

@@ -21,7 +21,7 @@ export default function CurvedMedia({ image, mode = 'hero' }: CurvedMediaProps) 
     const camera = new THREE.PerspectiveCamera(42, 1, .1, 20);
     camera.position.z = 3.35;
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'high-performance' });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.7));
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, window.innerWidth < 760 ? 1.2 : 1.7));
     renderer.outputColorSpace = THREE.SRGBColorSpace;
     host.appendChild(renderer.domElement);
 
