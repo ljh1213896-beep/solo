@@ -1,3 +1,5 @@
+import ProjectCursor from './ProjectCursor';
+
 type MediaSection = {
   id: string;
   title: string;
@@ -38,6 +40,7 @@ const sections: MediaSection[] = [
 export default function SaltLakeStory() {
   return (
     <div className="salt-sequence">
+      <ProjectCursor variant="flamingo" />
       {sections.map(section => (
         <section className={`salt-media-section salt-layout-${section.layout}`} key={section.id}>
           <header className="salt-media-head">

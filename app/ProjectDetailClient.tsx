@@ -5,6 +5,7 @@ import Lenis from 'lenis';
 import CurvedMedia from './CurvedMedia';
 import SaltLakeStory from './SaltLakeStory';
 import MedievalPirateStory from './MedievalPirateStory';
+import DigitalNomadStory from './DigitalNomadStory';
 import type { Project } from './projectData';
 
 export default function ProjectDetailClient({ project, next }: { project: Project; next: Project }) {
@@ -35,7 +36,7 @@ export default function ProjectDetailClient({ project, next }: { project: Projec
   };
 
   return (
-    <main ref={mainRef} className={`project-detail ${project.slug === 'salt-lake-habitat' ? 'is-salt-lake' : ''} ${project.slug === 'medieval-pirate' ? 'is-medieval' : ''} ${leaving ? 'is-leaving' : ''}`}>
+    <main ref={mainRef} className={`project-detail ${project.slug === 'salt-lake-habitat' ? 'is-salt-lake' : ''} ${project.slug === 'medieval-pirate' ? 'is-medieval' : ''} ${project.slug === 'digital-nomad' ? 'is-digital-nomad' : ''} ${leaving ? 'is-leaving' : ''}`}>
       <header className="project-header">
         <a href="/#work" className="project-brand">LJH<span>®</span></a>
         <span>{project.no} / 07</span>
@@ -43,22 +44,24 @@ export default function ProjectDetailClient({ project, next }: { project: Projec
         <a href="/#work" className="project-close" aria-label="返回作品列表">BACK ×</a>
       </header>
 
-      <section className="project-detail-hero">
+      {project.slug !== 'salt-lake-habitat' && <section className="project-detail-hero">
         <div className="project-hero-backdrop" aria-hidden="true">{project.en} · {project.en} · {project.en}</div>
         {project.slug === 'salt-lake-habitat'
           ? <div className="salt-hero-plain" aria-hidden="true"><span>LANDSCAPE / ECOLOGY / 2025</span></div>
           : project.slug === 'medieval-pirate'
             ? <div className="pirate-hero-media"><img src="/projects/medieval-pirate-detail/renders/06.webp" alt="Medieval Pirate 中古店入口效果图" /></div>
-            : <CurvedMedia image={project.image} />}
+            : project.slug === 'digital-nomad'
+              ? <div className="nomad-hero-media"><img src={project.image} alt="数字游民社区办公空间主视觉" /></div>
+              : <CurvedMedia image={project.image} />}
         <div className="project-hero-title">
           <p>{project.no} / {project.year}</p>
           <h1>{project.title}</h1>
           <h2>{project.en}</h2>
         </div>
         <div className="project-hero-meta"><span>{project.location}</span><span>{project.role}</span><span>SCROLL TO EXPLORE ↓</span></div>
-      </section>
+      </section>}
 
-      {project.slug === 'salt-lake-habitat' ? <SaltLakeStory /> : project.slug === 'medieval-pirate' ? <MedievalPirateStory /> : <>
+      {project.slug === 'salt-lake-habitat' ? <SaltLakeStory /> : project.slug === 'medieval-pirate' ? <MedievalPirateStory /> : project.slug === 'digital-nomad' ? <DigitalNomadStory /> : <>
         <section className="project-overview">
           <div className="project-overview-index"><span>PROJECT OVERVIEW</span><b>[ {project.no} ]</b></div>
           <div className="project-overview-copy">
