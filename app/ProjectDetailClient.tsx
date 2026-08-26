@@ -3,6 +3,8 @@
 import { useEffect, useRef, useState } from 'react';
 import Lenis from 'lenis';
 import CurvedMedia from './CurvedMedia';
+import SaltLakeStory from './SaltLakeStory';
+import MedievalPirateStory from './MedievalPirateStory';
 import type { Project } from './projectData';
 
 export default function ProjectDetailClient({ project, next }: { project: Project; next: Project }) {
@@ -33,7 +35,7 @@ export default function ProjectDetailClient({ project, next }: { project: Projec
   };
 
   return (
-    <main ref={mainRef} className={`project-detail ${leaving ? 'is-leaving' : ''}`}>
+    <main ref={mainRef} className={`project-detail ${project.slug === 'salt-lake-habitat' ? 'is-salt-lake' : ''} ${project.slug === 'medieval-pirate' ? 'is-medieval' : ''} ${leaving ? 'is-leaving' : ''}`}>
       <header className="project-header">
         <a href="/#work" className="project-brand">LJH<span>®</span></a>
         <span>{project.no} / 07</span>
@@ -43,7 +45,11 @@ export default function ProjectDetailClient({ project, next }: { project: Projec
 
       <section className="project-detail-hero">
         <div className="project-hero-backdrop" aria-hidden="true">{project.en} · {project.en} · {project.en}</div>
-        <CurvedMedia image={project.image} />
+        {project.slug === 'salt-lake-habitat'
+          ? <div className="salt-hero-plain" aria-hidden="true"><span>LANDSCAPE / ECOLOGY / 2025</span></div>
+          : project.slug === 'medieval-pirate'
+            ? <div className="pirate-hero-media"><img src="/projects/medieval-pirate-detail/renders/06.webp" alt="Medieval Pirate 中古店入口效果图" /></div>
+            : <CurvedMedia image={project.image} />}
         <div className="project-hero-title">
           <p>{project.no} / {project.year}</p>
           <h1>{project.title}</h1>
@@ -52,29 +58,31 @@ export default function ProjectDetailClient({ project, next }: { project: Projec
         <div className="project-hero-meta"><span>{project.location}</span><span>{project.role}</span><span>SCROLL TO EXPLORE ↓</span></div>
       </section>
 
-      <section className="project-overview">
-        <div className="project-overview-index"><span>PROJECT OVERVIEW</span><b>[ {project.no} ]</b></div>
-        <div className="project-overview-copy">
-          <p className="project-lead">{project.summary}</p>
-          <p>{project.concept}</p>
-        </div>
-        <dl>
-          <div><dt>YEAR</dt><dd>{project.year}</dd></div>
-          <div><dt>LOCATION</dt><dd>{project.location}</dd></div>
-          <div><dt>ROLE</dt><dd>{project.role}</dd></div>
-        </dl>
-      </section>
+      {project.slug === 'salt-lake-habitat' ? <SaltLakeStory /> : project.slug === 'medieval-pirate' ? <MedievalPirateStory /> : <>
+        <section className="project-overview">
+          <div className="project-overview-index"><span>PROJECT OVERVIEW</span><b>[ {project.no} ]</b></div>
+          <div className="project-overview-copy">
+            <p className="project-lead">{project.summary}</p>
+            <p>{project.concept}</p>
+          </div>
+          <dl>
+            <div><dt>YEAR</dt><dd>{project.year}</dd></div>
+            <div><dt>LOCATION</dt><dd>{project.location}</dd></div>
+            <div><dt>ROLE</dt><dd>{project.role}</dd></div>
+          </dl>
+        </section>
 
-      <section className="project-image-study">
-        <div className="project-image-frame"><img src={project.image} alt={`${project.title} 项目主视觉`} /></div>
-        <p>01 / SPATIAL FRAME</p>
-      </section>
+        <section className="project-image-study">
+          <div className="project-image-frame"><img src={project.image} alt={`${project.title} 项目主视觉`} /></div>
+          <p>01 / SPATIAL FRAME</p>
+        </section>
 
-      <section className="project-concept-band">
-        <p>CONCEPT / 设计概念</p>
-        <h2>{project.concept}</h2>
-        <div>{project.keywords.map(keyword => <span key={keyword}>{keyword}</span>)}</div>
-      </section>
+        <section className="project-concept-band">
+          <p>CONCEPT / 设计概念</p>
+          <h2>{project.concept}</h2>
+          <div>{project.keywords.map(keyword => <span key={keyword}>{keyword}</span>)}</div>
+        </section>
+      </>}
 
       <section className="next-project">
         <div className="next-project-sticky">
