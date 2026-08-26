@@ -13,6 +13,8 @@ import type { Project } from './projectData';
 
 export default function ProjectDetailClient({ project, next }: { project: Project; next: Project }) {
   const mainRef = useRef<HTMLElement>(null);
+  const qixiangVideoRef = useRef<HTMLVideoElement>(null);
+  const qixiangTitleRef = useRef<HTMLDivElement>(null);
   const [leaving, setLeaving] = useState(false);
 
   useEffect(() => {
@@ -30,6 +32,61 @@ export default function ProjectDetailClient({ project, next }: { project: Projec
     frame = requestAnimationFrame(animate);
     return () => { cancelAnimationFrame(frame); lenis.destroy(); };
   }, []);
+
+  useEffect(() => {
+    if (project.slug !== 'myriad-formless') return;
+    const video = qixiangVideoRef.current;
+    const title = qixiangTitleRef.current;
+    if (!video || !title) return;
+    const canvas = document.createElement('canvas');
+    canvas.width = 24;
+    canvas.height = 12;
+    const context = canvas.getContext('2d', { willReadFrequently:true });
+    if (!context) return;
+    let frame = 0;
+    let lastSample = 0;
+    let redWeight = .5;
+
+    const sample = (time:number) => {
+      if (time - lastSample > 120 && video.readyState >= 2 && video.videoWidth > 0) {
+        lastSample = time;
+        const videoRect = video.getBoundingClientRect();
+        const titleRect = title.getBoundingClientRect();
+        const scale = Math.max(videoRect.width / video.videoWidth, videoRect.height / video.videoHeight);
+        const renderedWidth = video.videoWidth * scale;
+        const renderedHeight = video.videoHeight * scale;
+        const offsetX = (renderedWidth - videoRect.width) / 2;
+        const offsetY = (renderedHeight - videoRect.height) / 2;
+        const sourceX = Math.max(0, (titleRect.left - videoRect.left + offsetX) / scale);
+        const sourceY = Math.max(0, (titleRect.top - videoRect.top + offsetY) / scale);
+        const sourceWidth = Math.min(video.videoWidth - sourceX, titleRect.width / scale);
+        const sourceHeight = Math.min(video.videoHeight - sourceY, titleRect.height / scale);
+        if (sourceWidth > 0 && sourceHeight > 0) {
+          context.drawImage(video, sourceX, sourceY, sourceWidth, sourceHeight, 0, 0, canvas.width, canvas.height);
+          const pixels = context.getImageData(0, 0, canvas.width, canvas.height).data;
+          let redPixels = 0;
+          let lightPixels = 0;
+          let luminance = 0;
+          for (let index = 0; index < pixels.length; index += 4) {
+            const red = pixels[index];
+            const green = pixels[index + 1];
+            const blue = pixels[index + 2];
+            luminance += red * .2126 + green * .7152 + blue * .0722;
+            if (red > 115 && red > green * 1.3 && red > blue * 1.3) redPixels += 1;
+            if (red + green + blue > 650) lightPixels += 1;
+          }
+          const samples = pixels.length / 4;
+          const averageLuminance = luminance / samples;
+          const currentWeight = redPixels / Math.max(1, redPixels + lightPixels);
+          redWeight = redWeight * .72 + currentWeight * .28;
+          title.classList.toggle('is-on-red', redWeight > .48 || averageLuminance < 145);
+        }
+      }
+      frame = requestAnimationFrame(sample);
+    };
+    frame = requestAnimationFrame(sample);
+    return () => cancelAnimationFrame(frame);
+  }, [project.slug]);
 
   const goNext = (event: React.MouseEvent<HTMLAnchorElement>) => {
     event.preventDefault();
@@ -60,9 +117,9 @@ export default function ProjectDetailClient({ project, next }: { project: Projec
                 : project.slug === 'tidal-moon-library'
                   ? <div className="tidal-hero-media"><img src="/projects/tidal-moon-detail/full/025.webp" alt="汐月书庭图书馆空间效果图" /></div>
                   : project.slug === 'myriad-formless'
-                    ? <div className="qixiang-hero-media"><video src="/projects/qixiang-cover.mp4?v=2" poster="/projects/qixiang-cover.webp?v=2" autoPlay muted loop playsInline /></div>
+                    ? <div className="qixiang-hero-media"><video ref={qixiangVideoRef} src="/projects/qixiang-cover.mp4?v=2" poster="/projects/qixiang-cover.webp?v=2" autoPlay muted loop playsInline /></div>
                   : <CurvedMedia image={project.image} />}
-        <div className="project-hero-title">
+        <div ref={project.slug === 'myriad-formless' ? qixiangTitleRef : undefined} className="project-hero-title">
           <p>{project.no} / {project.year}</p>
           <h1>{project.title}</h1>
           <h2>{project.en}</h2>

@@ -162,7 +162,7 @@ export default function ProjectCursor({ variant }:{ variant:CursorVariant }) {
   return <>
     <canvas ref={canvasRef} className={`project-cursor-trail is-${variant}`} aria-hidden="true" />
     <span ref={cursorRef} className={`project-cursor-icon is-${variant}`} aria-hidden="true">
-      {variant === 'flamingo' ? '🦩' : variant === 'anchor' ? '⚓' : variant === 'coffee' ? '☕' : variant === 'leaf' ? '🍁' : variant === 'book' ? <><i /><b /></> : <><i /><b /><em /></>}
+      {variant === 'flamingo' ? '🦩' : variant === 'anchor' ? '⚓' : variant === 'coffee' ? '☕' : variant === 'leaf' ? '🍁' : variant === 'book' ? <><i /><b /></> : <img src="/projects/qixiang-cursor-logo.png" alt="" />}
     </span>
   </>;
 }
