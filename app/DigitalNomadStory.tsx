@@ -1,9 +1,12 @@
 'use client';
 
+import ProjectCursor from './ProjectCursor';
+
 const assetRoot = '/projects/digital-nomad-detail';
 
 export default function DigitalNomadStory() {
   return <div className="nomad-story">
+    <ProjectCursor variant="coffee" />
     <section className="nomad-section nomad-effects" aria-labelledby="nomad-effects-title">
       <header className="nomad-section-head">
         <span>01 / 02</span>
