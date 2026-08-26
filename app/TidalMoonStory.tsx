@@ -1,10 +1,13 @@
 'use client';
 
+import ProjectCursor from './ProjectCursor';
+
 const assetRoot = '/projects/tidal-moon-detail';
 const fullPages = Array.from({ length:108 }, (_, index) => `${assetRoot}/full/${String(index + 1).padStart(3, '0')}.webp`);
 
 export default function TidalMoonStory() {
   return <div className="tidal-story">
+    <ProjectCursor variant="book" />
     <div className="tidal-manifesto" aria-hidden="true">
       <span>READ</span><span>PAUSE</span><span>GATHER</span><span>REPEAT</span>
     </div>
