@@ -4,7 +4,7 @@ import { useEffect, useRef } from 'react';
 
 type Particle = { x:number; y:number; vx:number; vy:number; life:number; size:number; rotation:number; char?:string };
 
-type CursorVariant = 'flamingo' | 'anchor' | 'coffee' | 'leaf' | 'book';
+type CursorVariant = 'flamingo' | 'anchor' | 'coffee' | 'leaf' | 'book' | 'typhoon';
 
 const bookCharacters = ['阅', '读', '字', '句', 'A', 'B', 'C', '·'];
 
@@ -48,6 +48,8 @@ export default function ProjectCursor({ variant }:{ variant:CursorVariant }) {
           ? Math.min(2, 1 + Math.floor(distance / 42))
           : variant === 'book'
             ? Math.min(2, 1 + Math.floor(distance / 38))
+            : variant === 'typhoon'
+              ? Math.min(3, 1 + Math.floor(distance / 28))
           : Math.min(4, 1 + Math.floor(distance / 24));
       for (let index = 0; index < count; index += 1) particles.push({
         x:event.clientX + (Math.random() - .5) * 9,
@@ -55,7 +57,7 @@ export default function ProjectCursor({ variant }:{ variant:CursorVariant }) {
         vx:(Math.random() - .5) * .5,
         vy:-.12 - Math.random() * .38,
         life:1,
-        size:variant === 'book' ? 8 + Math.random() * 4 : variant === 'flamingo' ? 1.8 + Math.random() * 1.5 : variant === 'leaf' ? 1.5 + Math.random() * 2.2 : .55 + Math.random() * 1.25,
+        size:variant === 'book' ? 8 + Math.random() * 4 : variant === 'typhoon' ? .8 + Math.random() * 1.4 : variant === 'flamingo' ? 1.8 + Math.random() * 1.5 : variant === 'leaf' ? 1.5 + Math.random() * 2.2 : .55 + Math.random() * 1.25,
         rotation:Math.random() * Math.PI,
         char:variant === 'book' ? bookCharacters[Math.floor(Math.random() * bookCharacters.length)] : undefined,
       });
@@ -69,7 +71,7 @@ export default function ProjectCursor({ variant }:{ variant:CursorVariant }) {
         particle.x += particle.vx;
         particle.y += particle.vy;
         particle.rotation += .018;
-        particle.life *= variant === 'coffee' ? .965 : variant === 'book' ? .958 : variant === 'flamingo' ? .954 : .947;
+        particle.life *= variant === 'coffee' ? .965 : variant === 'book' ? .958 : variant === 'typhoon' ? .952 : variant === 'flamingo' ? .954 : .947;
         context.save();
         context.translate(particle.x, particle.y);
         context.rotate(particle.rotation);
@@ -102,6 +104,22 @@ export default function ProjectCursor({ variant }:{ variant:CursorVariant }) {
           context.shadowBlur = 5;
           context.moveTo(0, particle.size * 4);
           context.bezierCurveTo(-3, particle.size, 4, -particle.size * 2, 0, -particle.size * 5);
+          context.stroke();
+        } else if (variant === 'typhoon') {
+          context.beginPath();
+          context.strokeStyle = `rgba(191, 55, 55, ${particle.life * .78})`;
+          context.lineWidth = particle.size;
+          context.lineCap = 'round';
+          context.shadowColor = 'rgba(181, 45, 45, .4)';
+          context.shadowBlur = 4;
+          context.moveTo(-8, 1);
+          context.bezierCurveTo(-3, -4, 3, 5, 10, -1);
+          context.stroke();
+          context.beginPath();
+          context.strokeStyle = `rgba(218, 103, 96, ${particle.life * .5})`;
+          context.lineWidth = Math.max(.45, particle.size * .55);
+          context.moveTo(-5, 4);
+          context.bezierCurveTo(0, 0, 4, 6, 8, 3);
           context.stroke();
         } else if (variant === 'book') {
           context.fillStyle = `rgba(236, 236, 232, ${particle.life * .72})`;
@@ -144,7 +162,7 @@ export default function ProjectCursor({ variant }:{ variant:CursorVariant }) {
   return <>
     <canvas ref={canvasRef} className={`project-cursor-trail is-${variant}`} aria-hidden="true" />
     <span ref={cursorRef} className={`project-cursor-icon is-${variant}`} aria-hidden="true">
-      {variant === 'flamingo' ? '🦩' : variant === 'anchor' ? '⚓' : variant === 'coffee' ? '☕' : variant === 'leaf' ? '🍁' : <><i /><b /></>}
+      {variant === 'flamingo' ? '🦩' : variant === 'anchor' ? '⚓' : variant === 'coffee' ? '☕' : variant === 'leaf' ? '🍁' : variant === 'book' ? <><i /><b /></> : <><i /><b /><em /></>}
     </span>
   </>;
 }

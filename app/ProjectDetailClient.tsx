@@ -8,6 +8,7 @@ import MedievalPirateStory from './MedievalPirateStory';
 import DigitalNomadStory from './DigitalNomadStory';
 import AutumnMarketStory from './AutumnMarketStory';
 import TidalMoonStory from './TidalMoonStory';
+import QixiangStory from './QixiangStory';
 import type { Project } from './projectData';
 
 export default function ProjectDetailClient({ project, next }: { project: Project; next: Project }) {
@@ -38,7 +39,7 @@ export default function ProjectDetailClient({ project, next }: { project: Projec
   };
 
   return (
-    <main ref={mainRef} className={`project-detail ${project.slug === 'salt-lake-habitat' ? 'is-salt-lake' : ''} ${project.slug === 'medieval-pirate' ? 'is-medieval' : ''} ${project.slug === 'digital-nomad' ? 'is-digital-nomad' : ''} ${project.slug === 'autumn-market' ? 'is-autumn-market' : ''} ${project.slug === 'tidal-moon-library' ? 'is-tidal-moon' : ''} ${leaving ? 'is-leaving' : ''}`}>
+    <main ref={mainRef} className={`project-detail ${project.slug === 'salt-lake-habitat' ? 'is-salt-lake' : ''} ${project.slug === 'medieval-pirate' ? 'is-medieval' : ''} ${project.slug === 'digital-nomad' ? 'is-digital-nomad' : ''} ${project.slug === 'autumn-market' ? 'is-autumn-market' : ''} ${project.slug === 'tidal-moon-library' ? 'is-tidal-moon' : ''} ${project.slug === 'myriad-formless' ? 'is-qixiang' : ''} ${leaving ? 'is-leaving' : ''}`}>
       <header className="project-header">
         <a href="/#work" className="project-brand">LJH<span>®</span></a>
         <span>{project.no} / 07</span>
@@ -58,6 +59,8 @@ export default function ProjectDetailClient({ project, next }: { project: Projec
                 ? <div className="autumn-hero-media"><img src="/projects/autumn-market-detail/effects/01.webp" alt="秋风市集空间效果图" /></div>
                 : project.slug === 'tidal-moon-library'
                   ? <div className="tidal-hero-media"><img src="/projects/tidal-moon-detail/full/025.webp" alt="汐月书庭图书馆空间效果图" /></div>
+                  : project.slug === 'myriad-formless'
+                    ? <div className="qixiang-hero-media"><video src="/projects/qixiang-cover.mp4?v=2" poster="/projects/qixiang-cover.webp?v=2" autoPlay muted loop playsInline /></div>
                   : <CurvedMedia image={project.image} />}
         <div className="project-hero-title">
           <p>{project.no} / {project.year}</p>
@@ -67,7 +70,7 @@ export default function ProjectDetailClient({ project, next }: { project: Projec
         <div className="project-hero-meta"><span>{project.location}</span><span>{project.role}</span><span>SCROLL TO EXPLORE ↓</span></div>
       </section>}
 
-      {project.slug === 'salt-lake-habitat' ? <SaltLakeStory /> : project.slug === 'medieval-pirate' ? <MedievalPirateStory /> : project.slug === 'digital-nomad' ? <DigitalNomadStory /> : project.slug === 'autumn-market' ? <AutumnMarketStory /> : project.slug === 'tidal-moon-library' ? <TidalMoonStory /> : <>
+      {project.slug === 'salt-lake-habitat' ? <SaltLakeStory /> : project.slug === 'medieval-pirate' ? <MedievalPirateStory /> : project.slug === 'digital-nomad' ? <DigitalNomadStory /> : project.slug === 'autumn-market' ? <AutumnMarketStory /> : project.slug === 'tidal-moon-library' ? <TidalMoonStory /> : project.slug === 'myriad-formless' ? <QixiangStory /> : <>
         <section className="project-overview">
           <div className="project-overview-index"><span>PROJECT OVERVIEW</span><b>[ {project.no} ]</b></div>
           <div className="project-overview-copy">
