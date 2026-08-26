@@ -223,7 +223,12 @@ export default function Home() {
 
       <aside className={`menu-panel ${menuOpen ? 'is-open' : ''}`} aria-hidden={!menuOpen}>
         <button onClick={() => setMenuOpen(false)} aria-label="关闭菜单">CLOSE ×</button>
-        <nav>{['HOME / 首页','WORK / 作品','PROFILE / 关于','CONTACT / 联系'].map((item, i) => <a key={item} href={i === 0 ? '#top' : i === 1 ? '#work' : i === 2 ? '#profile' : '#contact'} onClick={() => setMenuOpen(false)}><span>0{i + 1}</span>{item}</a>)}</nav>
+        <nav>{[
+          { label:'HOME / 首页', href:'#top' },
+          { label:'PROFILE / 关于', href:'#profile' },
+          { label:'WORK / 作品', href:'#work' },
+          { label:'CONTACT / 联系', href:'#contact' },
+        ].map((item, i) => <a key={item.label} href={item.href} onClick={() => setMenuOpen(false)}><span>0{i + 1}</span>{item.label}</a>)}</nav>
         <p>ENVIRONMENTAL · INTERIOR · SPATIAL · LANDSCAPE DESIGN</p>
       </aside>
 
@@ -275,7 +280,7 @@ export default function Home() {
           <div className="gallery-head"><span>PROJECT ARCHIVE</span><span>DRAGGED BY SCROLL</span><span>(07)</span></div>
           <div className="card-space">
             {works.map((work, i) => <article className="project-card" key={work.no} ref={el => { cardRefs.current[i] = el; }}>
-              <a className="project-card-link" href={`/projects/${work.slug}`} aria-label={`查看 ${work.title} 项目详情`} />
+              <a className="project-card-link" href={`/projects/${work.slug}`} aria-label={`查看 ${work.fullTitle} 项目详情`} />
               <div className="card-label"><span>{work.no}</span><div><h2>{work.title}</h2><p>{work.en}</p></div><small>{work.type}</small></div>
             </article>)}
           </div>
@@ -294,8 +299,8 @@ export default function Home() {
 
       <section className="work-index">
         <div className="index-head"><span>ALL PROJECTS</span><span>项目索引 / 2022—2025</span><span>(07)</span></div>
-        {works.map(work => <a className="index-row" href={`/projects/${work.slug}`} key={work.no}>
-          <span>{work.no}</span><div><h3>{work.title}</h3><p>{work.en}</p></div><small>{work.type}</small><time>{work.year}</time><b>↗</b><img src={work.image} alt="" />
+        {works.map(work => <a className="index-row" href={`/projects/${work.slug}`} key={work.no} aria-label={`查看 ${work.fullTitle}`}>
+          <span>{work.no}</span><div><h3>{work.title}</h3><p>{work.fullTitle}</p></div><small>{work.type}</small><time>{work.year}</time><b>↗</b><img src={work.image} alt="" />
         </a>)}
       </section>
 

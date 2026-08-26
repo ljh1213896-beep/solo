@@ -9,7 +9,8 @@ import DigitalNomadStory from './DigitalNomadStory';
 import AutumnMarketStory from './AutumnMarketStory';
 import TidalMoonStory from './TidalMoonStory';
 import QixiangStory from './QixiangStory';
-import type { Project } from './projectData';
+import OtherWorksStory from './OtherWorksStory';
+import { projects, type Project } from './projectData';
 
 export default function ProjectDetailClient({ project, next }: { project: Project; next: Project }) {
   const mainRef = useRef<HTMLElement>(null);
@@ -96,10 +97,17 @@ export default function ProjectDetailClient({ project, next }: { project: Projec
   };
 
   return (
-    <main ref={mainRef} className={`project-detail ${project.slug === 'salt-lake-habitat' ? 'is-salt-lake' : ''} ${project.slug === 'medieval-pirate' ? 'is-medieval' : ''} ${project.slug === 'digital-nomad' ? 'is-digital-nomad' : ''} ${project.slug === 'autumn-market' ? 'is-autumn-market' : ''} ${project.slug === 'tidal-moon-library' ? 'is-tidal-moon' : ''} ${project.slug === 'myriad-formless' ? 'is-qixiang' : ''} ${leaving ? 'is-leaving' : ''}`}>
+    <main ref={mainRef} className={`project-detail ${project.slug === 'salt-lake-habitat' ? 'is-salt-lake' : ''} ${project.slug === 'medieval-pirate' ? 'is-medieval' : ''} ${project.slug === 'digital-nomad' ? 'is-digital-nomad' : ''} ${project.slug === 'autumn-market' ? 'is-autumn-market' : ''} ${project.slug === 'tidal-moon-library' ? 'is-tidal-moon' : ''} ${project.slug === 'myriad-formless' ? 'is-qixiang' : ''} ${project.slug === 'experiments' ? 'is-other-works' : ''} ${leaving ? 'is-leaving' : ''}`}>
       <header className="project-header">
         <a href="/#work" className="project-brand">LJH<span>®</span></a>
-        <span>{project.no} / 07</span>
+        <details className="project-switcher">
+          <summary aria-label="切换作品"><span>{project.no} / 07</span><b>{project.title}</b><i>＋</i></summary>
+          <nav aria-label="作品快速切换">
+            {projects.map(item => <a href={`/projects/${item.slug}`} className={item.slug === project.slug ? 'is-current' : ''} aria-current={item.slug === project.slug ? 'page' : undefined} key={item.slug}>
+              <span>{item.no}</span><span><b>{item.title}</b><small>{item.fullTitle}</small></span><i>↗</i>
+            </a>)}
+          </nav>
+        </details>
         <span>{project.type}</span>
         <a href="/#work" className="project-close" aria-label="返回作品列表">BACK ×</a>
       </header>
@@ -118,6 +126,8 @@ export default function ProjectDetailClient({ project, next }: { project: Projec
                   ? <div className="tidal-hero-media"><img src="/projects/tidal-moon-detail/full/025.webp" alt="汐月书庭图书馆空间效果图" /></div>
                   : project.slug === 'myriad-formless'
                     ? <div className="qixiang-hero-media"><video ref={qixiangVideoRef} src="/projects/qixiang-cover.mp4?v=2" poster="/projects/qixiang-cover.webp?v=2" autoPlay muted loop playsInline /></div>
+                    : project.slug === 'experiments'
+                      ? <div className="other-works-hero-media"><video src="/projects/other-works-cover.mp4" poster="/projects/other-works-cover.webp" autoPlay muted loop playsInline /></div>
                   : <CurvedMedia image={project.image} />}
         <div ref={project.slug === 'myriad-formless' ? qixiangTitleRef : undefined} className="project-hero-title">
           <p>{project.no} / {project.year}</p>
@@ -127,7 +137,7 @@ export default function ProjectDetailClient({ project, next }: { project: Projec
         <div className="project-hero-meta"><span>{project.location}</span><span>{project.role}</span><span>SCROLL TO EXPLORE ↓</span></div>
       </section>}
 
-      {project.slug === 'salt-lake-habitat' ? <SaltLakeStory /> : project.slug === 'medieval-pirate' ? <MedievalPirateStory /> : project.slug === 'digital-nomad' ? <DigitalNomadStory /> : project.slug === 'autumn-market' ? <AutumnMarketStory /> : project.slug === 'tidal-moon-library' ? <TidalMoonStory /> : project.slug === 'myriad-formless' ? <QixiangStory /> : <>
+      {project.slug === 'salt-lake-habitat' ? <SaltLakeStory /> : project.slug === 'medieval-pirate' ? <MedievalPirateStory /> : project.slug === 'digital-nomad' ? <DigitalNomadStory /> : project.slug === 'autumn-market' ? <AutumnMarketStory /> : project.slug === 'tidal-moon-library' ? <TidalMoonStory /> : project.slug === 'myriad-formless' ? <QixiangStory /> : project.slug === 'experiments' ? <OtherWorksStory /> : <>
         <section className="project-overview">
           <div className="project-overview-index"><span>PROJECT OVERVIEW</span><b>[ {project.no} ]</b></div>
           <div className="project-overview-copy">
@@ -158,7 +168,7 @@ export default function ProjectDetailClient({ project, next }: { project: Projec
           <div className="next-backdrop" aria-hidden="true">NEXT PROJECT · NEXT PROJECT · NEXT PROJECT</div>
           <CurvedMedia image={next.image} mode="next" />
           <div className="next-project-label"><span>NEXT / {next.no}</span><h2>{next.title}</h2><p>{next.en}</p></div>
-          <a href={`/projects/${next.slug}`} onClick={goNext} className="next-project-link" aria-label={`进入下一个项目：${next.title}`}><span>ENTER PROJECT</span><b>↗</b></a>
+          <a href={`/projects/${next.slug}`} onClick={goNext} className="next-project-link" aria-label={`进入下一个项目：${next.fullTitle}`}><span>ENTER PROJECT</span><b>↗</b></a>
         </div>
       </section>
 

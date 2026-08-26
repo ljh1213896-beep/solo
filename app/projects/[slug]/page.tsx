@@ -11,7 +11,7 @@ export async function generateMetadata({ params }: { params:Promise<{ slug:strin
   const { slug } = await params;
   const project = getProject(slug);
   if (!project) return {};
-  const title = `${project.title} — LJH Portfolio`;
+  const title = `${project.fullTitle} — LJH Portfolio`;
   const description = `${project.summary} ${project.concept}`;
   const image = `https://ljh-0408.pages.dev${project.image}`;
   return {
