@@ -6,6 +6,7 @@ import LjhScene from './LjhScene';
 import { projects as works } from './projectData';
 import ProjectCarouselScene from './ProjectCarouselScene';
 import EntryPrelude from './EntryPrelude';
+import BrandMarquee from './BrandMarquee';
 
 const chapters = [
   { layout: 'statement', tag: '00 / INTRODUCTION', title: <><span className="manifesto-title">萬千炁象</span><small>Plain paper thousand hoodles</small><i /><span className="manifesto-line">当<em>空白</em>开始汲取<strong>空间</strong></span><small>When the blank begins to absorb space</small></>, copy: '' },
@@ -227,7 +228,7 @@ export default function Home() {
           { label:'HOME / 首页', href:'#top' },
           { label:'PROFILE / 关于', href:'#profile' },
           { label:'WORK / 作品', href:'#work' },
-          { label:'CONTACT / 联系', href:'#contact' },
+          { label:'CONTACT / 联系', href:'/contact' },
         ].map((item, i) => <a key={item.label} href={item.href} onClick={() => setMenuOpen(false)}><span>0{i + 1}</span>{item.label}</a>)}</nav>
         <p>ENVIRONMENTAL · INTERIOR · SPATIAL · LANDSCAPE DESIGN</p>
       </aside>
@@ -306,7 +307,8 @@ export default function Home() {
 
       <footer id="contact">
         <div className="footer-meta"><span>OPEN TO COLLABORATION / 2026</span><span>BASED IN CHINA · WORKING EVERYWHERE</span></div>
-        <a className="contact-link" href="mailto:2425527779@qq.com">LET&apos;S CREATE<i>让想法发生 ↗</i></a>
+        <a className="contact-link" href="/contact">LET&apos;S CREATE<i>让想法发生 ↗</i></a>
+        <BrandMarquee />
         <div className="footer-grid"><span>LJH © 2026</span><span>ENVIRONMENTAL / INTERIOR / SPATIAL / LANDSCAPE</span><a href="#top">BACK TO TOP ↑</a></div>
       </footer>
     </main>
