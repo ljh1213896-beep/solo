@@ -31,10 +31,11 @@ export default function AdminPage() {
         }
       `}</style>
       <div id="cms-loading">LJH CONTENT STUDIO · 正在加载</div>
+      <script src="/admin/preview.js" defer />
       <Script
         src="https://unpkg.com/decap-cms@3.8.3/dist/decap-cms.js"
         strategy="afterInteractive"
-        onLoad={() => document.getElementById('cms-loading')?.remove()}
+        onReady={() => document.getElementById('cms-loading')?.remove()}
       />
     </>
   );

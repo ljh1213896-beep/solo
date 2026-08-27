@@ -23,11 +23,13 @@ collections:
         label: 七个作品项目
         file: content/projects.json
         format: json
+        description: "左侧展开项目并修改文字或封面，右侧会同步显示接近网站效果的实时预览。"
         fields:
           - name: projects
             label: 项目列表
             label_singular: 项目
             widget: list
+            hint: "展开任意项目编辑；封面上传完成后会立即显示在右侧预览中。"
             summary: "{{fields.no}} · {{fields.title}}"
             minimize_collapsed: true
             fields:
