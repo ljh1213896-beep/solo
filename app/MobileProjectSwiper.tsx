@@ -71,7 +71,7 @@ export default function MobileProjectSwiper({ projects }: { projects: Project[] 
         </article>
       </div>
       <div className="mobile-gallery-foot">
-        <span>SWIPE LEFT</span>
+        <span>SWIPE →</span>
         <i><b style={{ transform: `scaleX(${(active + 1) / total})` }} /></i>
         <span>CONTACT →</span>
       </div>

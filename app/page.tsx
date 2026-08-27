@@ -6,7 +6,6 @@ import LjhScene from './LjhScene';
 import { projects as works } from './projectData';
 import ProjectCarouselScene from './ProjectCarouselScene';
 import EntryPrelude from './EntryPrelude';
-import BrandMarquee from './BrandMarquee';
 import MobileProjectSwiper from './MobileProjectSwiper';
 
 const chapters = [
@@ -25,6 +24,7 @@ export default function Home() {
   const chapterRefs = useRef<(HTMLDivElement | null)[]>([]);
   const cardRefs = useRef<(HTMLElement | null)[]>([]);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [contactLeaving, setContactLeaving] = useState(false);
 
   useEffect(() => {
     const lenis = new Lenis({ lerp: .075, smoothWheel: true, wheelMultiplier: .9, touchMultiplier: 1.1 });
@@ -32,6 +32,14 @@ export default function Home() {
     let scrollSnapping = false;
     let snapTimer = 0;
     let settleTimer = 0;
+    let contactTimer = 0;
+    let contactRouting = false;
+    const enterContact = () => {
+      if (contactRouting) return;
+      contactRouting = true;
+      setContactLeaving(true);
+      contactTimer = window.setTimeout(() => window.location.assign('/contact'), 900);
+    };
     const snapTo = (target: number, duration = 1.05) => {
       if (scrollSnapping) return;
       scrollSnapping = true;
@@ -167,7 +175,7 @@ export default function Home() {
         event.preventDefault();
         if (scrollSnapping) return;
         if (nextProject < 0) snapTo(profileStart, 1.15);
-        else if (nextProject >= works.length) snapTo(galleryStart + gallery.offsetHeight, 1.2);
+        else if (nextProject >= works.length) enterContact();
         else snapTo(galleryStart + galleryTravel * (nextProject / (works.length - 1)), .95);
       }
     };
@@ -199,11 +207,18 @@ export default function Home() {
     window.addEventListener('wheel', onWheel, { passive: false, capture: true });
     window.addEventListener('scroll', onScrollSettled, { passive: true });
     lenis.on('scroll', onScrollSettled);
+    const contactSentinel = document.querySelector('.contact-entry-sentinel');
+    const contactObserver = new IntersectionObserver((entries) => {
+      if (window.innerWidth > 760 && entries.some(entry => entry.isIntersecting)) enterContact();
+    }, { threshold: .8 });
+    if (contactSentinel) contactObserver.observe(contactSentinel);
     frame = requestAnimationFrame(render);
     return () => {
       cancelAnimationFrame(frame);
       window.clearTimeout(snapTimer);
       window.clearTimeout(settleTimer);
+      window.clearTimeout(contactTimer);
+      contactObserver.disconnect();
       lenis.off('scroll', onScrollSettled);
       lenis.destroy();
       window.removeEventListener('pointermove', onPointer);
@@ -290,29 +305,10 @@ export default function Home() {
           <div className="gallery-progress"><i /><span>SCROLL THROUGH PROJECTS</span></div>
         </div>
       </section>
-
-      <section className="paper-section" id="position">
-        <div className="paper-kicker"><span>DESIGN POSITION / 设计立场</span><span>APPROACH 01—04</span></div>
-        <h2 className="paper-title">NOT OBJECTS<br />IN SPACE.<br /><em>RELATIONS</em><br />MADE VISIBLE.</h2>
-        <p className="paper-copy">不止于塑造空间中的物体，<br />更在于让不可见的关系被感知。</p>
-        <div className="orbit-lines" aria-hidden="true" />
-      </section>
-
-      <section className="ticker" aria-label="设计领域"><div><span>LANDSCAPE</span><span>INTERIOR</span><span>SPATIAL</span><span>VISUAL</span><span>LANDSCAPE</span><span>INTERIOR</span></div></section>
-
-      <section className="work-index">
-        <div className="index-head"><span>ALL PROJECTS</span><span>项目索引 / 2022—2025</span><span>(07)</span></div>
-        {works.map(work => <a className="index-row" href={`/projects/${work.slug}`} key={work.no} aria-label={`查看 ${work.fullTitle}`}>
-          <span>{work.no}</span><div><h3>{work.title}</h3><p>{work.fullTitle}</p></div><small>{work.type}</small><time>{work.year}</time><b>↗</b><img src={work.image} alt="" />
-        </a>)}
-      </section>
-
-      <footer id="contact">
-        <div className="footer-meta"><span>OPEN TO COLLABORATION / 2026</span><span>BASED IN CHINA · WORKING EVERYWHERE</span></div>
-        <a className="contact-link" href="/contact">LET&apos;S CREATE<i>让想法发生 ↗</i></a>
-        <BrandMarquee />
-        <div className="footer-grid"><span>LJH © 2026</span><span>ENVIRONMENTAL / INTERIOR / SPATIAL / LANDSCAPE</span><a href="#top">BACK TO TOP ↑</a></div>
-      </footer>
+      <div className="contact-entry-sentinel" aria-hidden="true" />
+      <div className={`home-contact-transition ${contactLeaving ? 'is-active' : ''}`} aria-hidden="true">
+        <i /><span>CONTACT</span><b>LET&apos;S CONNECT</b>
+      </div>
     </main>
   );
 }
