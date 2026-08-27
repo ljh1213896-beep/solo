@@ -27,6 +27,11 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <div className="mobile-orientation-gate" role="status" aria-label="请将手机横屏观看">
+          <div className="orientation-device" aria-hidden="true"><i /></div>
+          <p>请横屏观看</p>
+          <span>ROTATE YOUR DEVICE · 横向体验空间</span>
+        </div>
         {children}
       </body>
     </html>
