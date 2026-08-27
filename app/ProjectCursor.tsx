@@ -4,7 +4,7 @@ import { useEffect, useRef } from 'react';
 
 type Particle = { x:number; y:number; vx:number; vy:number; life:number; size:number; rotation:number; char?:string };
 
-type CursorVariant = 'flamingo' | 'anchor' | 'coffee' | 'leaf' | 'book' | 'typhoon';
+type CursorVariant = 'flamingo' | 'anchor' | 'coffee' | 'leaf' | 'book' | 'typhoon' | 'film';
 
 const bookCharacters = ['阅', '读', '字', '句', 'A', 'B', 'C', '·'];
 
@@ -40,9 +40,12 @@ export default function ProjectCursor({ variant }:{ variant:CursorVariant }) {
       if (reduceMotion) return;
       const distance = Math.hypot(event.clientX - lastX, event.clientY - lastY);
       if (distance < 7) return;
+      const angle=Math.atan2(event.clientY-lastY,event.clientX-lastX);
       lastX = event.clientX;
       lastY = event.clientY;
-      const count = variant === 'flamingo'
+      const count = variant === 'film'
+        ? 1
+        : variant === 'flamingo'
         ? Math.min(3, 1 + Math.floor(distance / 34))
         : variant === 'coffee'
           ? Math.min(2, 1 + Math.floor(distance / 42))
@@ -54,11 +57,11 @@ export default function ProjectCursor({ variant }:{ variant:CursorVariant }) {
       for (let index = 0; index < count; index += 1) particles.push({
         x:event.clientX + (Math.random() - .5) * 9,
         y:event.clientY + (Math.random() - .5) * 9,
-        vx:(Math.random() - .5) * .5,
-        vy:-.12 - Math.random() * .38,
+        vx:variant === 'film' ? 0 : (Math.random() - .5) * .5,
+        vy:variant === 'film' ? 0 : -.12 - Math.random() * .38,
         life:1,
-        size:variant === 'book' ? 8 + Math.random() * 4 : variant === 'typhoon' ? .8 + Math.random() * 1.4 : variant === 'flamingo' ? 1.8 + Math.random() * 1.5 : variant === 'leaf' ? 1.5 + Math.random() * 2.2 : .55 + Math.random() * 1.25,
-        rotation:Math.random() * Math.PI,
+        size:variant === 'film' ? 1 : variant === 'book' ? 8 + Math.random() * 4 : variant === 'typhoon' ? .8 + Math.random() * 1.4 : variant === 'flamingo' ? 1.8 + Math.random() * 1.5 : variant === 'leaf' ? 1.5 + Math.random() * 2.2 : .55 + Math.random() * 1.25,
+        rotation:variant === 'film' ? angle : Math.random() * Math.PI,
         char:variant === 'book' ? bookCharacters[Math.floor(Math.random() * bookCharacters.length)] : undefined,
       });
       if (particles.length > 100) particles = particles.slice(-100);
@@ -70,12 +73,21 @@ export default function ProjectCursor({ variant }:{ variant:CursorVariant }) {
       for (const particle of particles) {
         particle.x += particle.vx;
         particle.y += particle.vy;
-        particle.rotation += .018;
-        particle.life *= variant === 'coffee' ? .965 : variant === 'book' ? .958 : variant === 'typhoon' ? .952 : variant === 'flamingo' ? .954 : .947;
+        if(variant!=='film')particle.rotation += .018;
+        particle.life *= variant === 'film' ? .972 : variant === 'coffee' ? .965 : variant === 'book' ? .958 : variant === 'typhoon' ? .952 : variant === 'flamingo' ? .954 : .947;
         context.save();
         context.translate(particle.x, particle.y);
         context.rotate(particle.rotation);
-        if (variant === 'flamingo') {
+        if (variant === 'film') {
+          context.fillStyle=`rgba(10,10,11,${particle.life*.82})`;
+          context.strokeStyle=`rgba(226,220,210,${particle.life*.72})`;
+          context.lineWidth=.8;
+          context.fillRect(-9,-6,18,12);context.strokeRect(-9,-6,18,12);
+          context.fillStyle=`rgba(218,76,150,${particle.life*.56})`;
+          context.fillRect(-5,-3,10,6);
+          context.fillStyle=`rgba(237,232,222,${particle.life*.8})`;
+          for(let hole=-6;hole<=6;hole+=4){context.fillRect(hole,-5,2,1.5);context.fillRect(hole,3.5,2,1.5);}
+        } else if (variant === 'flamingo') {
           context.beginPath();
           context.fillStyle = `rgba(255, 91, 164, ${particle.life * .72})`;
           context.shadowColor = 'rgba(255, 75, 155, .8)';
@@ -162,7 +174,7 @@ export default function ProjectCursor({ variant }:{ variant:CursorVariant }) {
   return <>
     <canvas ref={canvasRef} className={`project-cursor-trail is-${variant}`} aria-hidden="true" />
     <span ref={cursorRef} className={`project-cursor-icon is-${variant}`} aria-hidden="true">
-      {variant === 'flamingo' ? '🦩' : variant === 'anchor' ? '⚓' : variant === 'coffee' ? '☕' : variant === 'leaf' ? '🍁' : variant === 'book' ? <><i /><b /></> : <img src="/projects/qixiang-cursor-logo.png" alt="" />}
+      {variant === 'flamingo' ? '🦩' : variant === 'anchor' ? '⚓' : variant === 'coffee' ? '☕' : variant === 'leaf' ? '🍁' : variant === 'book' || variant === 'film' ? <><i /><b /></> : <img src="/projects/qixiang-cursor-logo.png" alt="" />}
     </span>
   </>;
 }

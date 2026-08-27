@@ -1,5 +1,7 @@
 'use client';
 
+import ProjectCursor from './ProjectCursor';
+
 const sections = [
   { no:'01', title:'其他作品', en:'SELECTED WORKS', image:'/projects/other-works-detail/pages/01.webp', label:'INTRODUCTION' },
   { no:'02', title:'渲染与摄影', en:'RENDERING / PHOTOGRAPHY', image:'/projects/other-works-detail/pages/02.webp', label:'IMAGE STUDIES' },
@@ -9,6 +11,7 @@ const sections = [
 
 export default function OtherWorksStory() {
   return <div className="other-works-story">
+    <ProjectCursor variant="film" />
     <div className="other-works-marquee" aria-hidden="true">
       <div>{Array.from({ length:2 }, (_, group) => <span key={group}>RENDERING — PHOTOGRAPHY — COURSE WORKS — GRAPHIC DESIGN — </span>)}</div>
     </div>

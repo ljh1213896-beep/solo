@@ -14,15 +14,16 @@
 html { background:var(--black); scroll-behavior:smooth; }
 body { margin:0; overflow-x:hidden; background:var(--black); color:var(--ink); font-family:Arial,"Noto Sans SC","Microsoft YaHei",sans-serif; }
 html.is-entering,html.is-entering body { overflow:hidden; }
-.entry-prelude { position:fixed; z-index:1000; inset:0; overflow:hidden; background:transparent; pointer-events:all; }
+.entry-prelude { position:fixed; z-index:1000; inset:0; overflow:hidden; background:#020203; pointer-events:all; }
 .entry-prelude canvas { position:absolute; inset:0; width:100%; height:100%; display:block; }
-.entry-reveal-line { position:absolute; left:0; right:0; top:50%; height:1px; background:linear-gradient(90deg,transparent,#df4f98 38%,#fff 50%,#df4f98 62%,transparent); transform:scaleX(0); opacity:0; animation:entry-line 4.3s cubic-bezier(.77,0,.18,1) both; box-shadow:0 0 24px rgba(223,79,152,.65); }
-@keyframes entry-line { 0%,64% { transform:scaleX(0); opacity:0; } 72% { transform:scaleX(1); opacity:1; } 88%,100% { transform:translateY(-48vh) scaleX(1); opacity:0; } }
+.entry-corner { position:absolute; z-index:2; bottom:24px; color:rgba(230,226,230,.58); font:8px monospace; letter-spacing:.14em; animation:entry-corner-fade 3.45s ease both; }.entry-corner-a { left:3vw; }.entry-corner-b { right:3vw; color:rgba(218,76,150,.72); }
+@keyframes entry-corner-fade { 0%,8% { opacity:0; } 18%,70% { opacity:1; } 90%,100% { opacity:0; } }
 a { color:inherit; text-decoration:none; }
 button { color:inherit; font:inherit; }
 ::selection { background:var(--rose); color:white; }
 .cursor { position:fixed; z-index:999; left:var(--mx); top:var(--my); width:36px; height:36px; border:1px solid rgba(180,75,118,.7); border-radius:50%; transform:translate(-50%,-50%); pointer-events:none; mix-blend-mode:screen; transition:width .2s,height .2s; }
 .cursor span { position:absolute; width:4px; height:4px; background:var(--blue); border-radius:50%; left:50%; top:50%; transform:translate(-50%,-50%); box-shadow:0 0 14px var(--blue); }
+@media(hover:hover) and (pointer:fine){.home-page,.home-page *{cursor:none!important}}
 .site-header { position:fixed; z-index:80; inset:0 0 auto; height:84px; padding:0 32px; display:grid; grid-template-columns:1fr 1fr 1fr auto; align-items:center; border-bottom:1px solid var(--line); backdrop-filter:blur(9px); background:rgba(3,3,3,.22); }
 .brand,.project-brand{display:flex;width:38px;height:54px;align-items:center;justify-content:flex-start}
 .site-mark{display:block;width:31px;height:42px;background:var(--rose);-webkit-mask:url('/brands/ljh-mark.png') center/contain no-repeat;mask:url('/brands/ljh-mark.png') center/contain no-repeat;filter:drop-shadow(0 0 9px rgba(216,86,155,.26));transition:background-color .3s,filter .3s,transform .3s}

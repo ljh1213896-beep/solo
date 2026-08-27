@@ -29,8 +29,12 @@ export default function ProjectCarouselScene({ projects }:{ projects:Project[] }
     const textures:THREE.Texture[]=[];
     const videoTextures:THREE.VideoTexture[]=[];
     const videos:HTMLVideoElement[]=[];
+    const raycaster=new THREE.Raycaster();
+    const pointerPosition=new THREE.Vector2(9,9);
+    const hoverOpacity=projects.map(()=>1);
     const loader=new THREE.TextureLoader();
     let disposed=false;
+    let hoveredIndex=-1,hoverStarted=0;
 
     const vertex=(halfWidth:string,halfHeight:string)=>`
       uniform float uTime;
@@ -138,6 +142,7 @@ export default function ProjectCarouselScene({ projects }:{ projects:Project[] }
         `,
       });
       const cover=new THREE.Mesh(coverGeometry,coverMaterial);
+      cover.userData.projectIndex=index;
       cover.position.z=.22;
       cover.renderOrder=index*2+1;
       root.add(cover);
@@ -155,7 +160,11 @@ export default function ProjectCarouselScene({ projects }:{ projects:Project[] }
     });
 
     let mouseX=0,mouseY=0,smoothX=0,smoothY=0,smoothProgress=0,frame=0;
-    const pointer=(event:PointerEvent)=>{mouseX=event.clientX/Math.max(1,innerWidth)-.5;mouseY=event.clientY/Math.max(1,innerHeight)-.5;};
+    const pointer=(event:PointerEvent)=>{
+      mouseX=event.clientX/Math.max(1,innerWidth)-.5;mouseY=event.clientY/Math.max(1,innerHeight)-.5;
+      const rect=host.getBoundingClientRect();
+      pointerPosition.set(((event.clientX-rect.left)/Math.max(1,rect.width))*2-1,-((event.clientY-rect.top)/Math.max(1,rect.height))*2+1);
+    };
     const resize=()=>{
       const width=host.clientWidth,height=host.clientHeight;
       renderer.setSize(width,height,false);
@@ -190,13 +199,25 @@ export default function ProjectCarouselScene({ projects }:{ projects:Project[] }
         base.material.uniforms.uBend.value=.33+Math.max(0,1-abs)*.2;
         cover.material.uniforms.uBend.value=.27+Math.max(0,1-abs)*.16;
         base.material.uniforms.uOpacity.value=opacity;
-        cover.material.uniforms.uOpacity.value=opacity;
       });
       stage.rotation.x=-.035-smoothY*.025;
       stage.rotation.z=smoothX*.012;
       camera.position.x=smoothX*.18;
       camera.position.y=-smoothY*.12;
       camera.lookAt(0,0,0);
+      scene.updateMatrixWorld(true);
+      raycaster.setFromCamera(pointerPosition,camera);
+      const galleryVisible=gallery&&scrollY>=gallery.offsetTop-innerHeight*.25&&scrollY<=gallery.offsetTop+gallery.offsetHeight;
+      const hit=galleryVisible?raycaster.intersectObjects(cards.map(card=>card.cover),false)[0]:undefined;
+      const nextHovered=hit?Number(hit.object.userData.projectIndex):-1;
+      if(nextHovered!==hoveredIndex){hoveredIndex=nextHovered;hoverStarted=time;}
+      cards.forEach(({cover},index)=>{
+        const rel=index-smoothProgress;
+        const opacity=clamp(1-(Math.abs(rel)-1.2)*.85,.12,1);
+        const target=index===hoveredIndex?(time-hoverStarted>520?0:.2):1;
+        hoverOpacity[index]+=(target-hoverOpacity[index])*(reduce?1:.14);
+        cover.material.uniforms.uOpacity.value=opacity*hoverOpacity[index];
+      });
       renderer.render(scene,camera);
       frame=requestAnimationFrame(animate);
     };
