@@ -9,7 +9,6 @@ import MobileProjectSwiper from './MobileProjectSwiper';
 import ContactClient from './ContactClient';
 import SiteMark from './SiteMark';
 import EntryPrelude from './EntryPrelude';
-import HomeSwipeTrail from './HomeSwipeTrail';
 
 const chapters = [
   { layout: 'statement', tag: '00 / INTRODUCTION', title: <><span className="manifesto-title">萬千炁象</span><small>Plain paper thousand hoodles</small><i /><span className="manifesto-line">当<em>空白</em>开始汲取<strong>空间</strong></span><small>When the blank begins to absorb space</small></>, copy: '' },
@@ -219,7 +218,6 @@ export default function Home() {
   return (
     <main className="home-page">
       <EntryPrelude />
-      <HomeSwipeTrail />
       <div className="cursor" aria-hidden="true"><span /></div>
       <header className="site-header">
         <a className="brand" href="#top" aria-label="LJH 首页"><SiteMark /></a>

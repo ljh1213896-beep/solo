@@ -15,17 +15,15 @@ export default function ProjectCursor({ variant }:{ variant:CursorVariant }) {
   useEffect(() => {
     const cursor = cursorRef.current;
     const canvas = canvasRef.current;
-    if (!cursor || !canvas) return;
+    if (!cursor || !canvas || window.matchMedia('(pointer: coarse)').matches) return;
     const context = canvas.getContext('2d');
     if (!context) return;
 
-    const coarse = window.matchMedia('(pointer: coarse)').matches;
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     let frame = 0;
     let particles: Particle[] = [];
     let lastX = -100;
     let lastY = -100;
-    let touching = !coarse;
 
     const resize = () => {
       const ratio = Math.min(window.devicePixelRatio || 1, 2);
@@ -36,18 +34,15 @@ export default function ProjectCursor({ variant }:{ variant:CursorVariant }) {
       context.setTransform(ratio, 0, 0, ratio, 0, 0);
     };
 
-    const moveAt = (clientX:number,clientY:number) => {
-      if (coarse && !touching) return;
-      if (!coarse) {
-        cursor.style.transform = `translate3d(${clientX}px,${clientY}px,0)`;
-        cursor.style.opacity = '1';
-      }
+    const move = (event: PointerEvent) => {
+      cursor.style.transform = `translate3d(${event.clientX}px,${event.clientY}px,0)`;
+      cursor.style.opacity = '1';
       if (reduceMotion) return;
-      const distance = Math.hypot(clientX - lastX, clientY - lastY);
+      const distance = Math.hypot(event.clientX - lastX, event.clientY - lastY);
       if (distance < 7) return;
-      const angle=Math.atan2(clientY-lastY,clientX-lastX);
-      lastX = clientX;
-      lastY = clientY;
+      const angle=Math.atan2(event.clientY-lastY,event.clientX-lastX);
+      lastX = event.clientX;
+      lastY = event.clientY;
       const count = variant === 'film'
         ? 1
         : variant === 'flamingo'
@@ -60,8 +55,8 @@ export default function ProjectCursor({ variant }:{ variant:CursorVariant }) {
               ? Math.min(3, 1 + Math.floor(distance / 28))
           : Math.min(4, 1 + Math.floor(distance / 24));
       for (let index = 0; index < count; index += 1) particles.push({
-        x:clientX + (Math.random() - .5) * 9,
-        y:clientY + (Math.random() - .5) * 9,
+        x:event.clientX + (Math.random() - .5) * 9,
+        y:event.clientY + (Math.random() - .5) * 9,
         vx:variant === 'film' ? 0 : (Math.random() - .5) * .5,
         vy:variant === 'film' ? 0 : -.12 - Math.random() * .38,
         life:1,
@@ -71,10 +66,6 @@ export default function ProjectCursor({ variant }:{ variant:CursorVariant }) {
       });
       if (particles.length > 100) particles = particles.slice(-100);
     };
-    const move = (event:PointerEvent) => moveAt(event.clientX,event.clientY);
-    const touchStart = (event:TouchEvent) => { const touch=event.touches[0];if(!touch)return;touching=true;lastX=touch.clientX;lastY=touch.clientY; };
-    const touchMove = (event:TouchEvent) => { const touch=event.touches[0];if(touch)moveAt(touch.clientX,touch.clientY); };
-    const up = () => { if (coarse) touching=false; };
 
     const draw = () => {
       context.clearRect(0, 0, window.innerWidth, window.innerHeight);
@@ -171,14 +162,12 @@ export default function ProjectCursor({ variant }:{ variant:CursorVariant }) {
 
     resize();
     window.addEventListener('resize', resize);
-    if(coarse){window.addEventListener('touchstart',touchStart,{passive:true});window.addEventListener('touchmove',touchMove,{passive:true});window.addEventListener('touchend',up,{passive:true});window.addEventListener('touchcancel',up,{passive:true});}
-    else window.addEventListener('pointermove', move, { passive:true });
+    window.addEventListener('pointermove', move, { passive:true });
     frame = requestAnimationFrame(draw);
     return () => {
       cancelAnimationFrame(frame);
       window.removeEventListener('resize', resize);
       window.removeEventListener('pointermove', move);
-      window.removeEventListener('touchstart',touchStart);window.removeEventListener('touchmove',touchMove);window.removeEventListener('touchend',up);window.removeEventListener('touchcancel',up);
     };
   }, [variant]);
 
