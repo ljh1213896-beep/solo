@@ -4,8 +4,8 @@ backend:
   name: github
   repo: ljh1213896-beep/ljh-0408.pages.dev
   branch: main
-  base_url: https://ljh-0408.pages.dev/api/decap
-  auth_endpoint: auth
+  base_url: https://ljh-0408.pages.dev
+  auth_endpoint: api/decap/auth
   use_graphql: true
 
 site_url: https://ljh-0408.pages.dev
