@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
+import MobileRotatedViewport from './MobileRotatedViewport';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -27,12 +28,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <div className="mobile-orientation-gate" role="status" aria-label="请将手机横屏观看">
-          <div className="orientation-device" aria-hidden="true"><i /></div>
-          <p>请横屏观看</p>
-          <span>ROTATE YOUR DEVICE · 横向体验空间</span>
-        </div>
-        {children}
+        <MobileRotatedViewport>{children}</MobileRotatedViewport>
       </body>
     </html>
   );
