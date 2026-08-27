@@ -14,3 +14,19 @@ footer .brand-marquee{margin-inline:-3vw;width:calc(100% + 6vw)}footer .brand-ma
 .brand-marquee img{width:auto;height:52px;max-width:100%;object-fit:contain}
 footer .brand-marquee img{height:44px}
 @media(max-width:760px){.brand-marquee img,footer .brand-marquee img{height:42px;max-width:180px}}
+
+/* Contact now continues inside the homepage; the partner rail sits in the paper field. */
+.contact-page-embedded .contact-hero{padding-top:48px}
+.contact-page-embedded .contact-grid{inset:0}
+.contact-directory{padding-bottom:28px}
+.contact-brand-inline{margin:9vh -4vw 0}
+.contact-brand-inline .brand-marquee{background:transparent;border-color:rgba(0,0,0,.24)}
+.contact-brand-inline .brand-marquee figure{border-color:rgba(0,0,0,.18)}
+.contact-brand-inline .brand-marquee img{opacity:.72;filter:grayscale(1) brightness(.2)}
+.contact-brand-inline .brand-marquee figure:hover img{opacity:1;filter:grayscale(1) brightness(.08)}
+.contact-directory>.contact-end{padding:28px 0 0;color:#686864}
+@media(max-width:760px){
+  .contact-page-embedded .contact-hero{padding-top:76px}
+  .contact-brand-inline{margin:64px -18px 0}
+  .contact-directory>.contact-end{padding-top:22px}
+}

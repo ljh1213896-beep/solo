@@ -26,7 +26,9 @@ export default function MobileProjectSwiper({ projects }: { projects: Project[] 
         setEntering(true);
         if (redirectTimer.current) window.clearTimeout(redirectTimer.current);
         const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        redirectTimer.current = window.setTimeout(() => window.location.assign('/contact'), reducedMotion ? 240 : 1250);
+        redirectTimer.current = window.setTimeout(() => {
+          document.getElementById('contact')?.scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth', block: 'start' });
+        }, reducedMotion ? 120 : 900);
       });
     }, { root: rail, threshold: [.25, .58, .86] });
 
@@ -61,7 +63,7 @@ export default function MobileProjectSwiper({ projects }: { projects: Project[] 
           </article>
         ))}
         <article className={`mobile-contact-slide ${entering ? 'is-entering' : ''}`} data-mobile-slide={projects.length} ref={contactRef}>
-          <a href="/contact" aria-label="进入联系页面">
+          <a href="#contact" aria-label="继续滑动到联系区域">
             <div className="mobile-contact-orbit" aria-hidden="true"><i /><i /><i /></div>
             <span>08 / CONTACT</span>
             <h2>LET'S<br />CONNECT</h2>

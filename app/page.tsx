@@ -5,8 +5,8 @@ import Lenis from 'lenis';
 import LjhScene from './LjhScene';
 import { projects as works } from './projectData';
 import ProjectCarouselScene from './ProjectCarouselScene';
-import EntryPrelude from './EntryPrelude';
 import MobileProjectSwiper from './MobileProjectSwiper';
+import ContactClient from './ContactClient';
 
 const chapters = [
   { layout: 'statement', tag: '00 / INTRODUCTION', title: <><span className="manifesto-title">萬千炁象</span><small>Plain paper thousand hoodles</small><i /><span className="manifesto-line">当<em>空白</em>开始汲取<strong>空间</strong></span><small>When the blank begins to absorb space</small></>, copy: '' },
@@ -21,10 +21,10 @@ export default function Home() {
   const heroRef = useRef<HTMLElement>(null);
   const galleryRef = useRef<HTMLElement>(null);
   const profileRef = useRef<HTMLElement>(null);
+  const contactRef = useRef<HTMLDivElement>(null);
   const chapterRefs = useRef<(HTMLDivElement | null)[]>([]);
   const cardRefs = useRef<(HTMLElement | null)[]>([]);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [contactLeaving, setContactLeaving] = useState(false);
 
   useEffect(() => {
     const lenis = new Lenis({ lerp: .075, smoothWheel: true, wheelMultiplier: .9, touchMultiplier: 1.1 });
@@ -32,14 +32,6 @@ export default function Home() {
     let scrollSnapping = false;
     let snapTimer = 0;
     let settleTimer = 0;
-    let contactTimer = 0;
-    let contactRouting = false;
-    const enterContact = () => {
-      if (contactRouting) return;
-      contactRouting = true;
-      setContactLeaving(true);
-      contactTimer = window.setTimeout(() => window.location.assign('/contact'), 900);
-    };
     const snapTo = (target: number, duration = 1.05) => {
       if (scrollSnapping) return;
       scrollSnapping = true;
@@ -133,7 +125,8 @@ export default function Home() {
       const hero = heroRef.current;
       const profile = profileRef.current;
       const gallery = galleryRef.current;
-      if (!hero || !profile || !gallery || window.innerWidth <= 1000 || Math.abs(event.deltaY) < 2) return;
+      const contact = contactRef.current;
+      if (!hero || !profile || !gallery || !contact || window.innerWidth <= 1000 || Math.abs(event.deltaY) < 2) return;
       const start = hero.offsetTop;
       const travel = Math.max(1, hero.offsetHeight - window.innerHeight);
       const currentY = window.scrollY;
@@ -175,7 +168,7 @@ export default function Home() {
         event.preventDefault();
         if (scrollSnapping) return;
         if (nextProject < 0) snapTo(profileStart, 1.15);
-        else if (nextProject >= works.length) enterContact();
+        else if (nextProject >= works.length) snapTo(contact.offsetTop, 1.2);
         else snapTo(galleryStart + galleryTravel * (nextProject / (works.length - 1)), .95);
       }
     };
@@ -207,18 +200,11 @@ export default function Home() {
     window.addEventListener('wheel', onWheel, { passive: false, capture: true });
     window.addEventListener('scroll', onScrollSettled, { passive: true });
     lenis.on('scroll', onScrollSettled);
-    const contactSentinel = document.querySelector('.contact-entry-sentinel');
-    const contactObserver = new IntersectionObserver((entries) => {
-      if (window.innerWidth > 760 && entries.some(entry => entry.isIntersecting)) enterContact();
-    }, { threshold: .8 });
-    if (contactSentinel) contactObserver.observe(contactSentinel);
     frame = requestAnimationFrame(render);
     return () => {
       cancelAnimationFrame(frame);
       window.clearTimeout(snapTimer);
       window.clearTimeout(settleTimer);
-      window.clearTimeout(contactTimer);
-      contactObserver.disconnect();
       lenis.off('scroll', onScrollSettled);
       lenis.destroy();
       window.removeEventListener('pointermove', onPointer);
@@ -229,7 +215,6 @@ export default function Home() {
 
   return (
     <main>
-      <EntryPrelude />
       <div className="cursor" aria-hidden="true"><span /></div>
       <header className="site-header">
         <a className="brand" href="#top">LJH<span>®</span></a>
@@ -244,7 +229,7 @@ export default function Home() {
           { label:'HOME / 首页', href:'#top' },
           { label:'PROFILE / 关于', href:'#profile' },
           { label:'WORK / 作品', href:'#work' },
-          { label:'CONTACT / 联系', href:'/contact' },
+          { label:'CONTACT / 联系', href:'#contact' },
         ].map((item, i) => <a key={item.label} href={item.href} onClick={() => setMenuOpen(false)}><span>0{i + 1}</span>{item.label}</a>)}</nav>
         <p>ENVIRONMENTAL · INTERIOR · SPATIAL · LANDSCAPE DESIGN</p>
       </aside>
@@ -305,9 +290,8 @@ export default function Home() {
           <div className="gallery-progress"><i /><span>SCROLL THROUGH PROJECTS</span></div>
         </div>
       </section>
-      <div className="contact-entry-sentinel" aria-hidden="true" />
-      <div className={`home-contact-transition ${contactLeaving ? 'is-active' : ''}`} aria-hidden="true">
-        <i /><span>CONTACT</span><b>LET&apos;S CONNECT</b>
+      <div ref={contactRef}>
+        <ContactClient embedded />
       </div>
     </main>
   );

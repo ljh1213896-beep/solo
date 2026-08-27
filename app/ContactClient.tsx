@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import BrandMarquee from './BrandMarquee';
 
-export default function ContactClient() {
+export default function ContactClient({ embedded = false }: { embedded?: boolean }) {
   const [copied, setCopied] = useState(false);
   const copyWechat = async () => {
     await navigator.clipboard.writeText('15513488747');
@@ -11,12 +11,12 @@ export default function ContactClient() {
     window.setTimeout(() => setCopied(false), 1600);
   };
 
-  return <main className="contact-page">
-    <header className="contact-header">
+  return <div className={`contact-page ${embedded ? 'contact-page-embedded' : ''}`} id={embedded ? 'contact' : undefined}>
+    {!embedded && <header className="contact-header">
       <a href="/" className="project-brand">LJH<span>®</span></a>
       <span>CONTACT / 联系</span>
       <a href="/" aria-label="返回首页">BACK ×</a>
-    </header>
+    </header>}
 
     <section className="contact-hero">
       <div className="contact-grid" aria-hidden="true" />
@@ -37,11 +37,8 @@ export default function ContactClient() {
       <a className="contact-row" href="mailto:2425527779@qq.com">
         <span>03</span><small>EMAIL / 邮箱</small><strong>2425527779@qq.com</strong><i>WRITE ↗</i>
       </a>
-    </section>
-
-    <section className="contact-brand-stage">
-      <BrandMarquee />
+      <div className="contact-brand-inline"><BrandMarquee /></div>
       <div className="contact-end"><span>LJH © 2026</span><a href="/">RETURN HOME ↑</a></div>
     </section>
-  </main>;
+  </div>;
 }
