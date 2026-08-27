@@ -11,6 +11,7 @@ import TidalMoonStory from './TidalMoonStory';
 import QixiangStory from './QixiangStory';
 import OtherWorksStory from './OtherWorksStory';
 import { projects, type Project } from './projectData';
+import SiteMark from './SiteMark';
 
 export default function ProjectDetailClient({ project, next }: { project: Project; next: Project }) {
   const mainRef = useRef<HTMLElement>(null);
@@ -99,7 +100,7 @@ export default function ProjectDetailClient({ project, next }: { project: Projec
   return (
     <main ref={mainRef} className={`project-detail ${project.slug === 'salt-lake-habitat' ? 'is-salt-lake' : ''} ${project.slug === 'medieval-pirate' ? 'is-medieval' : ''} ${project.slug === 'digital-nomad' ? 'is-digital-nomad' : ''} ${project.slug === 'autumn-market' ? 'is-autumn-market' : ''} ${project.slug === 'tidal-moon-library' ? 'is-tidal-moon' : ''} ${project.slug === 'myriad-formless' ? 'is-qixiang' : ''} ${project.slug === 'experiments' ? 'is-other-works' : ''} ${leaving ? 'is-leaving' : ''}`}>
       <header className="project-header">
-        <a href="/#work" className="project-brand">LJH<span>®</span></a>
+        <a href="/#work" className="project-brand" aria-label="返回作品列表"><SiteMark /></a>
         <details className="project-switcher">
           <summary aria-label="切换作品"><span>{project.no} / 07</span><b>{project.title}</b><i>＋</i></summary>
           <nav aria-label="作品快速切换">

@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import BrandMarquee from './BrandMarquee';
+import SiteMark from './SiteMark';
 
 export default function ContactClient({ embedded = false }: { embedded?: boolean }) {
   const [copied, setCopied] = useState(false);
@@ -13,7 +14,7 @@ export default function ContactClient({ embedded = false }: { embedded?: boolean
 
   return <div className={`contact-page ${embedded ? 'contact-page-embedded' : ''}`} id={embedded ? 'contact' : undefined}>
     {!embedded && <header className="contact-header">
-      <a href="/" className="project-brand">LJH<span>®</span></a>
+      <a href="/" className="project-brand" aria-label="LJH 首页"><SiteMark /></a>
       <span>CONTACT / 联系</span>
       <a href="/" aria-label="返回首页">BACK ×</a>
     </header>}

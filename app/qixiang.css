@@ -4,3 +4,5 @@
 @media(hover:hover){.qixiang-system-grid figure:hover img{transform:translateY(-3px);filter:saturate(1.05)}}
 @media(max-width:760px){.is-qixiang .project-detail-hero{min-height:0;height:84vh}.is-qixiang .project-hero-title{left:18px;bottom:112px}.is-qixiang .project-hero-title h1{font-size:15vw}.qixiang-section{padding:86px 18px 100px}.qixiang-section-head{grid-template-columns:48px 1fr;gap:12px;margin-bottom:48px}.qixiang-section-head h2{font-size:21px}.qixiang-section-head p{grid-column:1/-1;justify-self:start;padding-left:60px}.qixiang-system-grid{display:block}.qixiang-system-grid figure,.qixiang-system-grid figure.is-paired{margin-bottom:48px}.qixiang-geometry{right:-34vw;width:88vw}.qixiang-video-frame::before,.qixiang-video-frame::after{display:none}}
 @media(prefers-reduced-motion:reduce){.qixiang-hero-media video{display:none}.qixiang-hero-media{background:url('/projects/qixiang-cover.webp?v=2') center/cover no-repeat}.qixiang-system-grid img{transition:none}}
+/* Darker magenta keeps the personal mark legible on the light Qixiang header. */
+.is-qixiang .site-mark{background:#b72e74;filter:drop-shadow(0 0 8px rgba(183,46,116,.2))}
