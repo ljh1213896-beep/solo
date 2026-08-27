@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex,nofollow" />
+    <title>LJH 内容管理</title>
+    <style>
+      html,body{margin:0;min-height:100%;background:#080608;color:#f2eef1;font-family:Arial,"Microsoft YaHei",sans-serif}
+      #cms-loading{position:fixed;inset:0;display:grid;place-items:center;background:#080608;color:#c65b91;font:12px monospace;letter-spacing:.16em}
+    </style>
+  </head>
+  <body>
+    <div id="cms-loading">LJH CONTENT STUDIO · 正在加载</div>
+    <script src="https://unpkg.com/decap-cms@3.8.3/dist/decap-cms.js"></script>
+    <script>document.getElementById('cms-loading')?.remove();</script>
+  </body>
+</html>

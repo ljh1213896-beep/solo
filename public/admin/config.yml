@@ -1,0 +1,50 @@
+locale: zh_Hans
+
+backend:
+  name: github
+  repo: ljh1213896-beep/ljh-0408.pages.dev
+  branch: main
+  base_url: https://ljh-0408.pages.dev/api/decap
+  auth_endpoint: auth
+  use_graphql: true
+
+site_url: https://ljh-0408.pages.dev
+display_url: https://ljh-0408.pages.dev
+logo_url: https://ljh-0408.pages.dev/brands/ljh-mark.png
+publish_mode: simple
+media_folder: public/projects/uploads
+public_folder: /projects/uploads
+
+collections:
+  - name: portfolio
+    label: 作品集内容
+    files:
+      - name: projects
+        label: 七个作品项目
+        file: content/projects.json
+        format: json
+        fields:
+          - name: projects
+            label: 项目列表
+            label_singular: 项目
+            widget: list
+            summary: "{{fields.no}} · {{fields.title}}"
+            minimize_collapsed: true
+            fields:
+              - { name: no, label: 项目编号, widget: string, hint: "请保持两位编号，例如 01" }
+              - { name: slug, label: 固定网址标识, widget: string, hint: "请勿修改，否则项目专属页面会失效" }
+              - { name: year, label: 年份, widget: string }
+              - { name: title, label: 中文短标题, widget: string }
+              - { name: fullTitle, label: 完整项目标题, widget: string }
+              - { name: en, label: 英文标题, widget: string }
+              - { name: type, label: 项目类型, widget: string }
+              - { name: image, label: 封面图片, widget: image, choose_url: false }
+              - { name: video, label: 封面/漫游视频路径, widget: string, required: false, hint: "大视频请先上传到 public/projects，再填写 /projects/文件名" }
+              - { name: location, label: 地点, widget: string }
+              - { name: role, label: 负责内容, widget: string }
+              - { name: summary, label: 项目摘要, widget: text }
+              - { name: concept, label: 设计概念, widget: text }
+              - name: keywords
+                label: 关键词
+                widget: list
+                field: { name: keyword, label: 关键词, widget: string }
