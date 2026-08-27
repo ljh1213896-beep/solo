@@ -1,16 +1,15 @@
-import type { Metadata } from 'next';
+"use client";
 
-export const metadata: Metadata = {
-  title: 'LJH 内容管理',
-  robots: {
-    index: false,
-    follow: false,
-  },
-};
+import Script from 'next/script';
 
 export default function AdminPage() {
   return (
     <>
+      <link
+        rel="cms-config-url"
+        type="text/yaml"
+        href="/admin/config.yml"
+      />
       <style>{`
         html, body {
           margin: 0;
@@ -32,11 +31,10 @@ export default function AdminPage() {
         }
       `}</style>
       <div id="cms-loading">LJH CONTENT STUDIO · 正在加载</div>
-      <script src="https://unpkg.com/decap-cms@3.8.3/dist/decap-cms.js" />
-      <script
-        dangerouslySetInnerHTML={{
-          __html: "document.getElementById('cms-loading')?.remove();",
-        }}
+      <Script
+        src="https://unpkg.com/decap-cms@3.8.3/dist/decap-cms.js"
+        strategy="afterInteractive"
+        onLoad={() => document.getElementById('cms-loading')?.remove()}
       />
     </>
   );
