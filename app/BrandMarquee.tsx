@@ -1,12 +1,16 @@
 const brands = [
   { name:'中国建筑学会室内设计分会', image:'/brands/architectural-society.png' },
+  { name:'炁象', image:'/brands/qixiang.png' },
+  { name:'双流区民族宗教事务局', image:'/brands/shuangliu-ethnic-religious-bureau.png' },
+  { name:'西南民族大学畜牧兽医学院', image:'/brands/veterinary-college.png' },
+  { name:'西南民族大学法学院', image:'/brands/law-school.png' },
+  { name:'西南民族大学图书馆', image:'/brands/university-library.png' },
+  { name:'中西部设计竞赛', image:'/brands/midwest-design-competition.png' },
+  { name:'FD', image:'/brands/fd.png' },
   { name:'FOCUS DESIGN 设计平台', image:'/brands/focus-design.png' },
+  { name:'JZ', image:'/brands/jz.png' },
   { name:'梁建国环境设计与陈设艺术研究所', image:'/brands/liang-jg.png' },
-  { name:'中西部城市精英设计师教学实践设计竞赛', image:'/brands/midwest-design-competition.png' },
-  { name:'蓉城一家亲', image:'/brands/rongcheng-family.png' },
-  { name:'西南民族大学建筑学院', image:'/brands/school-of-architecture.png' },
-  { name:'西南民族大学', image:'/brands/southwest-minzu-university.png' },
-  { name:'畜牧兽医学院', image:'/brands/veterinary-college.png' },
+  { name:'MD', image:'/brands/md.png' },
 ];
 
 export default function BrandMarquee() {

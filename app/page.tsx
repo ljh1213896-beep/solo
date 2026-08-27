@@ -7,6 +7,7 @@ import { projects as works } from './projectData';
 import ProjectCarouselScene from './ProjectCarouselScene';
 import EntryPrelude from './EntryPrelude';
 import BrandMarquee from './BrandMarquee';
+import MobileProjectSwiper from './MobileProjectSwiper';
 
 const chapters = [
   { layout: 'statement', tag: '00 / INTRODUCTION', title: <><span className="manifesto-title">萬千炁象</span><small>Plain paper thousand hoodles</small><i /><span className="manifesto-line">当<em>空白</em>开始汲取<strong>空间</strong></span><small>When the blank begins to absorb space</small></>, copy: '' },
@@ -275,6 +276,7 @@ export default function Home() {
       </div>
 
       <section className="gallery-scroll" id="work" ref={galleryRef}>
+        <MobileProjectSwiper projects={works} />
         <div className="gallery-stage">
           <ProjectCarouselScene projects={works} />
           <div className="gallery-backdrop" aria-hidden="true"><div className="gallery-backdrop-track">{Array.from({ length: 12 }, (_, i) => <span key={i}>OUR WORK · SELECTED PROJECTS · ARCHIVE</span>)}</div></div>
