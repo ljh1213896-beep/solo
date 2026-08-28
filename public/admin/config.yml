@@ -50,7 +50,6 @@ collections:
                 label: 关键词
                 widget: list
                 field: { name: keyword, label: 关键词, widget: string }
-+
   - name: site_pages
     label: 网站页面内容
     files:
