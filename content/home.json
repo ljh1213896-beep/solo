@@ -1,0 +1,36 @@
+{
+  "header": {
+    "practice": "SPATIAL PRACTICE",
+    "locationYear": "CHINA / 2026",
+    "discipline": "ENVIRONMENT × INTERIOR"
+  },
+  "entry": {
+    "title": "萬 千 炁 象",
+    "subtitle": "SPATIAL PRACTICE / STRUCTURE IN MOTION",
+    "cornerLeft": "LJH / 2026",
+    "cornerRight": "STRUCTURE / 空间"
+  },
+  "hero": {
+    "tag": "00 / INTRODUCTION",
+    "mainTitle": "萬千炁象",
+    "subtitle": "Plain paper thousand hoodles",
+    "linePrefix": "当",
+    "lineEmphasis": "空白",
+    "lineMiddle": "开始汲取",
+    "lineStrong": "空间",
+    "lineEnglish": "When the blank begins to absorb space"
+  },
+  "principles": [
+    { "tag": "[ L / LATITUDE ]", "title": "L — Latitude", "copy": "设计的格局与思考的广度" },
+    { "tag": "[ J / JUNCTION ]", "title": "J — Junction", "copy": "空间的交汇、人与人 / 人与自然的互动" },
+    { "tag": "[ H / HARMONY ]", "title": "H — Harmony", "copy": "设计的终极目标——人与天地的共融" }
+  ],
+  "sceneWords": ["D E S I G N", "L J H", "S P A C E"],
+  "stageFooter": ["SCROLL / SCRUB", "35.027° N · 111.006° E", "PORTFOLIO INDEX 00—07"],
+  "gallery": {
+    "marquee": "OUR WORK · SELECTED PROJECTS · ARCHIVE",
+    "heading": "PROJECT ARCHIVE",
+    "interaction": "DRAGGED BY SCROLL",
+    "progress": "SCROLL THROUGH PROJECTS"
+  }
+}

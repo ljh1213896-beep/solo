@@ -14,7 +14,7 @@ import { RGBShiftShader } from 'three/examples/jsm/shaders/RGBShiftShader.js';
 
 const clamp = (value: number, min = 0, max = 1) => Math.min(max, Math.max(min, value));
 
-export default function LjhScene() {
+export default function LjhScene({ words }:{ words:string[] }) {
   const hostRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -167,7 +167,6 @@ export default function LjhScene() {
     new FontLoader().load('/fonts/helvetiker_bold.typeface.json', font => {
       if (disposed) return;
       const chars = ['L', 'J', 'H'];
-      const words = ['D E S I G N', 'L J H', 'S P A C E'];
       const wordSizes = [1.08, 1.68, 1.18];
       const makeGeometry = (text: string, size: number, depth: number) => {
         const geometry = new TextGeometry(text, { font, size, depth, curveSegments: 9, bevelEnabled: true, bevelThickness: .12, bevelSize: .075, bevelOffset: 0, bevelSegments: 5 });
@@ -346,7 +345,7 @@ export default function LjhScene() {
       renderer.dispose();
       renderer.domElement.remove();
     };
-  }, []);
+  }, [words]);
 
   return <div className="ljh-webgl" ref={hostRef} aria-hidden="true" />;
 }

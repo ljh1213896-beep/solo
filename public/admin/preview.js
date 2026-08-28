@@ -118,8 +118,109 @@
     },
   });
 
+  function entryData(props) {
+    var data = props.entry.get('data');
+    return data && data.toJS ? data.toJS() : {};
+  }
+
+  function PreviewShell(children) {
+    return h('main', { className: 'content-live-preview' },
+      h('header', { className: 'preview-topbar' },
+        h('div', { className: 'preview-brand' }, h('span', {}, 'LJH'), h('b', {}, 'CONTENT STUDIO')),
+        h('p', {}, '实时内容预览'),
+        h('span', { className: 'preview-count' }, 'LIVE')
+      ),
+      children
+    );
+  }
+
+  var HomePreview = window.createClass({
+    render: function render() {
+      var data = entryData(this.props);
+      var hero = data.hero || {};
+      var principles = Array.isArray(data.principles) ? data.principles : [];
+      var gallery = data.gallery || {};
+      return PreviewShell(h('div', { className: 'cms-page-preview cms-home-preview' },
+        h('span', { className: 'cms-kicker' }, text(hero.tag, '00 / INTRODUCTION')),
+        h('h1', {}, text(hero.mainTitle, '首页标题')),
+        h('p', { className: 'cms-subtitle' }, text(hero.subtitle, 'HOMEPAGE SUBTITLE')),
+        h('h2', {}, text(hero.linePrefix) + text(hero.lineEmphasis) + text(hero.lineMiddle) + text(hero.lineStrong)),
+        h('p', {}, text(hero.lineEnglish)),
+        h('div', { className: 'cms-principles' }, principles.map(function(item,index){
+          return h('article', { key:index }, h('span', {}, text(item.tag, '0' + (index + 1))), h('h3', {}, text(item.title, '理念标题')), h('p', {}, text(item.copy, '理念说明')));
+        })),
+        h('div', { className: 'cms-preview-band' }, text(gallery.marquee, 'OUR WORK · SELECTED PROJECTS · ARCHIVE'))
+      ));
+    },
+  });
+
+  var MenuPreview = window.createClass({
+    render: function render() {
+      var data = entryData(this.props);
+      var items = Array.isArray(data.items) ? data.items : [];
+      return PreviewShell(h('div', { className: 'cms-page-preview cms-menu-preview' },
+        h('span', { className: 'cms-kicker' }, text(data.closeLabel, 'CLOSE ×')),
+        h('nav', {}, items.map(function(item,index){ return h('div', { key:index }, h('span', {}, '0' + (index + 1)), h('b', {}, text(item.label, '菜单项目')), h('small', {}, text(item.href, '#section'))); })),
+        h('p', { className: 'cms-menu-footer' }, text(data.footer, 'DESIGN DISCIPLINES'))
+      ));
+    },
+  });
+
+  var ProfilePreview = window.createClass({
+    render: function render() {
+      var data = entryData(this.props);
+      var portrait = assetUrl(this.props.getAsset, data.portrait);
+      var skills = Array.isArray(data.skills) ? data.skills : [];
+      var awards = Array.isArray(data.academicAwards) ? data.academicAwards : [];
+      return PreviewShell(h('div', { className: 'cms-page-preview cms-profile-preview' },
+        h('div', { className: 'cms-profile-hero' },
+          portrait ? h('img', { src:portrait, alt:text(data.name, '个人肖像') }) : h('div', { className:'cms-media-empty' }, 'PORTRAIT'),
+          h('div', {}, h('span', { className:'cms-kicker' }, text(data.role, '个人定位')), h('h1', {}, text(data.name, '姓名')), h('h2', {}, text(data.nameEnglish, 'NAME')), h('p', {}, text(data.introduction, '个人简介')), h('small', {}, text(data.introductionEnglish, 'English introduction')))
+        ),
+        h('div', { className:'cms-chip-list' }, skills.map(function(skill,index){ return h('span', { key:index }, text(skill, 'SKILL')); })),
+        h('div', { className:'cms-award-list' }, awards.map(function(item,index){ return h('p', { key:index }, h('b', {}, text(item.title, '奖项')), h('em', {}, text(item.award, '—'))); }))
+      ));
+    },
+  });
+
+  var DetailPreview = window.createClass({
+    render: function render() {
+      var data = entryData(this.props);
+      var hero = data.hero || {};
+      var sections = Array.isArray(data.sections) ? data.sections : [];
+      var heroImage = assetUrl(this.props.getAsset, hero.image || hero.poster);
+      var getAsset = this.props.getAsset;
+      return PreviewShell(h('div', { className:'cms-page-preview cms-detail-preview' },
+        h('section', { className:'cms-detail-hero', style:heroImage ? { backgroundImage:'url("' + heroImage.replace(/"/g, '%22') + '")' } : {} },
+          h('span', { className:'cms-kicker' }, text(data.slug, 'PROJECT DETAIL')),
+          h('h1', {}, sections[0] ? text(sections[0].title, '作品内页') : '作品内页'),
+          h('p', {}, hero.video ? 'VIDEO HERO · ' + hero.video : text(hero.alt, 'PROJECT MEDIA'))
+        ),
+        sections.map(function(section,sectionIndex){
+          var mediaItems = Array.isArray(section.media) ? section.media : [];
+          return h('section', { className:'cms-detail-section', key:section.id || sectionIndex },
+            h('header', {}, h('span', {}, text(section.id, String(sectionIndex + 1).padStart(2,'0')) + ' / ' + String(sections.length).padStart(2,'0')), h('h2', {}, text(section.title, '章节标题')), h('p', {}, text(section.en, 'SECTION TITLE'))),
+            section.text ? h('blockquote', {}, section.text) : null,
+            section.video ? h('div', { className:'cms-video-path' }, 'VIDEO · ' + section.video) : null,
+            h('div', { className:'cms-media-grid' }, mediaItems.slice(0, 30).map(function(item,index){
+              var image = assetUrl(getAsset, item.image);
+              return h('figure', { key:index }, image ? h('img', { src:image, alt:text(item.caption, section.title) }) : h('div', { className:'cms-media-empty' }, 'IMAGE'), h('figcaption', {}, text(item.caption, String(index + 1).padStart(2,'0'))));
+            })),
+            mediaItems.length > 30 ? h('p', { className:'cms-more-media' }, '另有 ' + (mediaItems.length - 30) + ' 张素材，已保留在当前章节中') : null
+          );
+        })
+      ));
+    },
+  });
+
   window.CMS.registerPreviewStyle('/admin/preview.css');
   window.CMS.registerPreviewTemplate('projects', PortfolioPreview);
+  window.CMS.registerPreviewTemplate('home', HomePreview);
+  window.CMS.registerPreviewTemplate('menu', MenuPreview);
+  window.CMS.registerPreviewTemplate('profile', ProfilePreview);
+  ['detail_salt_lake','detail_tidal_moon','detail_qixiang','detail_medieval_pirate','detail_digital_nomad','detail_autumn_market','detail_experiments'].forEach(function(name){
+    window.CMS.registerPreviewTemplate(name, DetailPreview);
+  });
   window.__LJH_PREVIEW_REGISTERED__ = true;
   document.documentElement.dataset.cmsPreview = 'registered';
 })();

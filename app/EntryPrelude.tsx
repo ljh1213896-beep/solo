@@ -6,7 +6,9 @@ const clamp = (value:number,min=0,max=1)=>Math.min(max,Math.max(min,value));
 const easeOut = (value:number)=>1-Math.pow(1-value,4);
 const smooth = (value:number)=>value*value*(3-2*value);
 
-export default function EntryPrelude(){
+type EntryContent = { title:string; subtitle:string; cornerLeft:string; cornerRight:string };
+
+export default function EntryPrelude({ content }:{ content:EntryContent }){
   const canvasRef=useRef<HTMLCanvasElement>(null);
   const [finished,setFinished]=useState(false);
 
@@ -96,9 +98,9 @@ export default function EntryPrelude(){
         const copy=smooth(clamp((t-.58)/.14))*(1-smooth(clamp((t-.79)/.1)));
         context.textAlign='center';context.fillStyle=`rgba(239,235,238,${copy})`;
         context.font=`500 ${Math.max(16,Math.min(28,width*.018))}px "Noto Sans SC",sans-serif`;
-        context.fillText('萬 千 炁 象',width*.5,height*.73);
+        context.fillText(content.title,width*.5,height*.73);
         context.font='8px monospace';context.fillStyle=`rgba(218,76,150,${copy*.92})`;
-        context.fillText('SPATIAL PRACTICE / STRUCTURE IN MOTION',width*.5,height*.78);
+        context.fillText(content.subtitle,width*.5,height*.78);
       }
       const reveal=smooth(clamp((t-.76)/.22));
       if(reveal>0){
@@ -115,8 +117,8 @@ export default function EntryPrelude(){
 
     resize();addEventListener('resize',resize);frame=requestAnimationFrame(draw);
     return()=>{cancelAnimationFrame(frame);removeEventListener('resize',resize);document.documentElement.classList.remove('is-entering');};
-  },[]);
+  },[content]);
 
   if(finished)return null;
-  return <div className="entry-prelude" aria-label="LJH 入站动画"><canvas ref={canvasRef}/><span className="entry-corner entry-corner-a">LJH / 2026</span><span className="entry-corner entry-corner-b">STRUCTURE / 空间</span></div>;
+  return <div className="entry-prelude" aria-label="LJH 入站动画"><canvas ref={canvasRef}/><span className="entry-corner entry-corner-a">{content.cornerLeft}</span><span className="entry-corner entry-corner-b">{content.cornerRight}</span></div>;
 }

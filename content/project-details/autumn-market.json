@@ -1,0 +1,52 @@
+{
+  "slug": "autumn-market",
+  "hero": {"image":"/projects/autumn-market-detail/effects/01.webp","video":"","poster":"","alt":"秋风市集空间效果图"},
+  "sections": [
+    {
+      "id": "01",
+      "title": "效果展示",
+      "en": "MARKET IN MOTION",
+      "layout": "effects",
+      "text": "",
+      "media": [
+        {
+          "image": "/projects/autumn-market-detail/effects/01.webp",
+          "caption": "01 / 03"
+        },
+        {
+          "image": "/projects/autumn-market-detail/effects/02.webp",
+          "caption": "02 / 03"
+        },
+        {
+          "image": "/projects/autumn-market-detail/effects/03.webp",
+          "caption": "03 / 03"
+        }
+      ]
+    },
+    {
+      "id": "02",
+      "title": "项目概况",
+      "en": "PROJECT OVERVIEW",
+      "layout": "overview",
+      "text": "",
+      "media": [
+        {
+          "image": "/projects/autumn-market-detail/overview/01.webp",
+          "caption": "01 / 04"
+        },
+        {
+          "image": "/projects/autumn-market-detail/overview/02.webp",
+          "caption": "02 / 04"
+        },
+        {
+          "image": "/projects/autumn-market-detail/overview/03.webp",
+          "caption": "03 / 04"
+        },
+        {
+          "image": "/projects/autumn-market-detail/overview/04.webp",
+          "caption": "04 / 04"
+        }
+      ]
+    }
+  ]
+}

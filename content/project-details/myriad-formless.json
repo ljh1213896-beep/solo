@@ -1,0 +1,154 @@
+{
+  "slug": "myriad-formless",
+  "hero": {"image":"","video":"/projects/qixiang-cover.mp4?v=2","poster":"/projects/qixiang-cover.webp?v=2","alt":"炁象视觉形象系统动态封面"},
+  "sections": [
+    {
+      "id": "01",
+      "title": "展示视频",
+      "en": "BRAND MOTION / 01:35",
+      "layout": "video",
+      "text": "QIXIANG / MOTION SYSTEM",
+      "video": "/projects/qixiang-detail/showcase.mp4?v=2",
+      "media": []
+    },
+    {
+      "id": "02",
+      "title": "炁象视觉形象系统",
+      "en": "VISUAL IDENTITY / 26 PAGES",
+      "layout": "grid",
+      "text": "",
+      "media": [
+        {
+          "image": "/projects/qixiang-detail/system/001.webp?v=2",
+          "caption": "01 / 26",
+          "paired": false
+        },
+        {
+          "image": "/projects/qixiang-detail/system/002.webp?v=2",
+          "caption": "02 / 26",
+          "paired": false
+        },
+        {
+          "image": "/projects/qixiang-detail/system/003.webp?v=2",
+          "caption": "03 / 26",
+          "paired": false
+        },
+        {
+          "image": "/projects/qixiang-detail/system/004.webp?v=2",
+          "caption": "04 / 26",
+          "paired": false
+        },
+        {
+          "image": "/projects/qixiang-detail/system/005.webp?v=2",
+          "caption": "05 / 26",
+          "paired": false
+        },
+        {
+          "image": "/projects/qixiang-detail/system/006.webp?v=2",
+          "caption": "06 / 26",
+          "paired": false
+        },
+        {
+          "image": "/projects/qixiang-detail/system/007.webp?v=2",
+          "caption": "07 / 26",
+          "paired": true
+        },
+        {
+          "image": "/projects/qixiang-detail/system/008.webp?v=2",
+          "caption": "08 / 26",
+          "paired": true
+        },
+        {
+          "image": "/projects/qixiang-detail/system/009.webp?v=2",
+          "caption": "09 / 26",
+          "paired": false
+        },
+        {
+          "image": "/projects/qixiang-detail/system/010.webp?v=2",
+          "caption": "10 / 26",
+          "paired": true
+        },
+        {
+          "image": "/projects/qixiang-detail/system/011.webp?v=2",
+          "caption": "11 / 26",
+          "paired": true
+        },
+        {
+          "image": "/projects/qixiang-detail/system/012.webp?v=2",
+          "caption": "12 / 26",
+          "paired": false
+        },
+        {
+          "image": "/projects/qixiang-detail/system/013.webp?v=2",
+          "caption": "13 / 26",
+          "paired": false
+        },
+        {
+          "image": "/projects/qixiang-detail/system/014.webp?v=2",
+          "caption": "14 / 26",
+          "paired": false
+        },
+        {
+          "image": "/projects/qixiang-detail/system/015.webp?v=2",
+          "caption": "15 / 26",
+          "paired": false
+        },
+        {
+          "image": "/projects/qixiang-detail/system/016.webp?v=2",
+          "caption": "16 / 26",
+          "paired": false
+        },
+        {
+          "image": "/projects/qixiang-detail/system/017.webp?v=2",
+          "caption": "17 / 26",
+          "paired": false
+        },
+        {
+          "image": "/projects/qixiang-detail/system/018.webp?v=2",
+          "caption": "18 / 26",
+          "paired": true
+        },
+        {
+          "image": "/projects/qixiang-detail/system/019.webp?v=2",
+          "caption": "19 / 26",
+          "paired": true
+        },
+        {
+          "image": "/projects/qixiang-detail/system/020.webp?v=2",
+          "caption": "20 / 26",
+          "paired": false
+        },
+        {
+          "image": "/projects/qixiang-detail/system/021.webp?v=2",
+          "caption": "21 / 26",
+          "paired": false
+        },
+        {
+          "image": "/projects/qixiang-detail/system/022.webp?v=2",
+          "caption": "22 / 26",
+          "paired": false
+        },
+        {
+          "image": "/projects/qixiang-detail/system/023.webp?v=2",
+          "caption": "23 / 26",
+          "paired": true
+        },
+        {
+          "image": "/projects/qixiang-detail/system/024.webp?v=2",
+          "caption": "24 / 26",
+          "paired": true
+        },
+        {
+          "image": "/projects/qixiang-detail/system/025.webp?v=2",
+          "caption": "25 / 26",
+          "paired": true
+        },
+        {
+          "image": "/projects/qixiang-detail/system/026.webp?v=2",
+          "caption": "26 / 26",
+          "paired": true
+        }
+      ]
+    }
+  ]
+}

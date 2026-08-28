@@ -1,0 +1,171 @@
+{
+  "slug": "salt-lake-habitat",
+  "hero": {"image":"","video":"","poster":"","alt":"盐湖生境项目主视觉"},
+  "sections": [
+    {
+      "id": "01",
+      "title": "效果展示",
+      "en": "RENDERED VIEWS",
+      "layout": "wide",
+      "text": "",
+      "media": [
+        {
+          "image": "/projects/salt-lake-sequence/effects/01.webp",
+          "caption": "01 / 11"
+        },
+        {
+          "image": "/projects/salt-lake-sequence/effects/02.webp",
+          "caption": "02 / 11"
+        },
+        {
+          "image": "/projects/salt-lake-sequence/effects/03.webp",
+          "caption": "03 / 11"
+        },
+        {
+          "image": "/projects/salt-lake-sequence/effects/04.webp",
+          "caption": "04 / 11"
+        },
+        {
+          "image": "/projects/salt-lake-sequence/effects/05.webp",
+          "caption": "05 / 11"
+        },
+        {
+          "image": "/projects/salt-lake-sequence/effects/06.webp",
+          "caption": "06 / 11"
+        },
+        {
+          "image": "/projects/salt-lake-sequence/effects/07.webp",
+          "caption": "07 / 11"
+        },
+        {
+          "image": "/projects/salt-lake-sequence/effects/08.webp",
+          "caption": "08 / 11"
+        },
+        {
+          "image": "/projects/salt-lake-sequence/effects/09.webp",
+          "caption": "09 / 11"
+        },
+        {
+          "image": "/projects/salt-lake-sequence/effects/10.webp",
+          "caption": "10 / 11"
+        },
+        {
+          "image": "/projects/salt-lake-sequence/effects/11.webp",
+          "caption": "11 / 11"
+        }
+      ]
+    },
+    {
+      "id": "02",
+      "title": "项目概况",
+      "en": "PROJECT OVERVIEW",
+      "layout": "stack",
+      "text": "",
+      "media": [
+        {
+          "image": "/projects/salt-lake-sequence/project-pdf/01.webp",
+          "caption": "01 / 06"
+        },
+        {
+          "image": "/projects/salt-lake-sequence/project-pdf/02.webp",
+          "caption": "02 / 06"
+        },
+        {
+          "image": "/projects/salt-lake-sequence/project-pdf/03.webp",
+          "caption": "03 / 06"
+        },
+        {
+          "image": "/projects/salt-lake-sequence/project-pdf/04.webp",
+          "caption": "04 / 06"
+        },
+        {
+          "image": "/projects/salt-lake-sequence/project-pdf/05.webp",
+          "caption": "05 / 06"
+        },
+        {
+          "image": "/projects/salt-lake-sequence/project-pdf/06.webp",
+          "caption": "06 / 06"
+        }
+      ]
+    },
+    {
+      "id": "03",
+      "title": "四季导览图",
+      "en": "FOUR-SEASON GUIDE",
+      "layout": "pair",
+      "text": "",
+      "media": [
+        {
+          "image": "/projects/salt-lake-sequence/seasons/01.webp",
+          "caption": "01 / 04"
+        },
+        {
+          "image": "/projects/salt-lake-sequence/seasons/02.webp",
+          "caption": "02 / 04"
+        },
+        {
+          "image": "/projects/salt-lake-sequence/seasons/03.webp",
+          "caption": "03 / 04"
+        },
+        {
+          "image": "/projects/salt-lake-sequence/seasons/04.webp",
+          "caption": "04 / 04"
+        }
+      ]
+    },
+    {
+      "id": "04",
+      "title": "项目展板",
+      "en": "DESIGN BOARDS",
+      "layout": "portrait",
+      "text": "",
+      "media": [
+        {
+          "image": "/projects/salt-lake-sequence/boards/01.webp",
+          "caption": "01 / 04"
+        },
+        {
+          "image": "/projects/salt-lake-sequence/boards/02.webp",
+          "caption": "02 / 04"
+        },
+        {
+          "image": "/projects/salt-lake-sequence/boards/03.webp",
+          "caption": "03 / 04"
+        },
+        {
+          "image": "/projects/salt-lake-sequence/boards/04.webp",
+          "caption": "04 / 04"
+        }
+      ]
+    },
+    {
+      "id": "05",
+      "title": "平面图",
+      "en": "MASTERPLAN / PLAN STUDIES",
+      "layout": "plans",
+      "text": "",
+      "media": [
+        {
+          "image": "/projects/salt-lake-sequence/masterplan.webp",
+          "caption": "01 / 05"
+        },
+        {
+          "image": "/projects/salt-lake-sequence/plans/01.webp",
+          "caption": "02 / 05"
+        },
+        {
+          "image": "/projects/salt-lake-sequence/plans/02.webp",
+          "caption": "03 / 05"
+        },
+        {
+          "image": "/projects/salt-lake-sequence/plans/03.webp",
+          "caption": "04 / 05"
+        },
+        {
+          "image": "/projects/salt-lake-sequence/plans/04.webp",
+          "caption": "05 / 05"
+        }
+      ]
+    }
+  ]
+}

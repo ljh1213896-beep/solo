@@ -1,0 +1,86 @@
+{
+  "slug": "medieval-pirate",
+  "hero": {"image":"/projects/medieval-pirate-detail/renders/06.webp","video":"","poster":"","alt":"Medieval Pirate 中古店入口效果图"},
+  "sections": [
+    {
+      "id": "01",
+      "title": "项目概况",
+      "en": "PROJECT OVERVIEW",
+      "layout": "overview",
+      "text": "以航海、舱室与藏宝路径为叙事线索，把中古服饰零售空间转化为一段可被行走、观看与发现的沉浸旅程。",
+      "meta": [
+        {
+          "label": "TYPE",
+          "value": "中古商业 / 叙事空间"
+        },
+        {
+          "label": "LOCATION",
+          "value": "成都 · 四川"
+        },
+        {
+          "label": "YEAR",
+          "value": "2024"
+        }
+      ],
+      "media": [
+        {
+          "image": "/projects/medieval-pirate-detail/overview/01.webp",
+          "caption": "01 / 04"
+        },
+        {
+          "image": "/projects/medieval-pirate-detail/overview/02.webp",
+          "caption": "02 / 04"
+        },
+        {
+          "image": "/projects/medieval-pirate-detail/overview/03.webp",
+          "caption": "03 / 04"
+        },
+        {
+          "image": "/projects/medieval-pirate-detail/overview/04.webp",
+          "caption": "04 / 04"
+        }
+      ]
+    },
+    {
+      "id": "02",
+      "title": "效果图",
+      "en": "RENDERED ATMOSPHERES",
+      "layout": "renders",
+      "text": "",
+      "media": [
+        {
+          "image": "/projects/medieval-pirate-detail/renders/01.webp",
+          "caption": "01 / 08"
+        },
+        {
+          "image": "/projects/medieval-pirate-detail/renders/02.webp",
+          "caption": "02 / 08"
+        },
+        {
+          "image": "/projects/medieval-pirate-detail/renders/03.webp",
+          "caption": "03 / 08"
+        },
+        {
+          "image": "/projects/medieval-pirate-detail/renders/04.webp",
+          "caption": "04 / 08"
+        },
+        {
+          "image": "/projects/medieval-pirate-detail/renders/05.webp",
+          "caption": "05 / 08"
+        },
+        {
+          "image": "/projects/medieval-pirate-detail/renders/06.webp",
+          "caption": "06 / 08"
+        },
+        {
+          "image": "/projects/medieval-pirate-detail/renders/07.webp",
+          "caption": "07 / 08"
+        },
+        {
+          "image": "/projects/medieval-pirate-detail/renders/08.webp",
+          "caption": "08 / 08"
+        }
+      ]
+    }
+  ]
+}

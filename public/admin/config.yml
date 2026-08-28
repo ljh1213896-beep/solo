@@ -50,3 +50,521 @@ collections:
                 label: 关键词
                 widget: list
                 field: { name: keyword, label: 关键词, widget: string }
++
+  - name: site_pages
+    label: 网站页面内容
+    files:
+      - name: home
+        label: 首页文字与内容
+        file: content/home.json
+        format: json
+        description: "修改入站动画、首页标题、L/J/H 三段理念与作品区文字。"
+        fields:
+          - name: header
+            label: 顶部信息
+            widget: object
+            fields:
+              - { name: practice, label: 实践类型, widget: string }
+              - { name: locationYear, label: 地点与年份, widget: string }
+              - { name: discipline, label: 设计方向, widget: string }
+          - name: entry
+            label: 入站动画文字
+            widget: object
+            fields:
+              - { name: title, label: 主标题, widget: string }
+              - { name: subtitle, label: 英文副标题, widget: string }
+              - { name: cornerLeft, label: 左下角文字, widget: string }
+              - { name: cornerRight, label: 右下角文字, widget: string }
+          - name: hero
+            label: 首页第一屏
+            widget: object
+            fields:
+              - { name: tag, label: 章节标识, widget: string }
+              - { name: mainTitle, label: 中文主标题, widget: string }
+              - { name: subtitle, label: 英文副标题, widget: string }
+              - { name: linePrefix, label: 标语前缀, widget: string }
+              - { name: lineEmphasis, label: 洋红强调文字, widget: string }
+              - { name: lineMiddle, label: 标语中段, widget: string }
+              - { name: lineStrong, label: 加粗结尾, widget: string }
+              - { name: lineEnglish, label: 标语英文, widget: string }
+          - name: principles
+            label: L / J / H 三段理念
+            widget: list
+            min: 3
+            max: 3
+            summary: "{{fields.tag}} · {{fields.title}}"
+            fields:
+              - { name: tag, label: 标识, widget: string }
+              - { name: title, label: 标题, widget: string }
+              - { name: copy, label: 中文说明, widget: string }
+          - name: sceneWords
+            label: 3D 场景文字
+            widget: list
+            min: 3
+            max: 3
+            field: { name: word, label: 文字, widget: string }
+          - name: stageFooter
+            label: 首页底部状态文字
+            widget: list
+            min: 3
+            max: 3
+            field: { name: item, label: 文字, widget: string }
+          - name: gallery
+            label: 作品区文字
+            widget: object
+            fields:
+              - { name: marquee, label: 动态背景文字, widget: string }
+              - { name: heading, label: 作品区标题, widget: string }
+              - { name: interaction, label: 交互说明, widget: string }
+              - { name: progress, label: 滚动提示, widget: string }
+      - name: menu
+        label: 菜单页
+        file: content/menu.json
+        format: json
+        description: "修改菜单按钮、菜单项目名称/跳转位置和底部设计方向。"
+        fields:
+          - { name: closeLabel, label: 关闭按钮文字, widget: string }
+          - name: items
+            label: 菜单项目
+            widget: list
+            summary: "{{fields.label}}"
+            fields:
+              - { name: label, label: 菜单文字, widget: string }
+              - { name: href, label: 跳转位置, widget: string, hint: "首页 #top，个人介绍 #profile，作品 #work，联系 #contact" }
+          - { name: footer, label: 菜单底部文字, widget: string }
+      - name: profile
+        label: 个人介绍页
+        file: content/profile.json
+        format: json
+        description: "修改个人肖像、简介、教育、荣誉、技能、经历与奖项。"
+        fields:
+          - name: header
+            label: 页面顶部三段文字
+            widget: list
+            min: 3
+            max: 3
+            field: { name: item, label: 文字, widget: string }
+          - { name: portrait, label: 个人肖像, widget: image, choose_url: false }
+          - { name: portraitCaption, label: 肖像标注, widget: string }
+          - { name: name, label: 中文姓名, widget: string }
+          - { name: nameEnglish, label: 英文姓名, widget: string }
+          - { name: role, label: 身份定位, widget: string }
+          - { name: introduction, label: 中文简介, widget: text }
+          - { name: introductionEnglish, label: 英文简介, widget: text }
+          - name: education
+            label: 教育背景
+            widget: object
+            fields:
+              - { name: school, label: 学校, widget: string }
+              - { name: major, label: 专业, widget: string }
+              - { name: period, label: 时间, widget: string }
+              - { name: score, label: 学业情况, widget: string }
+              - { name: ranking, label: 专业排名, widget: string }
+          - name: honors
+            label: 荣誉奖项
+            widget: list
+            summary: "{{fields.year}} · {{fields.title}}"
+            fields:
+              - { name: year, label: 年份, widget: string }
+              - { name: title, label: 荣誉名称, widget: string }
+          - name: skills
+            label: 软件技能
+            widget: list
+            field: { name: skill, label: 技能名称, widget: string }
+          - name: campusExperiences
+            label: 校园经历
+            widget: list
+            summary: "{{fields.year}} · {{fields.title}}"
+            fields:
+              - { name: year, label: 年份, widget: string }
+              - { name: title, label: 经历名称, widget: string }
+          - name: academicAwards
+            label: 学术竞赛与奖项
+            widget: list
+            summary: "{{fields.title}} · {{fields.award}}"
+            fields:
+              - { name: title, label: 项目/比赛名称, widget: string }
+              - { name: award, label: 奖项, widget: string }
+          - name: practice
+            label: 科研与实践经历
+            widget: list
+            summary: "{{fields.title}} · {{fields.role}}"
+            fields:
+              - { name: title, label: 项目名称, widget: string }
+              - { name: role, label: 负责角色, widget: string }
+              - { name: description, label: 经历说明, widget: text }
+
+  - name: project_pages
+    label: 七个作品内页
+    files:
+      - name: detail_salt_lake
+        label: "盐湖生境｜作品内页"
+        file: content/project-details/salt-lake-habitat.json
+        format: json
+        description: "修改该作品内页的头图、视频、章节文字和展示素材；右侧实时预览内容顺序。"
+        fields:
+          - { name: slug, label: 固定网址标识, widget: hidden }
+          - name: hero
+            label: 内页首屏素材
+            widget: object
+            fields:
+              - { name: image, label: 首屏图片, widget: image, required: false, choose_url: false }
+              - { name: video, label: 首屏视频, widget: file, required: false, choose_url: false }
+              - { name: poster, label: 视频封面, widget: image, required: false, choose_url: false }
+              - { name: alt, label: 素材说明, widget: string, required: false }
+          - name: marquee
+            label: 动态装饰文字
+            widget: list
+            required: false
+            field: { name: item, label: 文字, widget: string }
+          - name: sections
+            label: 内页章节
+            label_singular: 章节
+            widget: list
+            summary: "{{fields.id}} · {{fields.title}}"
+            minimize_collapsed: true
+            fields:
+              - { name: id, label: 章节编号, widget: string }
+              - { name: title, label: 中文标题, widget: string }
+              - { name: en, label: 英文标题, widget: string }
+              - { name: label, label: 竖排/装饰标签, widget: string, required: false }
+              - { name: layout, label: 版式标识, widget: string, required: false, hint: "保留原值可维持当前版式" }
+              - { name: text, label: 章节说明文字, widget: text, required: false }
+              - { name: video, label: 章节视频, widget: file, required: false, choose_url: false }
+              - name: meta
+                label: 项目信息
+                widget: list
+                required: false
+                summary: "{{fields.label}} · {{fields.value}}"
+                fields:
+                  - { name: label, label: 信息名称, widget: string }
+                  - { name: value, label: 信息内容, widget: string }
+              - name: media
+                label: 图片素材
+                label_singular: 图片
+                widget: list
+                required: false
+                summary: "{{fields.caption}}"
+                minimize_collapsed: true
+                fields:
+                  - { name: image, label: 图片, widget: image, choose_url: false }
+                  - { name: caption, label: 图片标注, widget: string, required: false }
+                  - { name: paired, label: 使用双栏版式, widget: boolean, required: false, default: false }
+      - name: detail_tidal_moon
+        label: "汐月书庭｜作品内页"
+        file: content/project-details/tidal-moon-library.json
+        format: json
+        description: "修改该作品内页的头图、视频、章节文字和展示素材；右侧实时预览内容顺序。"
+        fields:
+          - { name: slug, label: 固定网址标识, widget: hidden }
+          - name: hero
+            label: 内页首屏素材
+            widget: object
+            fields:
+              - { name: image, label: 首屏图片, widget: image, required: false, choose_url: false }
+              - { name: video, label: 首屏视频, widget: file, required: false, choose_url: false }
+              - { name: poster, label: 视频封面, widget: image, required: false, choose_url: false }
+              - { name: alt, label: 素材说明, widget: string, required: false }
+          - name: marquee
+            label: 动态装饰文字
+            widget: list
+            required: false
+            field: { name: item, label: 文字, widget: string }
+          - name: sections
+            label: 内页章节
+            label_singular: 章节
+            widget: list
+            summary: "{{fields.id}} · {{fields.title}}"
+            minimize_collapsed: true
+            fields:
+              - { name: id, label: 章节编号, widget: string }
+              - { name: title, label: 中文标题, widget: string }
+              - { name: en, label: 英文标题, widget: string }
+              - { name: label, label: 竖排/装饰标签, widget: string, required: false }
+              - { name: layout, label: 版式标识, widget: string, required: false, hint: "保留原值可维持当前版式" }
+              - { name: text, label: 章节说明文字, widget: text, required: false }
+              - { name: video, label: 章节视频, widget: file, required: false, choose_url: false }
+              - name: meta
+                label: 项目信息
+                widget: list
+                required: false
+                summary: "{{fields.label}} · {{fields.value}}"
+                fields:
+                  - { name: label, label: 信息名称, widget: string }
+                  - { name: value, label: 信息内容, widget: string }
+              - name: media
+                label: 图片素材
+                label_singular: 图片
+                widget: list
+                required: false
+                summary: "{{fields.caption}}"
+                minimize_collapsed: true
+                fields:
+                  - { name: image, label: 图片, widget: image, choose_url: false }
+                  - { name: caption, label: 图片标注, widget: string, required: false }
+                  - { name: paired, label: 使用双栏版式, widget: boolean, required: false, default: false }
+      - name: detail_qixiang
+        label: "萬千炁象｜作品内页"
+        file: content/project-details/myriad-formless.json
+        format: json
+        description: "修改该作品内页的头图、视频、章节文字和展示素材；右侧实时预览内容顺序。"
+        fields:
+          - { name: slug, label: 固定网址标识, widget: hidden }
+          - name: hero
+            label: 内页首屏素材
+            widget: object
+            fields:
+              - { name: image, label: 首屏图片, widget: image, required: false, choose_url: false }
+              - { name: video, label: 首屏视频, widget: file, required: false, choose_url: false }
+              - { name: poster, label: 视频封面, widget: image, required: false, choose_url: false }
+              - { name: alt, label: 素材说明, widget: string, required: false }
+          - name: marquee
+            label: 动态装饰文字
+            widget: list
+            required: false
+            field: { name: item, label: 文字, widget: string }
+          - name: sections
+            label: 内页章节
+            label_singular: 章节
+            widget: list
+            summary: "{{fields.id}} · {{fields.title}}"
+            minimize_collapsed: true
+            fields:
+              - { name: id, label: 章节编号, widget: string }
+              - { name: title, label: 中文标题, widget: string }
+              - { name: en, label: 英文标题, widget: string }
+              - { name: label, label: 竖排/装饰标签, widget: string, required: false }
+              - { name: layout, label: 版式标识, widget: string, required: false, hint: "保留原值可维持当前版式" }
+              - { name: text, label: 章节说明文字, widget: text, required: false }
+              - { name: video, label: 章节视频, widget: file, required: false, choose_url: false }
+              - name: meta
+                label: 项目信息
+                widget: list
+                required: false
+                summary: "{{fields.label}} · {{fields.value}}"
+                fields:
+                  - { name: label, label: 信息名称, widget: string }
+                  - { name: value, label: 信息内容, widget: string }
+              - name: media
+                label: 图片素材
+                label_singular: 图片
+                widget: list
+                required: false
+                summary: "{{fields.caption}}"
+                minimize_collapsed: true
+                fields:
+                  - { name: image, label: 图片, widget: image, choose_url: false }
+                  - { name: caption, label: 图片标注, widget: string, required: false }
+                  - { name: paired, label: 使用双栏版式, widget: boolean, required: false, default: false }
+      - name: detail_medieval_pirate
+        label: "Medieval Pirate｜作品内页"
+        file: content/project-details/medieval-pirate.json
+        format: json
+        description: "修改该作品内页的头图、视频、章节文字和展示素材；右侧实时预览内容顺序。"
+        fields:
+          - { name: slug, label: 固定网址标识, widget: hidden }
+          - name: hero
+            label: 内页首屏素材
+            widget: object
+            fields:
+              - { name: image, label: 首屏图片, widget: image, required: false, choose_url: false }
+              - { name: video, label: 首屏视频, widget: file, required: false, choose_url: false }
+              - { name: poster, label: 视频封面, widget: image, required: false, choose_url: false }
+              - { name: alt, label: 素材说明, widget: string, required: false }
+          - name: marquee
+            label: 动态装饰文字
+            widget: list
+            required: false
+            field: { name: item, label: 文字, widget: string }
+          - name: sections
+            label: 内页章节
+            label_singular: 章节
+            widget: list
+            summary: "{{fields.id}} · {{fields.title}}"
+            minimize_collapsed: true
+            fields:
+              - { name: id, label: 章节编号, widget: string }
+              - { name: title, label: 中文标题, widget: string }
+              - { name: en, label: 英文标题, widget: string }
+              - { name: label, label: 竖排/装饰标签, widget: string, required: false }
+              - { name: layout, label: 版式标识, widget: string, required: false, hint: "保留原值可维持当前版式" }
+              - { name: text, label: 章节说明文字, widget: text, required: false }
+              - { name: video, label: 章节视频, widget: file, required: false, choose_url: false }
+              - name: meta
+                label: 项目信息
+                widget: list
+                required: false
+                summary: "{{fields.label}} · {{fields.value}}"
+                fields:
+                  - { name: label, label: 信息名称, widget: string }
+                  - { name: value, label: 信息内容, widget: string }
+              - name: media
+                label: 图片素材
+                label_singular: 图片
+                widget: list
+                required: false
+                summary: "{{fields.caption}}"
+                minimize_collapsed: true
+                fields:
+                  - { name: image, label: 图片, widget: image, choose_url: false }
+                  - { name: caption, label: 图片标注, widget: string, required: false }
+                  - { name: paired, label: 使用双栏版式, widget: boolean, required: false, default: false }
+      - name: detail_digital_nomad
+        label: "数字游民｜作品内页"
+        file: content/project-details/digital-nomad.json
+        format: json
+        description: "修改该作品内页的头图、视频、章节文字和展示素材；右侧实时预览内容顺序。"
+        fields:
+          - { name: slug, label: 固定网址标识, widget: hidden }
+          - name: hero
+            label: 内页首屏素材
+            widget: object
+            fields:
+              - { name: image, label: 首屏图片, widget: image, required: false, choose_url: false }
+              - { name: video, label: 首屏视频, widget: file, required: false, choose_url: false }
+              - { name: poster, label: 视频封面, widget: image, required: false, choose_url: false }
+              - { name: alt, label: 素材说明, widget: string, required: false }
+          - name: marquee
+            label: 动态装饰文字
+            widget: list
+            required: false
+            field: { name: item, label: 文字, widget: string }
+          - name: sections
+            label: 内页章节
+            label_singular: 章节
+            widget: list
+            summary: "{{fields.id}} · {{fields.title}}"
+            minimize_collapsed: true
+            fields:
+              - { name: id, label: 章节编号, widget: string }
+              - { name: title, label: 中文标题, widget: string }
+              - { name: en, label: 英文标题, widget: string }
+              - { name: label, label: 竖排/装饰标签, widget: string, required: false }
+              - { name: layout, label: 版式标识, widget: string, required: false, hint: "保留原值可维持当前版式" }
+              - { name: text, label: 章节说明文字, widget: text, required: false }
+              - { name: video, label: 章节视频, widget: file, required: false, choose_url: false }
+              - name: meta
+                label: 项目信息
+                widget: list
+                required: false
+                summary: "{{fields.label}} · {{fields.value}}"
+                fields:
+                  - { name: label, label: 信息名称, widget: string }
+                  - { name: value, label: 信息内容, widget: string }
+              - name: media
+                label: 图片素材
+                label_singular: 图片
+                widget: list
+                required: false
+                summary: "{{fields.caption}}"
+                minimize_collapsed: true
+                fields:
+                  - { name: image, label: 图片, widget: image, choose_url: false }
+                  - { name: caption, label: 图片标注, widget: string, required: false }
+                  - { name: paired, label: 使用双栏版式, widget: boolean, required: false, default: false }
+      - name: detail_autumn_market
+        label: "秋风市集｜作品内页"
+        file: content/project-details/autumn-market.json
+        format: json
+        description: "修改该作品内页的头图、视频、章节文字和展示素材；右侧实时预览内容顺序。"
+        fields:
+          - { name: slug, label: 固定网址标识, widget: hidden }
+          - name: hero
+            label: 内页首屏素材
+            widget: object
+            fields:
+              - { name: image, label: 首屏图片, widget: image, required: false, choose_url: false }
+              - { name: video, label: 首屏视频, widget: file, required: false, choose_url: false }
+              - { name: poster, label: 视频封面, widget: image, required: false, choose_url: false }
+              - { name: alt, label: 素材说明, widget: string, required: false }
+          - name: marquee
+            label: 动态装饰文字
+            widget: list
+            required: false
+            field: { name: item, label: 文字, widget: string }
+          - name: sections
+            label: 内页章节
+            label_singular: 章节
+            widget: list
+            summary: "{{fields.id}} · {{fields.title}}"
+            minimize_collapsed: true
+            fields:
+              - { name: id, label: 章节编号, widget: string }
+              - { name: title, label: 中文标题, widget: string }
+              - { name: en, label: 英文标题, widget: string }
+              - { name: label, label: 竖排/装饰标签, widget: string, required: false }
+              - { name: layout, label: 版式标识, widget: string, required: false, hint: "保留原值可维持当前版式" }
+              - { name: text, label: 章节说明文字, widget: text, required: false }
+              - { name: video, label: 章节视频, widget: file, required: false, choose_url: false }
+              - name: meta
+                label: 项目信息
+                widget: list
+                required: false
+                summary: "{{fields.label}} · {{fields.value}}"
+                fields:
+                  - { name: label, label: 信息名称, widget: string }
+                  - { name: value, label: 信息内容, widget: string }
+              - name: media
+                label: 图片素材
+                label_singular: 图片
+                widget: list
+                required: false
+                summary: "{{fields.caption}}"
+                minimize_collapsed: true
+                fields:
+                  - { name: image, label: 图片, widget: image, choose_url: false }
+                  - { name: caption, label: 图片标注, widget: string, required: false }
+                  - { name: paired, label: 使用双栏版式, widget: boolean, required: false, default: false }
+      - name: detail_experiments
+        label: "其他作品｜作品内页"
+        file: content/project-details/experiments.json
+        format: json
+        description: "修改该作品内页的头图、视频、章节文字和展示素材；右侧实时预览内容顺序。"
+        fields:
+          - { name: slug, label: 固定网址标识, widget: hidden }
+          - name: hero
+            label: 内页首屏素材
+            widget: object
+            fields:
+              - { name: image, label: 首屏图片, widget: image, required: false, choose_url: false }
+              - { name: video, label: 首屏视频, widget: file, required: false, choose_url: false }
+              - { name: poster, label: 视频封面, widget: image, required: false, choose_url: false }
+              - { name: alt, label: 素材说明, widget: string, required: false }
+          - name: marquee
+            label: 动态装饰文字
+            widget: list
+            required: false
+            field: { name: item, label: 文字, widget: string }
+          - name: sections
+            label: 内页章节
+            label_singular: 章节
+            widget: list
+            summary: "{{fields.id}} · {{fields.title}}"
+            minimize_collapsed: true
+            fields:
+              - { name: id, label: 章节编号, widget: string }
+              - { name: title, label: 中文标题, widget: string }
+              - { name: en, label: 英文标题, widget: string }
+              - { name: label, label: 竖排/装饰标签, widget: string, required: false }
+              - { name: layout, label: 版式标识, widget: string, required: false, hint: "保留原值可维持当前版式" }
+              - { name: text, label: 章节说明文字, widget: text, required: false }
+              - { name: video, label: 章节视频, widget: file, required: false, choose_url: false }
+              - name: meta
+                label: 项目信息
+                widget: list
+                required: false
+                summary: "{{fields.label}} · {{fields.value}}"
+                fields:
+                  - { name: label, label: 信息名称, widget: string }
+                  - { name: value, label: 信息内容, widget: string }
+              - name: media
+                label: 图片素材
+                label_singular: 图片
+                widget: list
+                required: false
+                summary: "{{fields.caption}}"
+                minimize_collapsed: true
+                fields:
+                  - { name: image, label: 图片, widget: image, choose_url: false }
+                  - { name: caption, label: 图片标注, widget: string, required: false }
+                  - { name: paired, label: 使用双栏版式, widget: boolean, required: false, default: false }

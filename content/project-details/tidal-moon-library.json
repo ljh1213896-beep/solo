@@ -1,0 +1,474 @@
+{
+  "slug": "tidal-moon-library",
+  "hero": {"image":"/projects/tidal-moon-detail/full/025.webp","video":"","poster":"","alt":"汐月书庭图书馆空间效果图"},
+  "marquee": [
+    "READ",
+    "PAUSE",
+    "GATHER",
+    "REPEAT"
+  ],
+  "sections": [
+    {
+      "id": "01",
+      "title": "项目概况",
+      "en": "PROJECT OVERVIEW",
+      "layout": "stack",
+      "text": "",
+      "media": [
+        {
+          "image": "/projects/tidal-moon-detail/overview/001.webp",
+          "caption": "OVERVIEW"
+        },
+        {
+          "image": "/projects/tidal-moon-detail/overview/002.webp",
+          "caption": "OVERVIEW"
+        },
+        {
+          "image": "/projects/tidal-moon-detail/overview/003.webp",
+          "caption": "OVERVIEW"
+        }
+      ]
+    },
+    {
+      "id": "02",
+      "title": "项目全览",
+      "en": "COMPLETE PROJECT INDEX",
+      "layout": "grid",
+      "text": "",
+      "media": [
+        {
+          "image": "/projects/tidal-moon-detail/full/001.webp",
+          "caption": "01 / 108"
+        },
+        {
+          "image": "/projects/tidal-moon-detail/full/002.webp",
+          "caption": "02 / 108"
+        },
+        {
+          "image": "/projects/tidal-moon-detail/full/003.webp",
+          "caption": "03 / 108"
+        },
+        {
+          "image": "/projects/tidal-moon-detail/full/004.webp",
+          "caption": "04 / 108"
+        },
+        {
+          "image": "/projects/tidal-moon-detail/full/005.webp",
+          "caption": "05 / 108"
+        },
+        {
+          "image": "/projects/tidal-moon-detail/full/006.webp",
+          "caption": "06 / 108"
+        },
+        {
+          "image": "/projects/tidal-moon-detail/full/007.webp",
+          "caption": "07 / 108"
+        },
+        {
+          "image": "/projects/tidal-moon-detail/full/008.webp",
+          "caption": "08 / 108"
+        },
+        {
+          "image": "/projects/tidal-moon-detail/full/009.webp",
+          "caption": "09 / 108"
+        },
+        {
+          "image": "/projects/tidal-moon-detail/full/010.webp",
+          "caption": "10 / 108"
+        },
+        {
+          "image": "/projects/tidal-moon-detail/full/011.webp",
+          "caption": "11 / 108"
+        },
+        {
+          "image": "/projects/tidal-moon-detail/full/012.webp",
+          "caption": "12 / 108"
+        },
+        {
+          "image": "/projects/tidal-moon-detail/full/013.webp",
+          "caption": "13 / 108"
+        },
+        {
+          "image": "/projects/tidal-moon-detail/full/014.webp",
+          "caption": "14 / 108"
+        },
+        {
+          "image": "/projects/tidal-moon-detail/full/015.webp",
+          "caption": "15 / 108"
+        },
+        {
+          "image": "/projects/tidal-moon-detail/full/016.webp",
+          "caption": "16 / 108"
+        },
+        {
+          "image": "/projects/tidal-moon-detail/full/017.webp",
+          "caption": "17 / 108"
+        },
+        {
+          "image": "/projects/tidal-moon-detail/full/018.webp",
+          "caption": "18 / 108"
+        },
+        {
+          "image": "/projects/tidal-moon-detail/full/019.webp",
+          "caption": "19 / 108"
+        },
+        {
+          "image": "/projects/tidal-moon-detail/full/020.webp",
+          "caption": "20 / 108"
+        },
+        {
+          "image": "/projects/tidal-moon-detail/full/021.webp",
+          "caption": "21 / 108"
+        },
+        {
+          "image": "/projects/tidal-moon-detail/full/022.webp",
+          "caption": "22 / 108"
+        },
+        {
+          "image": "/projects/tidal-moon-detail/full/023.webp",
+          "caption": "23 / 108"
+        },
+        {
+          "image": "/projects/tidal-moon-detail/full/024.webp",
+          "caption": "24 / 108"
+        },
+        {
+          "image": "/projects/tidal-moon-detail/full/025.webp",
+          "caption": "25 / 108"
+        },
+        {
+          "image": "/projects/tidal-moon-detail/full/026.webp",
+          "caption": "26 / 108"
+        },
+        {
+          "image": "/projects/tidal-moon-detail/full/027.webp",
+          "caption": "27 / 108"
+        },
+        {
+          "image": "/projects/tidal-moon-detail/full/028.webp",
+          "caption": "28 / 108"
+        },
+        {
+          "image": "/projects/tidal-moon-detail/full/029.webp",
+          "caption": "29 / 108"
+        },
+        {
+          "image": "/projects/tidal-moon-detail/full/030.webp",
+          "caption": "30 / 108"
+        },
+        {
+          "image": "/projects/tidal-moon-detail/full/031.webp",
+          "caption": "31 / 108"
+        },
+        {
+          "image": "/projects/tidal-moon-detail/full/032.webp",
+          "caption": "32 / 108"
+        },
+        {
+          "image": "/projects/tidal-moon-detail/full/033.webp",
+          "caption": "33 / 108"
+        },
+        {
+          "image": "/projects/tidal-moon-detail/full/034.webp",
+          "caption": "34 / 108"
+        },
+        {
+          "image": "/projects/tidal-moon-detail/full/035.webp",
+          "caption": "35 / 108"
+        },
+        {
+          "image": "/projects/tidal-moon-detail/full/036.webp",
+          "caption": "36 / 108"
+        },
+        {
+          "image": "/projects/tidal-moon-detail/full/037.webp",
+          "caption": "37 / 108"
+        },
+        {
+          "image": "/projects/tidal-moon-detail/full/038.webp",
+          "caption": "38 / 108"
+        },
+        {
+          "image": "/projects/tidal-moon-detail/full/039.webp",
+          "caption": "39 / 108"
+        },
+        {
+          "image": "/projects/tidal-moon-detail/full/040.webp",
+          "caption": "40 / 108"
+        },
+        {
+          "image": "/projects/tidal-moon-detail/full/041.webp",
+          "caption": "41 / 108"
+        },
+        {
+          "image": "/projects/tidal-moon-detail/full/042.webp",
+          "caption": "42 / 108"
+        },
+        {
+          "image": "/projects/tidal-moon-detail/full/043.webp",
+          "caption": "43 / 108"
+        },
+        {
+          "image": "/projects/tidal-moon-detail/full/044.webp",
+          "caption": "44 / 108"
+        },
+        {
+          "image": "/projects/tidal-moon-detail/full/045.webp",
+          "caption": "45 / 108"
+        },
+        {
+          "image": "/projects/tidal-moon-detail/full/046.webp",
+          "caption": "46 / 108"
+        },
+        {
+          "image": "/projects/tidal-moon-detail/full/047.webp",
+          "caption": "47 / 108"
+        },
+        {
+          "image": "/projects/tidal-moon-detail/full/048.webp",
+          "caption": "48 / 108"
+        },
+        {
+          "image": "/projects/tidal-moon-detail/full/049.webp",
+          "caption": "49 / 108"
+        },
+        {
+          "image": "/projects/tidal-moon-detail/full/050.webp",
+          "caption": "50 / 108"
+        },
+        {
+          "image": "/projects/tidal-moon-detail/full/051.webp",
+          "caption": "51 / 108"
+        },
+        {
+          "image": "/projects/tidal-moon-detail/full/052.webp",
+          "caption": "52 / 108"
+        },
+        {
+          "image": "/projects/tidal-moon-detail/full/053.webp",
+          "caption": "53 / 108"
+        },
+        {
+          "image": "/projects/tidal-moon-detail/full/054.webp",
+          "caption": "54 / 108"
+        },
+        {
+          "image": "/projects/tidal-moon-detail/full/055.webp",
+          "caption": "55 / 108"
+        },
+        {
+          "image": "/projects/tidal-moon-detail/full/056.webp",
+          "caption": "56 / 108"
+        },
+        {
+          "image": "/projects/tidal-moon-detail/full/057.webp",
+          "caption": "57 / 108"
+        },
+        {
+          "image": "/projects/tidal-moon-detail/full/058.webp",
+          "caption": "58 / 108"
+        },
+        {
+          "image": "/projects/tidal-moon-detail/full/059.webp",
+          "caption": "59 / 108"
+        },
+        {
+          "image": "/projects/tidal-moon-detail/full/060.webp",
+          "caption": "60 / 108"
+        },
+        {
+          "image": "/projects/tidal-moon-detail/full/061.webp",
+          "caption": "61 / 108"
+        },
+        {
+          "image": "/projects/tidal-moon-detail/full/062.webp",
+          "caption": "62 / 108"
+        },
+        {
+          "image": "/projects/tidal-moon-detail/full/063.webp",
+          "caption": "63 / 108"
+        },
+        {
+          "image": "/projects/tidal-moon-detail/full/064.webp",
+          "caption": "64 / 108"
+        },
+        {
+          "image": "/projects/tidal-moon-detail/full/065.webp",
+          "caption": "65 / 108"
+        },
+        {
+          "image": "/projects/tidal-moon-detail/full/066.webp",
+          "caption": "66 / 108"
+        },
+        {
+          "image": "/projects/tidal-moon-detail/full/067.webp",
+          "caption": "67 / 108"
+        },
+        {
+          "image": "/projects/tidal-moon-detail/full/068.webp",
+          "caption": "68 / 108"
+        },
+        {
+          "image": "/projects/tidal-moon-detail/full/069.webp",
+          "caption": "69 / 108"
+        },
+        {
+          "image": "/projects/tidal-moon-detail/full/070.webp",
+          "caption": "70 / 108"
+        },
+        {
+          "image": "/projects/tidal-moon-detail/full/071.webp",
+          "caption": "71 / 108"
+        },
+        {
+          "image": "/projects/tidal-moon-detail/full/072.webp",
+          "caption": "72 / 108"
+        },
+        {
+          "image": "/projects/tidal-moon-detail/full/073.webp",
+          "caption": "73 / 108"
+        },
+        {
+          "image": "/projects/tidal-moon-detail/full/074.webp",
+          "caption": "74 / 108"
+        },
+        {
+          "image": "/projects/tidal-moon-detail/full/075.webp",
+          "caption": "75 / 108"
+        },
+        {
+          "image": "/projects/tidal-moon-detail/full/076.webp",
+          "caption": "76 / 108"
+        },
+        {
+          "image": "/projects/tidal-moon-detail/full/077.webp",
+          "caption": "77 / 108"
+        },
+        {
+          "image": "/projects/tidal-moon-detail/full/078.webp",
+          "caption": "78 / 108"
+        },
+        {
+          "image": "/projects/tidal-moon-detail/full/079.webp",
+          "caption": "79 / 108"
+        },
+        {
+          "image": "/projects/tidal-moon-detail/full/080.webp",
+          "caption": "80 / 108"
+        },
+        {
+          "image": "/projects/tidal-moon-detail/full/081.webp",
+          "caption": "81 / 108"
+        },
+        {
+          "image": "/projects/tidal-moon-detail/full/082.webp",
+          "caption": "82 / 108"
+        },
+        {
+          "image": "/projects/tidal-moon-detail/full/083.webp",
+          "caption": "83 / 108"
+        },
+        {
+          "image": "/projects/tidal-moon-detail/full/084.webp",
+          "caption": "84 / 108"
+        },
+        {
+          "image": "/projects/tidal-moon-detail/full/085.webp",
+          "caption": "85 / 108"
+        },
+        {
+          "image": "/projects/tidal-moon-detail/full/086.webp",
+          "caption": "86 / 108"
+        },
+        {
+          "image": "/projects/tidal-moon-detail/full/087.webp",
+          "caption": "87 / 108"
+        },
+        {
+          "image": "/projects/tidal-moon-detail/full/088.webp",
+          "caption": "88 / 108"
+        },
+        {
+          "image": "/projects/tidal-moon-detail/full/089.webp",
+          "caption": "89 / 108"
+        },
+        {
+          "image": "/projects/tidal-moon-detail/full/090.webp",
+          "caption": "90 / 108"
+        },
+        {
+          "image": "/projects/tidal-moon-detail/full/091.webp",
+          "caption": "91 / 108"
+        },
+        {
+          "image": "/projects/tidal-moon-detail/full/092.webp",
+          "caption": "92 / 108"
+        },
+        {
+          "image": "/projects/tidal-moon-detail/full/093.webp",
+          "caption": "93 / 108"
+        },
+        {
+          "image": "/projects/tidal-moon-detail/full/094.webp",
+          "caption": "94 / 108"
+        },
+        {
+          "image": "/projects/tidal-moon-detail/full/095.webp",
+          "caption": "95 / 108"
+        },
+        {
+          "image": "/projects/tidal-moon-detail/full/096.webp",
+          "caption": "96 / 108"
+        },
+        {
+          "image": "/projects/tidal-moon-detail/full/097.webp",
+          "caption": "97 / 108"
+        },
+        {
+          "image": "/projects/tidal-moon-detail/full/098.webp",
+          "caption": "98 / 108"
+        },
+        {
+          "image": "/projects/tidal-moon-detail/full/099.webp",
+          "caption": "99 / 108"
+        },
+        {
+          "image": "/projects/tidal-moon-detail/full/100.webp",
+          "caption": "100 / 108"
+        },
+        {
+          "image": "/projects/tidal-moon-detail/full/101.webp",
+          "caption": "101 / 108"
+        },
+        {
+          "image": "/projects/tidal-moon-detail/full/102.webp",
+          "caption": "102 / 108"
+        },
+        {
+          "image": "/projects/tidal-moon-detail/full/103.webp",
+          "caption": "103 / 108"
+        },
+        {
+          "image": "/projects/tidal-moon-detail/full/104.webp",
+          "caption": "104 / 108"
+        },
+        {
+          "image": "/projects/tidal-moon-detail/full/105.webp",
+          "caption": "105 / 108"
+        },
+        {
+          "image": "/projects/tidal-moon-detail/full/106.webp",
+          "caption": "106 / 108"
+        },
+        {
+          "image": "/projects/tidal-moon-detail/full/107.webp",
+          "caption": "107 / 108"
+        },
+        {
+          "image": "/projects/tidal-moon-detail/full/108.webp",
+          "caption": "108 / 108"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,68 @@
+{
+  "slug": "experiments",
+  "hero": {"image":"","video":"/projects/other-works-cover.mp4","poster":"/projects/other-works-cover.webp","alt":"其他作品动态封面"},
+  "marquee": [
+    "RENDERING",
+    "PHOTOGRAPHY",
+    "COURSE WORKS",
+    "GRAPHIC DESIGN"
+  ],
+  "sections": [
+    {
+      "id": "01",
+      "title": "其他作品",
+      "en": "SELECTED WORKS",
+      "label": "INTRODUCTION",
+      "layout": "page",
+      "text": "",
+      "media": [
+        {
+          "image": "/projects/other-works-detail/pages/01.webp",
+          "caption": "LJH / ARCHIVE"
+        }
+      ]
+    },
+    {
+      "id": "02",
+      "title": "渲染与摄影",
+      "en": "RENDERING / PHOTOGRAPHY",
+      "label": "IMAGE STUDIES",
+      "layout": "page",
+      "text": "",
+      "media": [
+        {
+          "image": "/projects/other-works-detail/pages/02.webp",
+          "caption": "LJH / ARCHIVE"
+        }
+      ]
+    },
+    {
+      "id": "03",
+      "title": "课程作业",
+      "en": "COURSE ASSIGNMENTS",
+      "label": "SPATIAL STUDIES",
+      "layout": "page",
+      "text": "",
+      "media": [
+        {
+          "image": "/projects/other-works-detail/pages/03.webp",
+          "caption": "LJH / ARCHIVE"
+        }
+      ]
+    },
+    {
+      "id": "04",
+      "title": "平面与海报",
+      "en": "GRAPHIC / POSTER DESIGN",
+      "label": "VISUAL STUDIES",
+      "layout": "page",
+      "text": "",
+      "media": [
+        {
+          "image": "/projects/other-works-detail/pages/04.webp",
+          "caption": "LJH / ARCHIVE"
+        }
+      ]
+    }
+  ]
+}

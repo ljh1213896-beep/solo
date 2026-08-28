@@ -1,0 +1,10 @@
+{
+  "closeLabel": "CLOSE ×",
+  "items": [
+    { "label": "HOME / 首页", "href": "#top" },
+    { "label": "PROFILE / 关于", "href": "#profile" },
+    { "label": "WORK / 作品", "href": "#work" },
+    { "label": "CONTACT / 联系", "href": "#contact" }
+  ],
+  "footer": "ENVIRONMENTAL · INTERIOR · SPATIAL · LANDSCAPE DESIGN"
+}

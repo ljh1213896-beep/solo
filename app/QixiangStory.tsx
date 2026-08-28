@@ -1,38 +1,36 @@
 'use client';
 
 import ProjectCursor from './ProjectCursor';
+import type { ProjectDetail } from './projectDetailData';
 
-const systemRoot = '/projects/qixiang-detail/system';
-const systemPages = Array.from({ length:26 }, (_, index) => `${systemRoot}/${String(index + 1).padStart(3, '0')}.webp?v=2`);
-const pairedPages = new Set([7, 8, 10, 11, 18, 19, 23, 24, 25, 26]);
-
-export default function QixiangStory() {
+export default function QixiangStory({ detail }:{ detail:ProjectDetail }) {
+  const [motion, system] = detail.sections;
   return <div className="qixiang-story">
     <ProjectCursor variant="typhoon" />
     <div className="qixiang-geometry" aria-hidden="true"><i /><i /><i /><span /></div>
 
     <section className="qixiang-section qixiang-video" aria-labelledby="qixiang-video-title">
       <header className="qixiang-section-head">
-        <span>01 / 02</span>
-        <h2 id="qixiang-video-title">展示视频</h2>
-        <p>BRAND MOTION / 01:35</p>
+        <span>{motion.id} / 02</span>
+        <h2 id="qixiang-video-title">{motion.title}</h2>
+        <p>{motion.en}</p>
       </header>
       <div className="qixiang-video-frame">
-        <video src="/projects/qixiang-detail/showcase.mp4?v=2" controls playsInline preload="metadata" />
-        <span aria-hidden="true">QIXIANG / MOTION SYSTEM</span>
+        <video src={motion.video} controls playsInline preload="metadata" />
+        <span aria-hidden="true">{motion.text}</span>
       </div>
     </section>
 
     <section className="qixiang-section qixiang-system" aria-labelledby="qixiang-system-title">
       <header className="qixiang-section-head">
-        <span>02 / 02</span>
-        <h2 id="qixiang-system-title">炁象视觉形象系统</h2>
-        <p>VISUAL IDENTITY / 26 PAGES</p>
+        <span>{system.id} / 02</span>
+        <h2 id="qixiang-system-title">{system.title}</h2>
+        <p>{system.en}</p>
       </header>
       <div className="qixiang-system-grid">
-        {systemPages.map((src, index) => <figure className={pairedPages.has(index + 1) ? 'is-paired' : ''} key={src}>
-          <img src={src} alt={`炁象视觉形象系统 ${index + 1}`} loading={index < 2 ? 'eager' : 'lazy'} />
-          <figcaption><span>QX / SYSTEM</span>{String(index + 1).padStart(2, '0')} / 26</figcaption>
+        {system.media.map((media, index) => <figure className={media.paired ? 'is-paired' : ''} key={`${media.image}-${index}`}>
+          <img src={media.image} alt={`${system.title} ${index + 1}`} loading={index < 2 ? 'eager' : 'lazy'} />
+          <figcaption><span>QX / SYSTEM</span>{media.caption || `${String(index + 1).padStart(2, '0')} / ${String(system.media.length).padStart(2,'0')}`}</figcaption>
         </figure>)}
       </div>
     </section>
