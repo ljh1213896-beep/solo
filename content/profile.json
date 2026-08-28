@@ -1,53 +1,160 @@
 {
-  "header": ["ABOUT / 个人介绍", "PROFILE 01", "CHENGDU · CHINA"],
-  "portrait": "/profile/li-jianhua.png",
-  "portraitCaption": "PORTRAIT / 2025",
-  "name": "李建华",
+  "skills": [
+    "Photoshop",
+    "Sketch Up",
+    "Illustrator",
+    "Cinema 4D",
+    "Auto CAD",
+    "Midjourney",
+    "D5 Render",
+    "Blender",
+    "Stable Diffusion",
+    "ChatGPT",
+    "Codex",
+    "Github"
+  ],
   "nameEnglish": "LI JIANHUA",
-  "role": "环境设计师 / 空间实践者",
-  "introduction": "以环境、室内、空间与景观为实践边界，关注场地语境、人的行为以及自然关系。从调研、概念构建到视觉表达与落地协同，在设计实践与科研探索之间建立持续连接。",
-  "introductionEnglish": "An environmental design practitioner translating research, context and human experience into tangible places.",
   "education": {
     "school": "西南民族大学",
     "major": "环境设计",
     "period": "2022.09 至今",
-    "score": "学业情况：90.41 / 100  3.74 / 4",
-    "ranking": "专业课排名：2 / 98"
+    "score": "学业情况：90.93 / 100  3.8 / 4",
+    "ranking": "专业课排名：21/ 98"
   },
   "honors": [
-    { "year": "2024", "title": "国家奖学金" },
-    { "year": "2025", "title": "四川省大学生综合素质 A 级证书" },
-    { "year": "2024", "title": "西南民族大学本科生一等奖学金" },
-    { "year": "2024", "title": "西南民族大学校级三好学生" },
-    { "year": "2023", "title": "西南民族大学本科生二等奖学金" }
+    {
+      "year": "2024",
+      "title": "国家奖学金"
+    },
+    {
+      "year": "2025",
+      "title": "四川省大学生综合素质 A 级证书"
+    },
+    {
+      "year": "2024",
+      "title": "西南民族大学本科生一等奖学金"
+    },
+    {
+      "year": "2024",
+      "title": "西南民族大学校级三好学生"
+    },
+    {
+      "year": "2023",
+      "title": "西南民族大学本科生二等奖学金"
+    },
+    {
+      "year": "2025",
+      "title": "西南民族大学本科生一等奖学金"
+    }
   ],
-  "skills": ["Photoshop", "Sketch Up", "Illustrator", "Cinema 4D", "Auto CAD", "Midjourney", "D5 Render", "Blender", "Stable Diffusion", "ChatGPT", "Codex"],
   "campusExperiences": [
-    { "year": "2025", "title": "FOCUS DESIGN 设计平台签约设计师" },
-    { "year": "2024", "title": "环境设计与陈设艺术研究所 第四工作室负责人" },
-    { "year": "2023", "title": "中国建筑学会室内设计分会会员" },
-    { "year": "2023", "title": "建筑学院环境设计系实践工作组组长" },
-    { "year": "2022", "title": "党委宣传部民小薇工作室摄影记者" }
+    {
+      "year": "2025",
+      "title": "FOCUS DESIGN 设计平台签约设计师"
+    },
+    {
+      "year": "2024",
+      "title": "环境设计与陈设艺术研究所 第四工作室负责人"
+    },
+    {
+      "year": "2023",
+      "title": "中国建筑学会室内设计分会会员"
+    },
+    {
+      "year": "2023",
+      "title": "建筑学院环境设计系实践工作组组长"
+    },
+    {
+      "year": "2022",
+      "title": "党委宣传部民小薇工作室摄影记者"
+    }
   ],
-  "academicAwards": [
-    { "title": "2025 米兰设计周中国高校设计学科师生优秀作品展四川赛区", "award": "二等奖" },
-    { "title": "2024 第十届“中装杯”全国大学生环境设计大赛", "award": "二等奖" },
-    { "title": "2024 四川省大学生环境设计大赛", "award": "一等奖" },
-    { "title": "2024 两岸新锐设计竞赛·华灿奖", "award": "三等奖" },
-    { "title": "2024 东方设计奖全国高校创新设计大赛", "award": "一等奖" },
-    { "title": "2024 四川省大学生农业创意设计大赛", "award": "一等奖" },
-    { "title": "2024 十七届全国三维数字化创新设计大赛", "award": "一等奖" },
-    { "title": "2024 首届中西部乡村振兴环境设计大赛", "award": "一等奖" },
-    { "title": "2023 第12届未来设计师高校数字艺术设计大赛", "award": "一等奖" },
-    { "title": "2023 四川省国际大学生创新大赛", "award": "银奖" },
-    { "title": "2023 四川省道中华杯原创手绘比赛", "award": "一等奖" },
-    { "title": "2023 成都市优秀原创方案设计室内装饰类", "award": "优秀奖" }
+  "portraitCaption": "PORTRAIT / 2025",
+  "name": "李建华",
+  "header": [
+    "ABOUT / 个人介绍",
+    "PROFILE 01",
+    "CHENGDU · CHINA"
   ],
+  "role": "环境设计师 / 空间实践者",
+  "introductionEnglish": "An environmental design practitioner translating research, context and human experience into tangible places.",
+  "introduction": "以环境、室内、空间与景观为实践边界，关注场地语境、人的行为以及自然关系。从调研、概念构建到视觉表达与落地协同，在设计实践与科研探索之间建立持续连接。",
   "practice": [
-    { "title": "青触 Design — 基于新媒体平台的创意传媒品牌", "role": "负责人", "description": "负责项目研究主干梳理及主要设计工作。" },
-    { "title": "油脉巡行者 — 新一代仿生蛇形石油管道巡检机器人", "role": "主要负责人", "description": "负责产品研发、项目视觉设计与策划统筹。" },
-    { "title": "江西省赣州市赣县区义源村旅游规划项目", "role": "主要负责人", "description": "约 650 亩，方案已中标并进入落地阶段。" },
-    { "title": "四川省成都市红牌里两新艺术中心设计", "role": "设计主创", "description": "约 3000㎡文化空间改造，项目已落地。" },
-    { "title": "西南民族大学校图书馆一至四楼改造项目", "role": "主要负责人", "description": "负责调研、方案、采购需求与落地协同。" }
+    {
+      "title": "青触 Design — 基于新媒体平台的创意传媒品牌",
+      "role": "负责人",
+      "description": "负责项目研究主干梳理及主要设计工作。"
+    },
+    {
+      "title": "油脉巡行者 — 新一代仿生蛇形石油管道巡检机器人",
+      "role": "主要负责人",
+      "description": "负责产品研发、项目视觉设计与策划统筹。"
+    },
+    {
+      "title": "江西省赣州市赣县区义源村旅游规划项目",
+      "role": "主要负责人",
+      "description": "约 650 亩，方案已中标并进入落地阶段。"
+    },
+    {
+      "title": "四川省成都市红牌里两新艺术中心设计",
+      "role": "设计主创",
+      "description": "约 3000㎡文化空间改造，项目已落地。"
+    },
+    {
+      "title": "西南民族大学校图书馆一至四楼改造项目",
+      "role": "主要负责人",
+      "description": "负责调研、方案、采购需求与落地协同。"
+    }
+  ],
+  "portrait": "/profile/li-jianhua.png",
+  "academicAwards": [
+    {
+      "title": "2025 米兰设计周中国高校设计学科师生优秀作品展四川赛区",
+      "award": "二等奖"
+    },
+    {
+      "title": "2024 第十届“中装杯”全国大学生环境设计大赛",
+      "award": "二等奖"
+    },
+    {
+      "title": "2024 四川省大学生环境设计大赛",
+      "award": "一等奖"
+    },
+    {
+      "title": "2024 两岸新锐设计竞赛·华灿奖",
+      "award": "三等奖"
+    },
+    {
+      "title": "2024 东方设计奖全国高校创新设计大赛",
+      "award": "一等奖"
+    },
+    {
+      "title": "2024 四川省大学生农业创意设计大赛",
+      "award": "一等奖"
+    },
+    {
+      "title": "2024 十七届全国三维数字化创新设计大赛",
+      "award": "一等奖"
+    },
+    {
+      "title": "2024 首届中西部乡村振兴环境设计大赛",
+      "award": "一等奖"
+    },
+    {
+      "title": "2023 第12届未来设计师高校数字艺术设计大赛",
+      "award": "一等奖"
+    },
+    {
+      "title": "2023 四川省国际大学生创新大赛",
+      "award": "银奖"
+    },
+    {
+      "title": "2023 四川省道中华杯原创手绘比赛",
+      "award": "一等奖"
+    },
+    {
+      "title": "2023 成都市优秀原创方案设计室内装饰类",
+      "award": "优秀奖"
+    }
   ]
 }
