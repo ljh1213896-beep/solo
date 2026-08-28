@@ -1,10 +1,15 @@
 {
   "slug": "myriad-formless",
-  "hero": {"image":"","video":"/projects/qixiang-cover.mp4?v=2","poster":"/projects/qixiang-cover.webp?v=2","alt":"炁象视觉形象系统动态封面"},
+  "hero": {
+    "image": "",
+    "video": "/projects/qixiang-cover.mp4?v=2",
+    "poster": "/projects/qixiang-cover.webp?v=2",
+    "alt": "炁象视觉形象系统动态封面"
+  },
   "sections": [
     {
       "id": "01",
-      "title": "展示视频",
+      "title": "项目视频",
       "en": "BRAND MOTION / 01:35",
       "layout": "video",
       "text": "QIXIANG / MOTION SYSTEM",
